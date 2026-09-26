@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="motion">
+<main>
+
+  <div class="eyebrow">Part IV · Chapter 12 · Lecture 9</div>
+  <h1>Motion</h1>
+  <p class="subtitle">Why the brain infers motion rather than detecting it, the four problems motion solves,
+  area MT/V5, and the four kinds of evidence — one from each method family — that motion is coded there.</p>
+
+  <div data-toc></div>
+
+  <h2 id="motion-marr">1. Motion at Marr's three levels</h2>
+
+  <div class="scroll-x"><table>
+    <tr><th>Level</th><th>Motion perception</th></tr>
+    <tr><td>Computational</td><td>Distinguish depth relations, recognize objects, grab attention in dangerous situations, interact with the environment (e.g. landing a plane)</td></tr>
+    <tr><td>Algorithmic</td><td>Compare visual information — changes in position and changes in contrast — <strong>over time</strong> to estimate direction and speed; use <strong>optic flow</strong> to infer our own movement through the scene</td></tr>
+    <tr><td>Implementation</td><td><strong>V5</strong>, a.k.a. the <strong>middle temporal area (MT)</strong>, with a column structure tuned to specific directions of motion</td></tr>
+  </table></div>
+
+  <h2 id="inferred">2. Motion is inferred, not recorded</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Motion</strong>: the visual system <em>infers</em> motion from the changing pattern of light in the
+  retinal image. There's no "motion receptor" in the retina — only light at places and times.</div>
+
+  <p>The proof that it's an inference: you can get the inference without any motion at all.</p>
+
+  <div class="viz">
+    <div class="viz-title">Apparent motion — two dots that never move</div>
+    <svg id="amSvg" viewBox="0 0 640 160" role="img" aria-label="Two dots flashing alternately"></svg>
+    <div class="controls">
+      <label>Gap between flashes (ms) <input type="range" id="amISI" min="0" max="600" step="10" value="120" data-out="amISIv" data-fmt="int"><span class="val" id="amISIv"></span></label>
+      <span class="val" id="amOut"></span>
+    </div>
+    <div class="caption">What to notice: nothing moves — one dot switches off, the other switches on. At short
+    gaps you see <strong>one dot jumping smoothly</strong> back and forth. Push the gap near 0 and you see two dots
+    flickering together; push it past ~300 ms and you see two separate dots taking turns. Motion appears only in a
+    band of timings: the brain's comparison of position over time. (Your own mileage may vary with screen
+    refresh.)</div>
+  </div>
+
+  <div class="box defn"><span class="label">Apparent motion</span>
+  An illusion in which stationary objects viewed in quick succession (or next to moving objects) appear to move.
+  Every film and screen you've watched relies on it. Related: <strong>microsaccades</strong> — tiny involuntary
+  eye movements — can make certain static patterns appear to move.</div>
+
+  <h2 id="four-problems">3. Four problems motion solves</h2>
+
+  <h3>1 · Depth relations — motion parallax</h3>
+  <p>As you move, near things sweep across your retina fast and far things slowly (Ch. 11's non-pictorial cue;
+  the praying mantis sways its head to get it).</p>
+
+  <h3>2 · Recognizing objects — segmentation</h3>
+  <p>A camouflaged animal blends into the background until it moves. Motion groups the parts that move together
+  into one object:</p>
+
+  <div class="viz">
+    <div class="viz-title">Find the hidden shape (it only exists while moving)</div>
+    <canvas id="sgCanvas" height="260" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <button class="btn primary" id="sgPlay">Pause</button>
+      <label>Coherence <input type="range" id="sgC" min="0" max="1" step="0.05" value="1" data-out="sgCv" data-dp="2"><span class="val" id="sgCv"></span></label>
+    </div>
+    <div class="caption">What to notice: every frame is just random dots; pause and the shape is gone. While
+    playing, the dots inside a region all drift together and a shape pops out. Lower the coherence and the shape
+    dissolves — the grouping depends on shared motion.</div>
+  </div>
+
+  <div class="box defn"><span class="label">Biological motion</span>
+  The ability to perceive the movement of a biological entity (a person, an animal) and recognize the activity
+  — even from a handful of moving dots on the joints.</div>
+
+  <div class="viz">
+    <div class="viz-title">Point-light walker — 13 dots</div>
+    <canvas id="bmCanvas" height="260" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <button class="btn primary" id="bmPlay">Pause</button>
+      <label><input type="checkbox" id="bmInv"> Upside down</label>
+      <label><input type="checkbox" id="bmScr"> Scramble positions</label>
+    </div>
+    <div class="caption">What to notice: paused, it's a meaningless dot cloud; moving, it's instantly a person
+    walking. Turn it upside down and it gets much harder (an inversion effect, like faces). Scramble the starting
+    positions — each dot keeps its own motion — and the person vanishes: it's the <em>relationships</em> between
+    motions that matter. Synthetic walker, not motion-capture data.</div>
+  </div>
+
+  <h3>3 · Grabbing attention</h3>
+  <p>Motion grabs attention so strongly it can <strong>silence awareness of static images</strong>:
+  <strong>motion-induced blindness</strong> (moving dots make static foreground targets disappear) and
+  <strong>motion silencing</strong> (motion suppresses awareness of other changing features like colour).</p>
+
+  <h3>4 · Interacting with the environment — optic flow</h3>
+  <div class="box defn"><span class="label">Optic flow</span>
+  The pattern of apparent motion of objects in a visual scene caused by relative motion between the observer
+  and the scene. Moving forward → everything expands from a point: the point you're heading toward. Pilots use it
+  to land. Optic flow also creates <strong>vection</strong> — the sense of self-motion — which helps maintain
+  balance (the train-next-to-you illusion).</div>
+
+  <div class="viz">
+    <div class="viz-title">Optic flow — where are you heading?</div>
+    <canvas id="ofCanvas" height="260" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <label>Heading (left ↔ right) <input type="range" id="ofH" min="-1" max="1" step="0.05" value="0.3" data-out="ofHv" data-dp="2"><span class="val" id="ofHv"></span></label>
+      <label>Speed <input type="range" id="ofS" min="0" max="2" step="0.05" value="1" data-out="ofSv" data-dp="2"><span class="val" id="ofSv"></span></label>
+      <label><input type="checkbox" id="ofMark"> Show focus of expansion</label>
+    </div>
+    <div class="caption">What to notice: every dot streams away from one point — the focus of expansion — and
+    that point is exactly where you're heading. Near dots (bigger) move faster than far ones: motion parallax is
+    built into the flow field.</div>
+  </div>
+
+  <h2 id="mt">4. Evidence that MT/V5 codes motion — one per method</h2>
+
+  <p>This section is Chapter 8's "convergence across methods" applied to a new function. Learn it as a set:</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>Method</th><th>Finding</th></tr>
+    <tr><td><strong>1. Neuropsychology</strong></td><td>Stroke in MT → impaired motion perception. <strong>Patient LM</strong>: sees the world like a strobe light — "When I'm looking at the car first it seems far away, but then when I want to cross the road suddenly the car is very near." Intact colour vision, intact 3D (stereo) vision, intact faces/objects → a <em>selective</em> deficit</td></tr>
+    <tr><td><strong>2. Single-cell recording</strong></td><td>MT neurons are sensitive to motion <strong>direction and velocity</strong>, and neurons with similar preferences line up in columns</td></tr>
+    <tr><td><strong>3. fMRI</strong></td><td>MT is more activated by optic flow than by dynamic noise (flickering dots with no coherent motion)</td></tr>
+    <tr><td><strong>4. Behavior</strong></td><td><strong>Motion adaptation</strong> — fatigue one population of MT direction cells and the opposite population dominates, producing an illusory motion aftereffect</td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Fix the slide's term</span>
+  The slides call LM's condition "Akinesia". The correct term for loss of motion <em>perception</em> is
+  <strong>akinetopsia</strong> ("-opsia" = vision). <em>Akinesia</em> means loss of <em>movement</em> — a motor
+  symptom, closer to Parkinson's. If the exam uses the slide's word, recognize it — but know what it means here.</div>
+
+  <div class="box intuition"><span class="label">Why LM is a good patient case</span>
+  With intact colour, stereo, faces and objects, LM can't be "generally impaired" — the spared abilities are a
+  dissociation (Ch. 5). And notice the world doesn't go blank for her; she sees <em>snapshots</em>. Position is
+  still computed; what's lost is the inference that links positions over time.</div>
+
+  <h2 id="aftereffect">5. Motion adaptation: the lecture's final question, answered</h2>
+
+  <p><em>Why does a stationary scene appear to move in the opposite direction after you stare at motion for a
+  while?</em> Try it first:</p>
+
+  <div class="viz">
+    <div class="viz-title">Motion aftereffect — stare at the centre for 20 s, then watch it stop</div>
+    <canvas id="maCanvas" height="300" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <button class="btn primary" id="maGo">Start 20-second adaptation</button>
+      <span class="val" id="maOut"></span>
+    </div>
+    <div class="caption">What to notice: after the rings stop, the static pattern seems to <strong>expand</strong>
+    — the opposite of the contraction you adapted to. The bars on the right show the mechanism: two opponent
+    populations of MT cells (inward-tuned and outward-tuned). A static image normally drives both equally, so they
+    cancel. Adaptation fatigues the inward cells; for a few seconds afterwards the outward cells win.</div>
+  </div>
+
+  <div class="box key"><span class="label">The answer</span>
+  MT has direction-tuned cells for opposite directions, and perceived motion depends on the <strong>balance</strong>
+  between them. Staring at motion in one direction <strong>fatigues</strong> the cells tuned to that direction. When
+  the scene stops, the fatigued cells respond below normal while the opposite-direction cells respond normally —
+  so the balance tips toward the <strong>opposite direction</strong>, and a stationary scene appears to move that
+  way. Same logic as tilt adaptation (Ch. 10).</div>
+
+  <div class="box warn"><span class="label">Slide wording</span>
+  The L9 slide reads: fatigue the inward-flow cells → outward-flow cells dominate → "we will perceive an
+  <em>inward</em> optic flow". By its own logic that should say <strong>outward</strong>: if outward cells dominate,
+  the static image seems to expand. That's also what the demo above shows.</div>
+
+  <h2 id="check-yourself">6. Check yourself</h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">A patient after a stroke sees cars "jump" from far to near, but sees colours, depth and faces normally. The lesion is most likely in…</div>
+    <button class="opt">V1</button>
+    <button class="opt">The fusiform face area</button>
+    <button class="opt">MT / V5</button>
+    <button class="opt">The LGN parvo layers</button>
+    <div class="why"><strong>Why:</strong> Selective motion loss with everything else intact = MT (patient LM). V1
+    damage would cause a blind region, not a motion-only deficit.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">After watching a waterfall for a minute, the rocks beside it seem to drift upward. This is because…</div>
+    <button class="opt">Downward-tuned cells are fatigued, so upward-tuned cells dominate</button>
+    <button class="opt">Upward-tuned cells are fatigued</button>
+    <button class="opt">The rocks are actually moving</button>
+    <button class="opt">Perceptual completion fills in the motion</button>
+    <div class="why"><strong>Why:</strong> You adapted to <em>downward</em> motion, fatiguing downward cells. The
+    aftereffect is always opposite to the adapting direction.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Which finding comes from single-cell recording rather than fMRI?</div>
+    <button class="opt">MT responds more to optic flow than to dynamic noise</button>
+    <button class="opt">Patient LM sees the world like a strobe</button>
+    <button class="opt">The motion aftereffect</button>
+    <button class="opt">MT neurons are tuned to direction and velocity, organized in columns</button>
+    <div class="why"><strong>Why:</strong> Tuning of individual neurons needs single-neuron resolution. The flow
+    vs noise contrast is the fMRI result; LM is neuropsychology; the aftereffect is behavior.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">You're on a stopped train; the train beside you pulls away and you feel yourself moving backward. This is…</div>
+    <button class="opt">Apparent motion</button>
+    <button class="opt">Vection from optic flow</button>
+    <button class="opt">Motion-induced blindness</button>
+    <button class="opt">Biological motion</button>
+    <div class="why"><strong>Why:</strong> Large-field optic flow creates a sense of self-motion — vection.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const setup = (cv, H) => { const W = cv.clientWidth || 600; if (cv.width !== Math.round(W * devicePixelRatio)) { cv.width = W * devicePixelRatio; cv.height = H * devicePixelRatio; cv.style.height = H + "px"; } const c = cv.getContext("2d"); c.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); c.clearRect(0, 0, W, H); return [c, W]; };
+  const visible = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; };
+
+  // ---------- apparent motion ----------
+  const am = document.getElementById("amSvg"), isi = document.getElementById("amISI"), amOut = document.getElementById("amOut");
+  const dA = SG.el("circle", {cx:220, cy:80, r:20, fill:"var(--accent)"}), dB = SG.el("circle", {cx:420, cy:80, r:20, fill:"var(--accent)"});
+  am.appendChild(dA); am.appendChild(dB);
+  let phase = 0, tNext = 0;
+  const FLASH = 50;
+  function amTick(now) {
+    const gap = +isi.value;
+    if (now >= tNext) {
+      phase = (phase + 1) % 4; // 0: A on, 1: gap, 2: B on, 3: gap
+      dA.setAttribute("opacity", phase === 0 ? 1 : 0); dB.setAttribute("opacity", phase === 2 ? 1 : 0);
+      if (gap === 0 && (phase === 1 || phase === 3)) tNext = now; else tNext = now + (phase % 2 === 0 ? FLASH : gap);
+    }
+    amOut.textContent = gap < 20 ? "→ looks like two dots flickering together" : gap <= 300 ? "→ looks like one dot moving" : "→ looks like two dots taking turns";
+    requestAnimationFrame(amTick);
+  }
+  requestAnimationFrame(amTick);
+
+  // ---------- segmentation ----------
+  const sg = document.getElementById("sgCanvas"), sgC = document.getElementById("sgC"); let sgRun = true;
+  const N = 900; const pts = []; for (let i = 0; i < N; i++) pts.push({x: Math.random(), y: Math.random(), a: Math.random() * 6.28});
+  const inShape = (x, y) => { const dx = x - 0.5, dy = y - 0.5; return Math.abs(dx) + Math.abs(dy) < 0.25; }; // a diamond
+  function sgStep() {
+    const coh = +sgC.value;
+    pts.forEach(p => {
+      if (inShape(p.x, p.y) && Math.random() < coh) { p.x += 0.004; }
+      else { p.a += (Math.random() - 0.5) * 0.8; p.x += 0.002 * Math.cos(p.a); p.y += 0.002 * Math.sin(p.a); }
+      p.x = (p.x + 1) % 1; p.y = (p.y + 1) % 1;
+    });
+    // keep density uniform: respawn
+    for (let k = 0; k < 6; k++) { const p = pts[(Math.random() * N) | 0]; p.x = Math.random(); p.y = Math.random(); }
+  }
+  function sgDraw() {
+    const [c, W] = setup(sg, 260); c.fillStyle = SG.css("--ink");
+    pts.forEach(p => c.fillRect(p.x * W, p.y * 260, 2.5, 2.5));
+  }
+  (function loop() { if (sgRun && visible(sg)) { sgStep(); sgDraw(); } requestAnimationFrame(loop); })();
+  sgDraw();
+  document.getElementById("sgPlay").onclick = e => { sgRun = !sgRun; e.target.textContent = sgRun ? "Pause" : "Play"; };
+  document.addEventListener("themechange", sgDraw);
+
+  // ---------- point-light walker ----------
+  const bm = document.getElementById("bmCanvas"), bInv = document.getElementById("bmInv"), bScr = document.getElementById("bmScr"); let bmRun = true, bt = 0;
+  const scr = []; for (let i = 0; i < 13; i++) scr.push([(Math.random() - 0.5) * 120, (Math.random() - 0.5) * 160]);
+  function walker(t) {
+    const s = Math.sin(t), c = Math.cos(t), s2 = Math.sin(t + Math.PI), bob = 3 * Math.cos(2 * t);
+    const P = [];
+    const hip = [0, 20 + bob], sh = [0, -40 + bob];
+    P.push([0, -62 + bob]);                           // head
+    P.push([sh[0] - 12, sh[1]], [sh[0] + 12, sh[1]]); // shoulders
+    P.push([-14 + 18 * s2, sh[1] + 32], [14 + 18 * s, sh[1] + 32]);               // elbows
+    P.push([-14 + 30 * s2, sh[1] + 58 - 6 * c], [14 + 30 * s, sh[1] + 58 + 6 * c]); // wrists
+    P.push([hip[0] - 9, hip[1]], [hip[0] + 9, hip[1]]); // hips
+    const knee = (ph) => [22 * Math.sin(ph), hip[1] + 40 - 4 * Math.max(0, Math.sin(ph))];
+    const ank = (ph) => [34 * Math.sin(ph) - 10 * Math.max(0, -Math.cos(ph)), hip[1] + 80 - 12 * Math.max(0, Math.cos(ph + 0.6))];
+    const kL = knee(t), kR = knee(t + Math.PI), aL = ank(t), aR = ank(t + Math.PI);
+    P.push([kL[0] - 6, kL[1]], [kR[0] + 6, kR[1]], [aL[0] - 6, aL[1]], [aR[0] + 6, aR[1]]);
+    return P;
+  }
+  function bmDraw() {
+    const [c, W] = setup(bm, 260); c.fillStyle = SG.css("--bg-soft"); c.fillRect(0, 0, W, 260);
+    let P = walker(bt);
+    if (bScr.checked) { const P0 = walker(0); P = P.map((p, i) => [p[0] - P0[i][0] + scr[i][0], p[1] - P0[i][1] + scr[i][1]]); }
+    c.fillStyle = SG.css("--ink");
+    P.forEach(([x, y]) => { const yy = bInv.checked ? -y : y; c.beginPath(); c.arc(W / 2 + x, 130 + yy, 4, 0, 7); c.fill(); });
+  }
+  (function loop() { if (bmRun && visible(bm)) { bt += 0.06; bmDraw(); } requestAnimationFrame(loop); })();
+  bmDraw();
+  document.getElementById("bmPlay").onclick = e => { bmRun = !bmRun; e.target.textContent = bmRun ? "Pause" : "Play"; };
+  [bInv, bScr].forEach(e => e.addEventListener("change", bmDraw)); document.addEventListener("themechange", bmDraw);
+
+  // ---------- optic flow ----------
+  const of = document.getElementById("ofCanvas"), ofH = document.getElementById("ofH"), ofS = document.getElementById("ofS"), ofM = document.getElementById("ofMark");
+  const stars = []; const reset = s => { s.x = (Math.random() - 0.5) * 8; s.y = (Math.random() - 0.5) * 4; s.z = 1 + Math.random() * 9; return s; };
+  for (let i = 0; i < 260; i++) stars.push(reset({}));
+  function ofFrame() {
+    const [c, W] = setup(of, 260), H = 260, hx = +ofH.value, sp = +ofS.value * 0.06, f = 120;
+    const fx = W / 2 + hx * W * 0.35;
+    stars.forEach(s => {
+      s.z -= sp; s.x -= 0; if (s.z < 0.3) reset(s), s.z = 10;
+      const px = fx + (s.x) / s.z * f, py = H / 2 + s.y / s.z * f;
+      const pz = s.z + sp * 4, qx = fx + s.x / pz * f, qy = H / 2 + s.y / pz * f;
+      c.strokeStyle = SG.css("--accent"); c.lineWidth = Math.max(1, 3 / s.z * 2);
+      c.beginPath(); c.moveTo(qx, qy); c.lineTo(px, py); c.stroke();
+    });
+    if (ofM.checked) { c.strokeStyle = SG.css("--rose"); c.lineWidth = 2; c.beginPath(); c.arc(fx, H / 2, 10, 0, 7); c.moveTo(fx - 16, H / 2); c.lineTo(fx + 16, H / 2); c.moveTo(fx, H / 2 - 16); c.lineTo(fx, H / 2 + 16); c.stroke(); }
+  }
+  (function loop() { if (visible(of)) ofFrame(); requestAnimationFrame(loop); })();
+
+  // ---------- motion aftereffect ----------
+  const ma = document.getElementById("maCanvas"), maOut = document.getElementById("maOut");
+  let maPhase = 0, maStart = 0, ringOff = 0, fatigue = 0, running = false, lastT = 0;
+  function maDraw(now) {
+    const [c, W] = setup(ma, 300), cx = Math.min(W * 0.36, 200), cy = 150;
+    const dt = lastT ? (now - lastT) / 1000 : 0; lastT = now;
+    const t = (now - maStart) / 1000;
+    const adapting = running && t < 20;
+    if (adapting) { ringOff = (ringOff + dt * 22) % 24; fatigue = Math.min(1, fatigue + dt / 12); maOut.textContent = `adapting… ${Math.ceil(20 - t)} s — keep your eyes on the centre`; }
+    else { fatigue = Math.max(0, fatigue - dt / 5); if (running) maOut.textContent = fatigue > 0.05 ? "Stopped. Does it seem to expand?" : "Aftereffect faded."; }
+    if (running && t >= 20 && fatigue <= 0.001) running = false;
+    for (let r = 132 - ringOff; r > 4; r -= 24) { c.strokeStyle = SG.css("--ink"); c.lineWidth = 6; c.beginPath(); c.arc(cx, cy, r, 0, 7); c.stroke(); }
+    c.fillStyle = SG.css("--rose"); c.beginPath(); c.arc(cx, cy, 4, 0, 7); c.fill();
+    // opponent populations
+    const bx = Math.max(cx + 170, W - 190), base = 250;
+    const inward = adapting ? (1 - 0.6 * fatigue) : 0.5 * (1 - 0.6 * fatigue), outward = adapting ? 0.15 : 0.5;
+    [[inward, "inward cells", "--accent"], [outward, "outward cells", "--accent-3"]].forEach(([v, lab, col], i) => {
+      c.fillStyle = SG.css(col); c.fillRect(bx + i * 80, base - v * 180, 50, v * 180);
+      c.fillStyle = SG.css("--ink-soft"); c.font = "12px sans-serif"; c.textAlign = "center"; c.fillText(lab, bx + 25 + i * 80, base + 18);
+    });
+    const net = outward - inward;
+    c.fillStyle = SG.css("--ink"); c.fillText(Math.abs(net) < 0.03 ? "balanced → no motion" : net > 0 ? "outward wins → see expansion" : "inward wins → see contraction", bx + 65, 40);
+    requestAnimationFrame(maDraw);
+  }
+  requestAnimationFrame(maDraw);
+  document.getElementById("maGo").onclick = () => { running = true; maStart = performance.now(); fatigue = 0; };
+});
+</script>
+</body>
+</html>

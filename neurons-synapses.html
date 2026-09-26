@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neurons, spikes &amp; synapses · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="neurons-synapses">
+<main>
+
+  <div class="eyebrow">Part I · Chapter 2 · Lectures 2 &amp; 4</div>
+  <h1>Neurons, spikes &amp; synapses</h1>
+  <p class="subtitle">The cells of the nervous system, how an all-or-none spike can still carry "how
+  much", how synapses pass the signal on, how drugs for Parkinson's and depression hijack that step, and
+  the three ways synapses change with experience.</p>
+
+  <div data-toc></div>
+
+  <h2 id="hierarchy">1. A multi-scale, hierarchical system</h2>
+
+  <p>"How does the brain work?" is unanswerable as stated, because the answer depends on the scale you're
+  looking at. The lecture's ladder:</p>
+
+  <div class="viz">
+    <div class="viz-title">Four scales of the nervous system</div>
+    <svg viewBox="0 0 640 150" role="img" aria-label="Cell, circuit, cortical column, brain, increasing in scale">
+      <g font-size="14" text-anchor="middle">
+        <circle cx="80" cy="65" r="14" fill="var(--accent)"/><line x1="94" y1="65" x2="130" y2="65" stroke="var(--accent)" stroke-width="3"/>
+        <text x="80" y="125" fill="var(--ink)">1 · Cell</text>
+        <g stroke="var(--accent-2)" stroke-width="2.5" fill="var(--accent-2)">
+          <circle cx="220" cy="45" r="9"/><circle cx="260" cy="85" r="9"/><circle cx="200" cy="90" r="9"/>
+          <line x1="220" y1="45" x2="260" y2="85"/><line x1="200" y1="90" x2="260" y2="85"/><line x1="220" y1="45" x2="200" y2="90"/>
+        </g>
+        <text x="230" y="125" fill="var(--ink)">2 · Circuit</text>
+        <g>
+          <rect x="360" y="25" width="50" height="80" fill="none" stroke="var(--accent-3)" stroke-width="2.5"/>
+          <line x1="360" y1="38" x2="410" y2="38" stroke="var(--accent-3)"/><line x1="360" y1="51" x2="410" y2="51" stroke="var(--accent-3)"/>
+          <line x1="360" y1="64" x2="410" y2="64" stroke="var(--accent-3)"/><line x1="360" y1="77" x2="410" y2="77" stroke="var(--accent-3)"/><line x1="360" y1="90" x2="410" y2="90" stroke="var(--accent-3)"/>
+        </g>
+        <text x="385" y="125" fill="var(--ink)">3 · Cortical column</text>
+        <path d="M500,85 C490,40 540,20 570,30 C600,20 625,50 610,80 C600,100 520,105 500,85 Z" fill="var(--rose)" opacity=".7"/>
+        <text x="560" y="125" fill="var(--ink)">4 · Brain</text>
+        <text x="320" y="145" fill="var(--ink-mute)" font-size="12">→ increasing scale → (the brain level is itself divided four ways: Ch. 3)</text>
+      </g>
+    </svg>
+  </div>
+
+  <p>Some numbers the lecture gives: ~<strong>100 billion</strong> neurons, ~<strong>100 trillion</strong>
+  synaptic connections, ~<strong>5,000</strong> connections per neuron.</p>
+
+  <h2 id="cell-types">2. The four main cell types</h2>
+
+  <div class="scroll-x"><table>
+    <tr><th>Cell</th><th>Job</th><th>Where</th></tr>
+    <tr><td><strong>Neuron</strong></td><td>Carries information. <strong>Soma</strong> = cell body; <strong>dendrites</strong> = receiving side; <strong>axon</strong> = transmitting side.</td><td>Everywhere</td></tr>
+    <tr><td><strong>Schwann cell</strong></td><td>Myelination — wraps axons in a fatty insulating layer.</td><td><strong>P</strong>eripheral NS</td></tr>
+    <tr><td><strong>Oligodendrocyte</strong></td><td>Myelination.</td><td><strong>C</strong>entral NS (brain + spinal cord)</td></tr>
+    <tr><td><strong>Astrocyte</strong></td><td>Maintains the <strong>blood–brain barrier</strong> and <strong>modulates neural activity</strong>.</td><td>CNS</td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Common mistake</span>
+  Swapping Schwann cells and oligodendrocytes. They do the <em>same</em> job (myelin) in different places.
+  One hook: <strong>S</strong>chwann = <strong>S</strong>ide (peripheral); <strong>O</strong>ligo = the
+  <strong>O</strong>rgan in the middle (CNS).</div>
+
+  <h3>Four shapes of neuron</h3>
+  <p>Shape follows job. Count the processes leaving the cell body:</p>
+
+  <div class="viz">
+    <div class="viz-title">Neuron morphologies (dendrites thin, axon thick)</div>
+    <svg viewBox="0 0 640 210" role="img" aria-label="Multipolar, bipolar, unipolar and anaxonic neurons">
+      <g stroke="var(--accent)" fill="none" stroke-linecap="round">
+        <!-- multipolar -->
+        <g stroke-width="2"><line x1="80" y1="80" x2="50" y2="40"/><line x1="80" y1="80" x2="110" y2="40"/><line x1="80" y1="80" x2="40" y2="85"/><line x1="80" y1="80" x2="70" y2="35"/><line x1="80" y1="80" x2="120" y2="75"/></g>
+        <line x1="80" y1="80" x2="80" y2="160" stroke-width="5"/>
+        <!-- bipolar -->
+        <line x1="240" y1="80" x2="240" y2="30" stroke-width="2"/><line x1="240" y1="80" x2="240" y2="160" stroke-width="5"/>
+        <!-- unipolar -->
+        <line x1="400" y1="60" x2="400" y2="100" stroke-width="5"/><line x1="340" y1="100" x2="460" y2="100" stroke-width="5"/>
+        <!-- anaxonic -->
+        <g stroke-width="2"><line x1="560" y1="80" x2="520" y2="50"/><line x1="560" y1="80" x2="600" y2="50"/><line x1="560" y1="80" x2="520" y2="115"/><line x1="560" y1="80" x2="600" y2="115"/><line x1="560" y1="80" x2="560" y2="35"/><line x1="560" y1="80" x2="560" y2="125"/></g>
+      </g>
+      <g fill="var(--accent)"><circle cx="80" cy="80" r="13"/><circle cx="240" cy="80" r="13"/><circle cx="400" cy="55" r="13"/><circle cx="560" cy="80" r="13"/></g>
+      <g font-size="14" text-anchor="middle" fill="var(--ink)">
+        <text x="80" y="185">Multipolar</text><text x="240" y="185">Bipolar</text><text x="400" y="185">Unipolar</text><text x="560" y="185">Anaxonic</text>
+      </g>
+      <g font-size="12" text-anchor="middle" fill="var(--ink-mute)">
+        <text x="80" y="202">1 axon, many dendrites · integration</text><text x="240" y="202">1 axon, 1 dendrite · special senses</text>
+        <text x="400" y="202">1 process → splits in 2 · long-distance sensory</text><text x="560" y="202">no distinct axon · local processing</text>
+      </g>
+    </svg>
+    <div class="caption">What to notice: the <em>purpose</em> column is what gets tested. Many dendrites
+    = many inputs = integration. No axon = can't send far = local processing. The lecture's named examples
+    — <strong>pyramidal</strong> and <strong>Purkinje</strong> neurons (Purkinje live in the cerebellum,
+    drawn by Ramón y Cajal) — are both multipolar.</div>
+  </div>
+
+  <h2 id="action-potential">3. The action potential</h2>
+
+  <p>Neurons talk with electricity. The problem they have to solve: send a signal down an axon that may be
+  a metre long without it fading. The solution is a pulse that regenerates itself as it travels and is
+  always the same size.</p>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Action potential</strong> — a brief, <strong>all-or-none</strong> change in a neuron's voltage that
+  travels along the axon to transmit information. <strong>Refractory period</strong> — the time during/after
+  a spike when the neuron is less likely to fire again.</div>
+
+  <div class="grid2">
+    <div>
+      <p><strong>The four steps</strong> (study guide):</p>
+      <ol>
+        <li><strong>Initial stimulus</strong> pushes the voltage up to threshold.</li>
+        <li><strong>Depolarization</strong> — Na⁺ channels open, Na⁺ rushes <em>in</em>, voltage shoots up.</li>
+        <li><strong>Repolarization</strong> — K⁺ channels open, K⁺ rushes <em>out</em>, voltage falls.</li>
+        <li><strong>Hyperpolarization</strong> — some K⁺ channels stay open, so voltage undershoots rest before recovering.</li>
+      </ol>
+    </div>
+    <div class="box analogy"><span class="label">Analogy (from lecture)</span>
+    Friend annoys you (threshold reached → Na⁺ channels open) → you get <strong>salty</strong> (Na⁺ — sodium —
+    rushes IN) → you get really worked up (depolarization) → you calm down (K⁺ channels open, K⁺ rushes OUT)
+    → back to rest. Where it leaks: you can be a little annoyed; a neuron can't be "a little" spiking.</div>
+  </div>
+
+  <p>Now the puzzle the lecture poses and leaves for you: <em>if action potentials are all-or-none, how can
+  neurons signal different amounts of information?</em> Drag the stimulus slider.</p>
+
+  <div class="viz">
+    <div class="viz-title">Spikes are all-or-none — the rate carries the "how much"</div>
+    <canvas id="apCanvas" height="260" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <label>Stimulus strength <input type="range" id="apI" min="0" max="3" step="0.05" value="0.6" data-out="apIv" data-dp="2"><span class="val" id="apIv"></span></label>
+      <label>Refractory period (ms) <input type="range" id="apRef" min="1" max="12" step="1" value="3" data-out="apRefv" data-fmt="int"><span class="val" id="apRefv"></span></label>
+      <span class="val" id="apRate"></span>
+    </div>
+    <div class="caption">What to notice: below threshold, nothing happens at all — no small spikes. Above
+    it, every spike is the same height; a stronger stimulus only makes them come <em>more often</em>. Push
+    the stimulus to the top and the rate stops growing: the refractory period caps how fast the cell can
+    fire (raise the refractory slider and watch the cap drop). Simplified integrate-and-fire model;
+    voltages are textbook-typical, not from the slides.</div>
+  </div>
+
+  <div class="box key"><span class="label">Key idea</span>
+  <strong>Frequency coding</strong> — neurons represent different amounts of information by <em>how
+  frequently</em> they fire action potentials, not by how big the spikes are. That's the answer to the
+  lecture's puzzle.</div>
+
+  <h2 id="synapses">4. Synapses: passing the signal on</h2>
+
+  <p>A <strong>synapse</strong> is the gap between neurons. Two kinds:</p>
+
+  <div class="scroll-x"><table>
+    <tr><th></th><th>Electrical synapse</th><th>Chemical synapse</th></tr>
+    <tr><td>Speed</td><td><strong>Faster</strong> — current flows directly</td><td><strong>Slower</strong> — chemicals must be released and diffuse</td></tr>
+    <tr><td>Flexibility</td><td>Less flexible</td><td>More flexible — can be tuned up or down</td></tr>
+    <tr><td>Example</td><td>In the eye &amp; heart</td><td>Most of the brain</td></tr>
+    <tr><td>Machinery</td><td>—</td><td>Neurotransmitters, receptors, <strong>reuptake</strong></td></tr>
+  </table></div>
+
+  <p>Neurotransmitters in the lecture: <strong>glutamate</strong> (excitatory), <strong>GABA</strong>
+  (inhibitory), <strong>dopamine</strong> (can be both, depending on the receptor). After release, the
+  transmitter is cleared from the gap by <strong>reuptake</strong> (pumped back into the sending neuron) or
+  broken down by <strong>enzymes</strong>. Those clearance steps are exactly where drugs act.</p>
+
+  <div class="viz">
+    <div class="viz-title">A chemical synapse — try the drugs</div>
+    <svg id="synSvg" viewBox="0 0 640 300" role="img" aria-label="Presynaptic terminal releasing transmitter into the cleft onto postsynaptic receptors"></svg>
+    <div class="controls">
+      <label><input type="checkbox" id="synPD"> Parkinson's: few dopamine neurons</label>
+      <label><input type="checkbox" id="synAg"> Dopamine agonist</label>
+      <label><input type="checkbox" id="synRe"> Block reuptake</label>
+      <label><input type="checkbox" id="synEn"> Block breakdown enzyme</label>
+    </div>
+    <div id="synOut" class="caption"></div>
+  </div>
+
+  <h3>The drugs, mechanism by mechanism</h3>
+  <div class="grid2">
+    <div class="box example"><span class="label">Parkinson's disease drugs</span>
+    PD = loss of dopamine neurons, so less dopamine reaches receptors. Three strategies:
+    <ul>
+      <li><strong>Dopamine agonists</strong> — mimic dopamine and bind its receptors.</li>
+      <li><strong>Amantadine</strong> — limits reuptake, so dopamine stays in the gap longer.</li>
+      <li><strong>COMT / MAO-B inhibitors</strong> — limit the enzymes that break dopamine down.</li>
+    </ul>
+    (L-dopa, which adds dopamine to the system, comes in Ch. 7.)</div>
+    <div class="box example"><span class="label">Depression drugs (Lecture 4)</span>
+    Depression involves changes across systems for mood, reward, motivation, stress and cognition.
+    <strong>Serotonin</strong> is a <em>neuromodulator</em> that influences many of them.
+    <ul>
+      <li><strong>SSRIs</strong> (Selective Serotonin Reuptake Inhibitors) block serotonin reuptake → more
+      serotonin remains in the synapse.</li>
+      <li>Other antidepressants: less serotonin breakdown, or more serotonin release.</li>
+    </ul></div>
+  </div>
+
+  <div class="box intuition"><span class="label">Intuition</span>
+  Every one of these drugs does the same thing from a different angle: <strong>raise the effective amount of
+  transmitter acting on receptors</strong>. Make more, release more, clear less (reuptake), break down less
+  (enzymes), or fake it (agonist). If you understand the life cycle of a transmitter —
+  release → bind → clear — you can derive any drug question.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Fix the broken synapse (workbook exercise)</div>
+    <div class="g-body"><p>A presynaptic neuron fires normally. It releases plenty of glutamate. The
+    postsynaptic neuron never fires. A test shows its glutamate receptors are intact but the cleft is
+    flooded with an enzyme that destroys glutamate within microseconds. Diagnose and fix.</p></div>
+    <details class="step"><summary>Step 1 — Where does transmission fail?</summary><div><p>Walk the chain:
+    spike arrives ✓ → release ✓ → transmitter crosses gap ✗ (destroyed before it binds) → receptors ✓. The
+    break is in the cleft.</p></div></details>
+    <details class="step"><summary>Step 2 — What would restore it?</summary><div><p>Inhibit the enzyme
+    (the COMT/MAO-B strategy, applied to glutamate), or bypass it with an agonist that the enzyme can't
+    degrade.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>Enzyme inhibitor → glutamate
+    survives long enough to bind → postsynaptic neuron reaches threshold. The skill being tested:
+    <strong>locate the failure in release → bind → clear, then pick the drug strategy that acts at that
+    step.</strong> Blocking reuptake wouldn't help here — the transmitter never lived long enough to be taken
+    back up.</p></div></details>
+  </div>
+
+  <h2 id="plasticity">5. Plasticity: three ways synapses change</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Plasticity</strong> — the nervous system's ability to change its structure or function in response
+  to experience.</div>
+
+  <div class="scroll-x"><table>
+    <tr><th>Mechanism</th><th>What physically changes</th><th>Lecture example</th></tr>
+    <tr><td><strong>1. Long-term potentiation / depression (LTP / LTD)</strong></td><td>Adding or removing channels; increasing or decreasing transmitter release. Same synapse, stronger or weaker.</td><td>Potentiation = studying for FoBB. Depression = forgetting FoBB. <strong>Habituation</strong> involves LTD.</td></tr>
+    <tr><td><strong>2. Dendritic growth vs retraction</strong></td><td>New synapses form (~<strong>4 days</strong> to form a synapse, seen with electron microscopy); or dendrites are <strong>pruned</strong>.</td><td>Cat: pruning from prenatal ~8 days to 1 year. Neurotypical vs aberrant pruning.</td></tr>
+    <tr><td><strong>3. Astrocyte regulation</strong></td><td>Classically just the blood–brain barrier; recently shown to also regulate neural activity.</td><td>—</td></tr>
+  </table></div>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Habituation</strong> — a basic form of learning in which an organism's response to a repeated,
+  <em>benign</em> stimulus gradually decreases over time. Mechanism: long-term <em>depression</em> of the
+  synapses carrying it. (You stop noticing your clothes on your skin.)</div>
+
+  <div class="box warn"><span class="label">Common mistake</span>
+  "Depression" in LTD means <em>weakened synapse</em>, nothing to do with the mood disorder or SSRIs. And
+  habituation is LTD, not LTP — the response goes <em>down</em>.</div>
+
+  <h2 id="principles">6. The five general principles</h2>
+  <ol>
+    <li>The nervous system is a <strong>multiscale, hierarchical</strong> structure.</li>
+    <li>It is incredibly <strong>diverse</strong> (cell types, neuron shapes).</li>
+    <li>It is highly <strong>interconnected</strong> (~5,000 connections per neuron).</li>
+    <li>It is <strong>plastic</strong>.</li>
+    <li>It is complicated ☺</li>
+  </ol>
+
+  <h2 id="check-yourself">7. Check yourself</h2>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">A stronger touch on your skin is signalled to the brain mainly by…</div>
+    <button class="opt">Bigger action potentials</button>
+    <button class="opt">Longer-lasting action potentials</button>
+    <button class="opt">Switching from GABA to glutamate</button>
+    <button class="opt">More action potentials per second</button>
+    <div class="why"><strong>Why:</strong> Frequency coding. Spikes are all-or-none, so they can't get
+    bigger — the tempting first option is exactly the misconception the lecture's question targets.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">During which phase are K⁺ channels open while voltage drops <em>below</em> resting level?</div>
+    <button class="opt">Depolarization</button>
+    <button class="opt">Hyperpolarization</button>
+    <button class="opt">Initial stimulus</button>
+    <button class="opt">Repolarization</button>
+    <div class="why"><strong>Why:</strong> Repolarization also involves K⁺ leaving, but it brings the
+    voltage <em>back toward</em> rest. The undershoot below rest — because some K⁺ channels are still open
+    — is hyperpolarization. Depolarization is the Na⁺ phase.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">SSRIs and amantadine have what in common?</div>
+    <button class="opt">Both limit reuptake of a transmitter</button>
+    <button class="opt">Both mimic dopamine</button>
+    <button class="opt">Both inhibit breakdown enzymes</button>
+    <button class="opt">Both treat Parkinson's</button>
+    <div class="why"><strong>Why:</strong> SSRIs block serotonin reuptake (depression); amantadine limits
+    dopamine reuptake (PD). Different transmitter, different disease, same mechanism. COMT/MAO-B inhibitors
+    are the enzyme ones; agonists are the mimics.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Myelin in the spinal cord is made by…</div>
+    <button class="opt">Schwann cells</button>
+    <button class="opt">Astrocytes</button>
+    <button class="opt">Oligodendrocytes</button>
+    <button class="opt">Purkinje cells</button>
+    <div class="why"><strong>Why:</strong> The spinal cord is CNS. Easy to miss because people think "CNS =
+    brain". Schwann cells are peripheral.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">You move next to a train line. After a month you no longer notice trains. This is ___, caused by ___.</div>
+    <button class="opt">Potentiation; adding receptors</button>
+    <button class="opt">Habituation; long-term depression</button>
+    <button class="opt">Pruning; astrocytes</button>
+    <button class="opt">Change blindness; frequency coding</button>
+    <div class="why"><strong>Why:</strong> Repeated, benign stimulus + decreasing response = habituation,
+    implemented by LTD. Change blindness is about failing to notice a <em>change</em>, not tuning out a
+    constant repetition.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  // ---------- action potential (integrate-and-fire with drawn spike shape) ----------
+  const cv = document.getElementById("apCanvas"), I = document.getElementById("apI"), R = document.getElementById("apRef"), rateOut = document.getElementById("apRate");
+  function simulate(stim, refMs) {
+    const dt = 0.1, T = 200, tau = 10, Vrest = -70, Vth = -55, gain = 12;
+    const V = [], spikes = []; let v = Vrest, refUntil = -1;
+    for (let k = 0; k * dt < T; k++) {
+      const t = k * dt;
+      const on = t >= 20 && t < 180;
+      if (t < refUntil) { v = Vrest - 8 + 8 * (1 - (refUntil - t) / refMs); }
+      else {
+        v += dt / tau * (-(v - Vrest) + (on ? stim * gain : 0));
+        if (v >= Vth) { spikes.push(t); v = Vrest - 8; refUntil = t + refMs; }
+      }
+      V.push(v);
+    }
+    return { V, spikes, dt, T };
+  }
+  function draw() {
+    const W = cv.clientWidth || 600; cv.width = W * devicePixelRatio; cv.style.height = "260px"; cv.height = 260 * devicePixelRatio;
+    const c = cv.getContext("2d"); c.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    const H = 260, ink = SG.css("--ink-mute"), acc = SG.css("--accent"), rose = SG.css("--rose"), gold = SG.css("--gold");
+    c.clearRect(0, 0, W, H);
+    const refMs = +R.value, sim = simulate(+I.value, refMs);
+    const x = t => 40 + t / sim.T * (W - 60), y = v => 20 + (45 - v) / 135 * 190;
+    c.strokeStyle = ink; c.lineWidth = 1; c.font = "12px sans-serif"; c.fillStyle = ink;
+    [[-55, "threshold −55 mV"], [-70, "rest −70 mV"]].forEach(([v, s]) => { c.setLineDash([4, 4]); c.beginPath(); c.moveTo(40, y(v)); c.lineTo(W - 20, y(v)); c.stroke(); c.setLineDash([]); c.fillText(s, W - 130, y(v) - 4); });
+    // stimulus bar
+    c.fillStyle = gold; c.globalAlpha = .35; c.fillRect(x(20), 228, x(180) - x(20), 10); c.globalAlpha = 1;
+    c.fillStyle = ink; c.fillText("stimulus on", x(20), 252);
+    // trace with stereotyped spikes
+    c.strokeStyle = acc; c.lineWidth = 2; c.beginPath();
+    sim.V.forEach((v, k) => { const t = k * sim.dt; k ? c.lineTo(x(t), y(v)) : c.moveTo(x(t), y(v)); });
+    c.stroke();
+    c.strokeStyle = rose; c.lineWidth = 2;
+    sim.spikes.forEach(t => { c.beginPath(); c.moveTo(x(t), y(-55)); c.lineTo(x(t + 0.3), y(40)); c.lineTo(x(t + 0.9), y(-78)); c.stroke(); });
+    const rate = sim.spikes.length / 0.16;
+    rateOut.textContent = sim.spikes.length ? `${sim.spikes.length} spikes in 160 ms ≈ ${Math.round(rate)} Hz` : "0 spikes — below threshold";
+  }
+  [I, R].forEach(e => e.addEventListener("input", draw));
+  document.addEventListener("themechange", draw); window.addEventListener("resize", draw);
+  draw();
+
+  // ---------- synapse ----------
+  const svg = document.getElementById("synSvg"), out = document.getElementById("synOut");
+  const box = id => document.getElementById(id);
+  function drawSyn() {
+    const pd = box("synPD").checked, ag = box("synAg").checked, re = box("synRe").checked, en = box("synEn").checked;
+    // effective dopamine-like activation (toy arithmetic, relative units)
+    let release = pd ? 0.3 : 1.0;
+    let lifetime = 1 * (re ? 1.8 : 1) * (en ? 1.5 : 1);
+    let da = release * lifetime;
+    let act = Math.min(1, (da + (ag ? 0.6 : 0)) / 1.0);
+    svg.innerHTML = "";
+    const add = (t, a) => svg.appendChild(SG.el(t, a));
+    add("path", {d:"M40,20 L600,20 L600,110 Q320,150 40,110 Z", fill:"var(--panel)", stroke:"var(--accent)", "stroke-width":2});
+    add("path", {d:"M40,290 L600,290 L600,200 Q320,170 40,200 Z", fill:"var(--panel)", stroke:"var(--accent-2)", "stroke-width":2});
+    const tx = (x, y, s, f) => { const t = SG.el("text", {x, y, "text-anchor":"middle", fill: f || "var(--ink-soft)", "font-size":13}); t.textContent = s; svg.appendChild(t); };
+    tx(320, 45, "Presynaptic terminal (sending)"); tx(320, 275, "Postsynaptic neuron (receiving)");
+    // vesicles
+    for (let i = 0; i < 6; i++) add("circle", {cx:180 + i * 55, cy:78, r:11, fill: i < Math.round(release * 6) ? "var(--accent)" : "none", stroke:"var(--accent)", opacity:.8});
+    // transporter
+    add("rect", {x:520, y:108, width:28, height:18, rx:4, fill: re ? "var(--ink-mute)" : "var(--gold)"});
+    tx(534, 100, re ? "reuptake blocked" : "reuptake pump", re ? "var(--rose)" : "var(--ink-soft)");
+    // enzyme
+    add("polygon", {points:"90,150 105,140 120,150 105,160", fill: en ? "var(--ink-mute)" : "var(--rose)"});
+    tx(105, 178, en ? "enzyme blocked" : "enzyme (COMT/MAO)", en ? "var(--rose)" : "var(--ink-soft)");
+    // molecules in cleft
+    const n = Math.round(Math.min(da, 2.2) * 9);
+    let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    for (let i = 0; i < n; i++) add("circle", {cx:160 + rnd() * 320, cy:140 + rnd() * 40, r:4.5, fill:"var(--accent)"});
+    if (ag) for (let i = 0; i < 6; i++) add("rect", {x:170 + rnd() * 300, y:140 + rnd() * 40, width:8, height:8, fill:"var(--accent-3)"});
+    // receptors
+    const nOn = Math.round(act * 7);
+    for (let i = 0; i < 7; i++) add("rect", {x:175 + i * 45, y:188, width:22, height:12, rx:3, fill: i < nOn ? "var(--accent-2)" : "none", stroke:"var(--accent-2)", "stroke-width":2});
+    tx(320, 225, `receptors activated: ${nOn} / 7`, "var(--ink)");
+    let msg = pd ? "Few dopamine neurons → little release → weak signal (the Parkinson's problem). " : "Normal release. ";
+    if (ag) msg += "Agonist (violet squares) binds receptors directly — no dopamine required. ";
+    if (re) msg += "Blocked reuptake keeps transmitter in the gap longer (amantadine; SSRIs do this for serotonin). ";
+    if (en) msg += "Blocked enzymes mean less breakdown (COMT / MAO-B inhibitors). ";
+    if (pd && !ag && !re && !en) msg += "Tick a drug to see how each one compensates.";
+    out.innerHTML = msg + " <span class='muted'>Toy model: counts are illustrative, not physiological.</span>";
+  }
+  ["synPD","synAg","synRe","synEn"].forEach(id => box(id).addEventListener("change", drawSyn));
+  drawSyn();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Imaging &amp; perturbing: faces · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="methods-faces">
+<main>
+
+  <div class="eyebrow">Part III · Chapter 8 · Lectures 6 &amp; 7</div>
+  <h1>Imaging &amp; perturbing the brain, told through faces</h1>
+  <p class="subtitle">Every method in the course — behavior, fMRI, EEG/MEG, ECoG, sEEG, patient studies,
+  electrical stimulation — introduced by the question about faces it can answer, with the benefits and
+  limitations you need to know cold.</p>
+
+  <div data-toc></div>
+
+  <h2 id="five-questions">1. Five questions about faces</h2>
+
+  <p>The lecture organizes all the methods around one topic, and each question sits at a Marr level. Which
+  method you need depends on what you're asking:</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>#</th><th>Question</th><th>Marr level</th><th>Method → answer</th></tr>
+    <tr><td>1</td><td>Why is face perception important?</td><td>Computational</td><td>Communication, social interaction, emotion perception</td></tr>
+    <tr><td>2</td><td>How do humans represent faces?</td><td>Algorithmic</td><td><strong>Behavior</strong> → orientation-<em>specific</em> templates</td></tr>
+    <tr><td>3</td><td>Is face perception distinct from the rest of vision?</td><td>Algorithmic</td><td><strong>Behavior</strong> → face inversion effect; <strong>fMRI</strong> → FFA is face-selective</td></tr>
+    <tr><td>4</td><td>How fast are faces detected?</td><td>Algorithmic</td><td><strong>EEG/MEG/ECoG/single neuron</strong> → 150–170 ms after the face appears</td></tr>
+    <tr><td>5</td><td>Does a brain area play a <em>causal</em> role?</td><td>Implementation</td><td><strong>Patients + electrical stimulation</strong> → strong evidence FFA is causal</td></tr>
+  </table></div>
+
+  <h2 id="behavior">2. Behavior: how are faces represented?</h2>
+
+  <p>Two hypotheses: (a) we hold <strong>one orientation-invariant</strong> representation of each face, or (b)
+  we memorize <strong>many orientation-specific</strong> views (which needs a lot of experience).</p>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>The Dutch-politician demo — reconstruct the logic</div>
+    <div class="g-body"><p>A collage shows many photos of Dutch politicians from different angles and lighting.
+    Two groups count how many <em>distinct</em> people are shown: people familiar with Dutch politicians and
+    people who aren't. What does each hypothesis predict?</p></div>
+    <details class="step"><summary>Step 1 — What would "orientation-invariant" predict?</summary><div><p>If
+    everyone extracts one view-independent representation, experience shouldn't matter much —
+    <strong>both groups equally good</strong>.</p></div></details>
+    <details class="step"><summary>Step 2 — And "orientation-specific"?</summary><div><p>If recognition needs
+    stored templates for each view, the familiar group — who have seen these faces from many angles — should be
+    <strong>much better</strong>.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>Correct answer: <strong>2
+    people</strong>. Unfamiliar viewers typically say <strong>7</strong>. Face recognition benefits hugely from
+    experience → more exposure = more orientation-specific templates = better recognition. The method lesson:
+    <strong>behavioral experiments characterize representations</strong> by making the hypotheses predict
+    different performance.</p></div></details>
+  </div>
+
+  <h3>The face inversion effect</h3>
+  <p>Turning an image upside down disrupts <strong>face</strong> recognition much more than
+  <strong>object</strong> (e.g. house) recognition. That disproportionate cost suggests faces are processed by
+  specialized mechanisms. Try it — one version of this face has been tampered with:</p>
+
+  <div class="viz">
+    <div class="viz-title">Which face is distorted? (flip to find out)</div>
+    <svg id="thSvg" viewBox="0 0 640 280" role="img" aria-label="Two schematic faces, one with eyes and mouth flipped, shown upside down"></svg>
+    <div class="controls">
+      <button class="btn primary" id="thFlip">Flip upright</button>
+    </div>
+    <div class="caption">What to notice: upside down, the two faces look nearly the same; upright, one is
+    obviously grotesque. Inverted, you read features one at a time and each looks fine; upright, faces are
+    processed as a configured whole, so the wrong relationships jump out. <span class="pill">going deeper</span>
+    This particular version is the "Thatcher illusion", a well-known cousin of the lecture's demo.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="box key"><span class="label">Behavior — benefits</span><ul>
+      <li>Characterizes representations (orientation-specific vs invariant)</li>
+      <li>Dissociates representations (face vs object)</li>
+      <li>Cheap and low-tech</li></ul></div>
+    <div class="box warn"><span class="label">Behavior — limitations</span><ul>
+      <li>Sparse, limited data (one response per trial)</li>
+      <li>Hard to tell the fine-grained <em>stages</em> of processing</li>
+      <li>No relation to the brain</li></ul></div>
+  </div>
+
+  <h2 id="fmri">3. fMRI: is there a face region?</h2>
+
+  <p><strong>Hypothesis:</strong> some place in the brain responds more to faces than to objects.
+  <strong>Method:</strong> fMRI. It measures the <strong>BOLD</strong> (Blood Oxygenation Level–Dependent)
+  signal — changes in the ratio of <strong>oxygenated to deoxygenated hemoglobin</strong>. Active neurons pull
+  in oxygen-rich blood; the scanner sees the blood, not the neurons.</p>
+
+  <p><strong>Finding: the fusiform face area (FFA)</strong> on the underside of the temporal lobe.</p>
+  <ul>
+    <li>Responds to faces more than anything else tested</li>
+    <li>Found in a similar region in every subject</li>
+    <li>Shows a face-inversion effect for <strong>Mooney faces</strong> (two-tone faces) — same stimuli upright
+    vs inverted, different response, so it isn't low-level image features</li>
+  </ul>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>"Any other hypotheses that can account for these data?"</div>
+    <div class="g-body"><p>The FFA lights up more for faces than for objects. List alternative explanations,
+    then say how the lecture ruled them out.</p></div>
+    <details class="step"><summary>Alternatives</summary><div><p>(1) It responds to <em>any body part</em>. (2) It
+    responds to anything <em>curvy</em>. (3) Faces are more interesting, so it responds to anything
+    <em>attended</em>.</p></div></details>
+    <details class="step"><summary>How they were ruled out</summary><div><p>Show other body parts (hands), curvy
+    non-face objects, and make people attend to everything equally with a <strong>1-back task</strong>: watch a
+    stream of stimuli and press when the current one matches the one immediately before. Now every
+    stimulus is attended. FFA still prefers faces.</p></div></details>
+    <details class="step"><summary>Takeaway</summary><div><p>A difference between two conditions has many
+    possible causes; good design adds control conditions that each kill one alternative. Attention confounds
+    are killed by giving a task that forces equal attention.</p></div></details>
+  </div>
+
+  <div class="grid2">
+    <div class="box key"><span class="label">fMRI — benefits</span>
+    The <strong>best spatial resolution for measuring activity across the whole brain</strong>.</div>
+    <div class="box warn"><span class="label">fMRI — limitations</span><ul>
+      <li>How BOLD relates to neural activity is unclear and indirect</li>
+      <li><strong>Low temporal resolution</strong>: lags neural activity by 2–3 s</li>
+      <li>~1 mm spatial resolution — can't resolve cortical layers (~0.5 mm)</li>
+      <li>Susceptibility artifact near ears and sinuses</li>
+      <li>Expensive (about 600 dollars an hour)</li>
+      <li><strong>Can't tell if a region plays a causal role</strong></li></ul></div>
+  </div>
+
+  <h2 id="timing">4. EEG, MEG, ECoG, sEEG: how fast?</h2>
+
+  <p>Why not just use reaction times? Because an RT bundles too much: processing might have <em>started</em>
+  earlier, and the RT also contains <strong>motor planning</strong> and <strong>decision making</strong> (e.g.
+  confidence). You need to watch the brain directly, with millisecond precision.</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>Method</th><th>What it records</th><th>Face result</th><th>Benefits</th><th>Limitations</th></tr>
+    <tr><td><strong>EEG</strong> (electroencephalography)</td><td>12–100+ scalp electrodes, each summing over lots of neurons</td><td>Face-specific response at <strong>170 ms</strong>; can't tell if it's from FFA</td><td>Excellent temporal resolution; non-invasive</td><td>Lousy spatial resolution; disrupted by small movements; can't show causality</td></tr>
+    <tr><td><strong>MEG</strong> (magnetoencephalography)</td><td>Magnetic fields from neural currents</td><td>—</td><td>Excellent temporal; non-invasive; <strong>slightly better spatial than EEG</strong></td><td>Still lousy spatial; disrupted by Earth's magnetic field and movement</td></tr>
+    <tr><td><strong>ECoG</strong> (electrocorticography)</td><td>Electrodes on the brain surface in neurosurgery (seizure) patients</td><td>Small (2 mm) patches at FFA are face-selective from <strong>~150 ms</strong></td><td>High spatial <em>and</em> temporal resolution</td><td>Rare; invasive; hard to control in hospital; covers one patch, not whole brain; lots of neurons per electrode</td></tr>
+    <tr><td><strong>sEEG</strong> (stereo-EEG)</td><td>Depth electrodes that can pick up individual neurons</td><td>Single neurons show face processing at <strong>~150 ms</strong></td><td>Very high spatial and temporal resolution</td><td>Same as ECoG</td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Fix the study guide</span>
+  The L6 study guide calls sEEG "single neuron EEG". The slides' name is <strong>stereoelectroencephalography</strong>
+  — depth electrodes placed in 3D ("stereo"). The "single neuron" part is what it <em>can record</em>, not what
+  the letters stand for.</div>
+
+  <div class="box key"><span class="label">The number to remember</span>
+  EEG / MEG / ECoG / single-neuron recording all converge: faces are detected <strong>150–170 ms</strong> after
+  they appear.</div>
+
+  <h2 id="resolution-map">5. The resolution map</h2>
+
+  <div class="viz">
+    <div class="viz-title">Spatial vs temporal resolution — click a method</div>
+    <svg id="rmSvg" viewBox="0 0 640 380" role="img" aria-label="Log-log map of methods by spatial and temporal resolution"></svg>
+    <div class="caption" id="rmOut">Schematic placement; axes are log scales, and positions are approximate
+    (the lecture's closing slide was a figure of this kind). What to notice: nothing sits in the bottom-left
+    corner <em>and</em> covers the whole brain non-invasively — and the ringed methods are the only ones that
+    can test causality.</div>
+  </div>
+
+  <h2 id="causality">6. Causality: patients and stimulation</h2>
+
+  <p>Every recording method above shares one limitation: <strong>it can't tell if a region plays a causal
+  role</strong>. To test whether X causes Y, you have to <em>mess with X</em> and see whether Y breaks.</p>
+
+  <h3>Patient studies</h3>
+  <div class="grid2">
+    <div class="box example"><span class="label">Prosopagnosia</span>
+    Cannot recognize familiar faces. Face recognition is a distribution; ~2% of the population has
+    prosopagnosia. A patient with an FFA lesion couldn't recognize his wife — but shown a photo of sumo champion
+    Akebono in front of the Meiji shrine, he failed on the face and <em>immediately named the shrine</em>.
+    <ul><li>Impairs face <em>recognition</em>, not face <em>detection</em></li><li>Voice recognition intact (can identify people that way)</li><li>Object recognition intact</li></ul>
+    = <strong>single dissociation</strong>.</div>
+    <div class="box example"><span class="label">Object agnosia — patient CK</span>
+    33-year-old, closed head injury. Severely impaired visual object recognition, <strong>normal face
+    recognition</strong>.
+    <ul><li><em>Not memory?</em> Tactile object recognition is normal → it's a <strong>visual</strong> agnosia.</li>
+    <li><em>Not lost knowledge?</em> Asked to define a pipe: "a short, hollow object, larger on one end, 120°
+    angle, for leisurely smoking using tobacco."</li></ul>
+    Together with prosopagnosia = <strong>double dissociation</strong>: faces and objects are distinct processes.</div>
+  </div>
+
+  <div class="box intuition"><span class="label">Why CK is necessary</span>
+  Prosopagnosia alone leaves the "task sensitivity" loophole from Ch. 5: maybe faces are just <em>harder</em>
+  objects. CK closes it — if faces were just harder objects, someone who fails on objects couldn't be fine on
+  faces. And the two "but how do you know…" checks (touch, definitions) are there to rule out that CK's
+  problem is memory or knowledge rather than visual recognition.</div>
+
+  <div class="grid2">
+    <div class="box key"><span class="label">Patient studies — benefits</span>
+    Some evidence that FFA is <em>necessary</em> for face recognition.</div>
+    <div class="box warn"><span class="label">Patient studies — limitations</span><ul>
+      <li>Hard to find patients with the "right" lesion</li>
+      <li>Lesions are messy — affect multiple functions</li>
+      <li>Chronic lesions: the brain reorganizes during recovery, so effects may reflect recovery rather than the lesion</li>
+      <li>Not a direct manipulation — you can't turn the area off <em>then on</em></li></ul></div>
+  </div>
+
+  <h3>Direct electrical stimulation</h3>
+  <p>Neurosurgeons treating seizures need to find the seizure's origin and check whether it's safe to operate
+  (e.g. preserve language). They electrically stimulate the cortex. <strong>ECoG electrodes can both record and
+  stimulate</strong> — turning an area off, then back on. Stimulating FFA electrodes distorts the faces
+  patients see, establishing a causal role for FFA.</p>
+
+  <div class="grid2">
+    <div class="box key"><span class="label">Stimulation — benefits</span>
+    <strong>Strong evidence</strong> that FFA is causally involved in face recognition — a real on/off
+    manipulation.</div>
+    <div class="box warn"><span class="label">Stimulation — limitations</span><ul>
+      <li>Can't tell if disruption is due to <strong>FFA specifically</strong> or FFA's <strong>connections</strong> with other areas</li>
+      <li>Special patient group (seizure patients) who may have a propensity for the function you're studying</li></ul></div>
+  </div>
+
+  <div class="box key"><span class="label">Big takeaway</span>
+  No single method gives the full picture. Robust results come from <strong>convergence across methods</strong>:
+  behavior (inversion effect, templates) + imaging (FFA selectivity) + timing (150–170 ms) + patients and
+  stimulation (causality). Embrace the brain's complexity.</div>
+
+  <h2 id="check-yourself">7. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">You want to know <em>where</em> in the whole brain a task activates, non-invasively. Best method?</div>
+    <button class="opt">EEG</button>
+    <button class="opt">fMRI</button>
+    <button class="opt">ECoG</button>
+    <button class="opt">Behavioral reaction times</button>
+    <div class="why"><strong>Why:</strong> fMRI has the best spatial resolution for the whole brain. ECoG has
+    better resolution but is invasive and covers only a patch. EEG is great at <em>when</em>, lousy at
+    <em>where</em>.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Which method, on its own, can establish that FFA <em>causes</em> face recognition?</div>
+    <button class="opt">fMRI</button>
+    <button class="opt">sEEG recording</button>
+    <button class="opt">MEG</button>
+    <button class="opt">Direct electrical stimulation</button>
+    <div class="why"><strong>Why:</strong> Only perturbation (turning a region off/on) tests causality. All
+    recording methods — however precise — show correlation. sEEG <em>recording</em> is tempting because of its
+    precision, but precision isn't causation.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">Why can't reaction time alone tell you how fast faces are detected?</div>
+    <button class="opt">It includes motor planning and decision time, and processing may have started earlier</button>
+    <button class="opt">Reaction times are too variable to measure</button>
+    <button class="opt">Faces are detected faster than any key press can register</button>
+    <button class="opt">It has poor spatial resolution</button>
+    <div class="why"><strong>Why:</strong> The lecture's three reasons. Spatial resolution isn't the issue for
+    a timing question.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Patient CK recognizes objects normally by touch. This rules out that his deficit is…</div>
+    <button class="opt">Visual</button>
+    <button class="opt">A face-recognition problem</button>
+    <button class="opt">A general memory/knowledge-of-objects problem</button>
+    <button class="opt">Caused by a lesion</button>
+    <div class="why"><strong>Why:</strong> If he'd lost object memory, touch would fail too. Intact touch pins
+    the deficit to <em>vision</em> — visual object agnosia.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">A limitation shared by patient studies with <em>chronic</em> lesions but not by electrical stimulation is…</div>
+    <button class="opt">Invasiveness</button>
+    <button class="opt">Brain reorganization during recovery</button>
+    <button class="opt">Can't isolate the region from its connections</button>
+    <button class="opt">Low temporal resolution</button>
+    <div class="why"><strong>Why:</strong> Stimulation is acute (on, then off), so recovery can't reshape the
+    result. "Region vs its connections" is actually a stimulation limitation.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  // ---------- Thatcher faces ----------
+  const th = document.getElementById("thSvg"); let upright = false;
+  function face(cx, cy, thatcher) {
+    const g = SG.el("g", {});
+    g.appendChild(SG.el("ellipse", {cx, cy, rx:85, ry:110, fill:"var(--gold)", opacity:.35, stroke:"var(--ink-soft)", "stroke-width":2}));
+    const feat = (x, y, drawFn) => { const f = SG.el("g", {transform: thatcher ? `rotate(180 ${x} ${y})` : ""}); drawFn(f, x, y); g.appendChild(f); };
+    const eye = (f, x, y) => {
+      f.appendChild(SG.el("path", {d:`M${x-22},${y} Q${x},${y-16} ${x+22},${y} Q${x},${y+10} ${x-22},${y} Z`, fill:"var(--panel)", stroke:"var(--ink)", "stroke-width":2}));
+      f.appendChild(SG.el("circle", {cx:x, cy:y - 2, r:6, fill:"var(--ink)"}));
+      f.appendChild(SG.el("path", {d:`M${x-24},${y-18} Q${x},${y-30} ${x+24},${y-18}`, fill:"none", stroke:"var(--ink)", "stroke-width":4}));
+    };
+    feat(cx - 35, cy - 25, eye); feat(cx + 35, cy - 25, eye);
+    g.appendChild(SG.el("path", {d:`M${cx},${cy - 10} L${cx - 10},${cy + 25} L${cx + 8},${cy + 27}`, fill:"none", stroke:"var(--ink-soft)", "stroke-width":2}));
+    feat(cx, cy + 55, (f, x, y) => {
+      f.appendChild(SG.el("path", {d:`M${x-32},${y-4} Q${x},${y+22} ${x+32},${y-4} Q${x},${y+4} ${x-32},${y-4} Z`, fill:"var(--rose)", stroke:"var(--ink)", "stroke-width":2}));
+    });
+    return g;
+  }
+  function drawTh() {
+    th.innerHTML = "";
+    const wrap = SG.el("g", {transform: upright ? "" : "rotate(180 320 140)"});
+    wrap.appendChild(face(190, 140, false)); wrap.appendChild(face(450, 140, true)); th.appendChild(wrap);
+    document.getElementById("thFlip").textContent = upright ? "Turn upside down" : "Flip upright";
+  }
+  drawTh();
+  document.getElementById("thFlip").onclick = () => { upright = !upright; drawTh(); };
+
+  // ---------- resolution map ----------
+  const rm = document.getElementById("rmSvg"), rmOut = document.getElementById("rmOut");
+  // log10 metres (spatial) and log10 seconds (temporal); approximate schematic values
+  const methods = [
+    {n:"Behavior", s:[-0.5, 0.2], t:[-1, 1], causal:false, info:"<strong>Behavior</strong> — no spatial information about the brain at all (drawn across the top). Cheap, characterizes and dissociates representations; sparse data; no stages; no relation to the brain."},
+    {n:"fMRI", s:[-3, -2], t:[0.3, 1.5], causal:false, info:"<strong>fMRI</strong> — ~1 mm, whole brain; BOLD lags 2–3 s. Best whole-brain spatial resolution; indirect signal, expensive, not causal."},
+    {n:"EEG", s:[-1.7, -1], t:[-3, -1], causal:false, info:"<strong>EEG</strong> — millisecond timing, centimetre-scale blur. Non-invasive; face response at 170 ms; can't localize to FFA; not causal."},
+    {n:"MEG", s:[-2.1, -1.4], t:[-3, -1], causal:false, info:"<strong>MEG</strong> — like EEG with slightly better spatial resolution. Disrupted by Earth's magnetic field and movement; not causal."},
+    {n:"ECoG", s:[-3, -2.3], t:[-3, -1], causal:false, info:"<strong>ECoG</strong> — electrodes on the surface; ~2 mm patches, ms timing (FFA face-selective from ~150 ms). Rare, invasive, one patch only. Recording alone isn't causal."},
+    {n:"sEEG / single neuron", s:[-5, -4], t:[-3.3, -1.5], causal:false, info:"<strong>sEEG</strong> — depth electrodes down to single neurons; face processing at ~150 ms. Same limitations as ECoG."},
+    {n:"Patient lesions", s:[-2, -0.8], t:[5, 8], causal:true, info:"<strong>Patient studies</strong> — lesions are centimetres and messy; they last months to years (recovery may reorganize function). Evidence that a region is <em>necessary</em>."},
+    {n:"Electrical stimulation", s:[-2.9, -2.2], t:[-2, 0.5], causal:true, info:"<strong>Direct electrical stimulation</strong> (via ECoG) — focal, turn off then on. Strong causal evidence; can't separate region from its connections; special patient group."}
+  ];
+  const X = lt => 70 + (lt + 4) / 13 * 550, Y = ls => 330 - (ls + 5.5) / 6 * 300;
+  function drawRm(sel) {
+    rm.innerHTML = "";
+    rm.appendChild(SG.el("line", {x1:70, y1:330, x2:625, y2:330, stroke:"var(--ink-mute)"})); rm.appendChild(SG.el("line", {x1:70, y1:330, x2:70, y2:15, stroke:"var(--ink-mute)"}));
+    [[-3,"1 ms"],[0,"1 s"],[3,"~15 min"],[6,"~12 days"],[8.5,"years"]].forEach(([v, s]) => { const t = SG.el("text", {x:X(v), y:348, "text-anchor":"middle", fill:"var(--ink-mute)", "font-size":11}); t.textContent = s; rm.appendChild(t); });
+    [[-5,"10 µm"],[-3,"1 mm"],[-2,"1 cm"],[-1,"10 cm"],[0,"whole-body"]].forEach(([v, s]) => { const t = SG.el("text", {x:64, y:Y(v) + 4, "text-anchor":"end", fill:"var(--ink-mute)", "font-size":11}); t.textContent = s; rm.appendChild(t); });
+    const xl = SG.el("text", {x:350, y:372, "text-anchor":"middle", fill:"var(--ink-soft)", "font-size":12}); xl.textContent = "Temporal resolution (log) — finer to the left"; rm.appendChild(xl);
+    const yl = SG.el("text", {x:14, y:175, "text-anchor":"middle", fill:"var(--ink-soft)", "font-size":12, transform:"rotate(-90 14 175)"}); yl.textContent = "Spatial resolution (log) — finer lower"; rm.appendChild(yl);
+    methods.forEach((m, i) => {
+      const x = X(m.t[0]), w = X(m.t[1]) - x, y = Y(m.s[1]), h = Y(m.s[0]) - y, on = sel === i;
+      const r = SG.el("rect", {x, y, width:w, height:h, rx:10, fill: m.causal ? "var(--rose)" : "var(--accent)", "fill-opacity": on ? .55 : .22, stroke: m.causal ? "var(--rose)" : "var(--accent)", "stroke-width": m.causal ? 3 : 1.5, style:"cursor:pointer"});
+      r.addEventListener("click", () => drawRm(i)); rm.appendChild(r);
+      const t = SG.el("text", {x:x + w / 2, y:y + h / 2 + 4, "text-anchor":"middle", fill:"var(--ink)", "font-size":12, "font-weight": on ? 700 : 500, style:"pointer-events:none"}); t.textContent = m.n; rm.appendChild(t);
+    });
+    if (sel != null) rmOut.innerHTML = methods[sel].info + (methods[sel].causal ? " <strong>Can test causality.</strong>" : " <strong>Cannot test causality.</strong>");
+  }
+  drawRm(null);
+});
+</script>
+</body>
+</html>

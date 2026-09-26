@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The eye, retina &amp; pathway · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="eye-retina">
+<main>
+
+  <div class="eyebrow">Part IV · Chapter 9 · Lectures 7 &amp; 8</div>
+  <h1>The eye, the retina &amp; the visual pathway</h1>
+  <p class="subtitle">From a pinhole to the human eye, rods versus cones, why you don't see your blind spot or
+  your own blood vessels, and how to predict exactly what someone sees after damage anywhere from retina to
+  cortex.</p>
+
+  <div data-toc></div>
+
+  <h2 id="vision-marr">1. Vision at Marr's three levels</h2>
+  <div class="scroll-x"><table>
+    <tr><th>Level</th><th>Vision</th></tr>
+    <tr><td>Computational</td><td>Recognize faces (social interaction), recognize objects (tool use)</td></tr>
+    <tr><td>Algorithmic</td><td>Perceptual completion, visual adaptation</td></tr>
+    <tr><td>Implementation</td><td>Rods, cones; optic nerve, optic chiasm; thalamus (LGN) and visual cortex</td></tr>
+  </table></div>
+  <p class="muted">The L7 study guide asks you to "be able to apply Marr's 3 levels" to vision — this table is the
+  lecture's own answer; every row gets its own section below.</p>
+
+  <h2 id="pinhole">2. From pinhole to eye</h2>
+
+  <p>We see objects because they reflect light. The problem: light reflects in <em>all directions</em>, so every
+  point on a wall receives light from every point of the object. It all mixes → a blur, not an image.</p>
+
+  <p><strong>Ibn al-Haytham</strong> (965–1040) worked out the fix: let only <em>one ray from each point</em>
+  through. A <strong>camera obscura</strong> — light passing through a small hole into a dark space — forms a
+  clear, <strong>inverted</strong> image. Drag the hole size and watch the tradeoff:</p>
+
+  <div class="viz">
+    <div class="viz-title">Camera obscura — the aperture tradeoff</div>
+    <svg id="phSvg" viewBox="0 0 640 260" role="img" aria-label="Rays from an arrow pass through an aperture and form an inverted image on a screen"></svg>
+    <div class="controls">
+      <label>Hole size <input type="range" id="phD" min="1" max="60" step="1" value="8" data-out="phDv" data-fmt="int"><span class="val" id="phDv"></span></label>
+      <label><input type="checkbox" id="phLens"> Add a lens (the eye's solution)</label>
+      <span class="val" id="phOut"></span>
+    </div>
+    <div class="caption">What to notice: a tiny hole gives a sharp but <strong>dim</strong> image; a big hole is
+    bright but <strong>blurry</strong>, because each object point now spreads over a patch. A lens breaks the
+    tradeoff — it bends the whole bundle of rays back to one point, so you get a big hole <em>and</em> a sharp
+    image. Brightness ∝ hole area, blur ∝ hole width (simple ray geometry).</div>
+  </div>
+
+  <div class="grid2">
+    <div class="box warn"><span class="label">Pinhole's three problems</span><ol>
+      <li><strong>Dim</strong></li>
+      <li><strong>Narrow field of view</strong></li>
+      <li><strong>Fixed focus</strong> — can't adjust for near vs far</li></ol>
+      (It was used for art — and some deemed that mystical, or cheating.)</div>
+    <div class="box key"><span class="label">The eye's solutions</span><ul>
+      <li><strong>Bigger hole</strong>, letting more light in</li>
+      <li><strong>Pupil</strong> dilates and contracts to adjust light</li>
+      <li><strong>Wide field of view</strong> with 2 eyes</li>
+      <li><strong>Cornea</strong> bends a lot of light into the eye</li>
+      <li><strong>Accommodation</strong>: the lens changes shape to adjust focus</li></ul></div>
+  </div>
+
+  <div class="box example"><span class="label">Accommodation demo (Monroe / Einstein)</span>
+  A hybrid image that looks like Einstein up close and Marilyn Monroe from far away. Focus changes the
+  <em>type</em> of information processed: focused / close-up → fine detail (Einstein); unfocused / far → coarse
+  information (Monroe). This coarse-vs-fine split returns in the magno/parvo pathways (Ch. 10).</div>
+
+  <p class="muted">Darwin admitted that the eye — with its "inimitable contrivances for adjusting the focus to
+  different distances, for admitting different amounts of light" — made natural selection seem "absurd in the
+  highest degree" (he went on to explain how it could evolve anyway).</p>
+
+  <h2 id="retina">3. The retina: rods and cones</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Retina</strong> — a layered structure containing <strong>photoreceptors</strong> (receive light,
+  transform it into electrical signals), several types of <strong>interneurons</strong> (pre-process the
+  signals), and <strong>retinal ganglion cells</strong> (transmit signals to the brain through the optic
+  nerve).</div>
+
+  <div class="scroll-x"><table>
+    <tr><th></th><th>Rods</th><th>Cones</th></tr>
+    <tr><td>Shape / size</td><td>Smaller, rod-shaped</td><td>Bigger, cone-shaped</td></tr>
+    <tr><td>Types</td><td>1</td><td>3 (red, green, blue)</td></tr>
+    <tr><td>Light level</td><td><strong>Scotopic</strong> — low light</td><td><strong>Photopic</strong> — bright light, colour</td></tr>
+    <tr><td>Where</td><td><strong>Periphery</strong></td><td><strong>Fovea</strong> (central vision)</td></tr>
+    <tr><td>Opsin</td><td><strong>Rhodopsin</strong></td><td><strong>Photopsins</strong></td></tr>
+  </table></div>
+
+  <div class="box defn"><span class="label">Phototransduction</span>
+  Photoreceptors contain light-sensitive proteins called <strong>opsins</strong> that convert light into
+  electrical signals. Hook: <strong>rh</strong>odopsin is in <strong>r</strong>ods; <strong>ph</strong>otopsin is
+  <strong>ph</strong>otopic (cones).</div>
+
+  <div class="viz">
+    <div class="viz-title">Where rods and cones are (schematic)</div>
+    <svg id="dsSvg" viewBox="0 0 640 250" role="img" aria-label="Cone density peaks sharply at the fovea; rod density is zero at the fovea and high in the periphery; both are zero at the blind spot"></svg>
+    <div class="caption">Schematic reconstruction of the lecture's density plot — shapes are right, heights are
+    not to scale. What to notice: cones spike at the fovea; rods are absent there and dominate the periphery;
+    <em>nothing</em> is at the blind spot (where the optic nerve leaves), on the nasal side.</div>
+  </div>
+
+  <div class="box example"><span class="label">Other species sit at different points on the rod–cone spectrum</span>
+  <strong>Mantis shrimp</strong>: 12 colour-sensitive photoreceptors (humans: 3), can detect ultraviolet, no
+  rods. <strong>Cats</strong>: lots of rods, few cones — good at seeing in the dark.</div>
+
+  <h3>Averted vision</h3>
+  <p>If rods are in the periphery and rods handle dim light, then to see a faint star you should look
+  <em>next to</em> it. That's <strong>averted vision</strong> — used in astronomy and taught in the U.S. Army
+  field manual: look about <strong>10 degrees</strong> above, below or to the side of an object at night.</p>
+
+  <h2 id="blind-spot">4. The blind spot and perceptual completion</h2>
+
+  <p>Where the optic nerve leaves the eye there are <strong>no photoreceptors</strong>: a blind spot in each
+  eye. Find yours:</p>
+
+  <div class="viz">
+    <div class="viz-title">Blind-spot test</div>
+    <svg viewBox="0 0 640 170" role="img" aria-label="A cross on the left and a pink X on a bar on the right">
+      <line x1="80" y1="60" x2="80" y2="100" stroke="var(--ink)" stroke-width="4"/><line x1="60" y1="80" x2="100" y2="80" stroke="var(--ink)" stroke-width="4"/>
+      <rect x="300" y="70" width="320" height="20" fill="var(--accent)"/>
+      <g stroke="var(--rose)" stroke-width="6"><line x1="438" y1="58" x2="462" y2="102"/><line x1="462" y1="58" x2="438" y2="102"/></g>
+      <text x="320" y="150" text-anchor="middle" fill="var(--ink-soft)" font-size="13">Cover your LEFT eye. Stare at the + with your right eye. Move slowly toward / away from the screen.</text>
+    </svg>
+    <div class="caption">What to notice: at some distance the pink X vanishes — and you don't see a hole. You see
+    the orange bar running straight through. Your brain filled the gap with its best guess.</div>
+  </div>
+
+  <p>Why don't you normally notice it? <strong>Two reasons</strong>:</p>
+  <ol>
+    <li><strong>Two eyes cover for each other</strong> — each eye's blind spot falls on a part of the scene the
+    other eye can see.</li>
+    <li><strong>Perceptual completion</strong> — the brain "fills in" gaps by making an educated guess. The
+    brain is always making predictions.</li>
+  </ol>
+
+  <h2 id="adaptation">5. Visual adaptation: why you don't see your blood vessels</h2>
+
+  <p>Blood vessels lie <em>in front of</em> your retina. They should cast shadows on your photoreceptors all
+  day. Why don't you see them? Because they're <strong>stationary relative to the photoreceptors</strong>, and
+  the brain filters out constant, unchanging stimuli.</p>
+
+  <div class="box defn"><span class="label">Visual adaptation</span>
+  The brain filters out unchanging stimuli, and is more sensitive to <em>changes</em> (like motion).</div>
+
+  <div class="viz">
+    <div class="viz-title">Troxler fading — stare at the dot for 20 seconds</div>
+    <svg id="trSvg" viewBox="0 0 640 300" role="img" aria-label="Blurry coloured blobs around a central fixation dot">
+      <defs><filter id="trBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter></defs>
+      <rect x="0" y="0" width="640" height="300" fill="var(--bg-soft)"/>
+      <g filter="url(#trBlur)" opacity=".8">
+        <circle cx="150" cy="80" r="45" fill="var(--accent)"/><circle cx="500" cy="90" r="45" fill="var(--rose)"/>
+        <circle cx="130" cy="220" r="45" fill="var(--gold)"/><circle cx="510" cy="220" r="45" fill="var(--accent-3)"/>
+        <circle cx="320" cy="40" r="35" fill="var(--accent-2)"/><circle cx="320" cy="265" r="35" fill="var(--accent-2)"/>
+      </g>
+      <circle cx="320" cy="150" r="5" fill="var(--ink)"/>
+    </svg>
+    <div class="caption">What to notice: keep your eyes perfectly still and the blobs fade into the background.
+    Blink or move your eyes and they snap back — the change resets adaptation. Blurry, peripheral, unchanging
+    stimuli are exactly what the system filters out, same as your retinal blood vessels.</div>
+  </div>
+
+  <h2 id="pathway">6. The visual pathway — and what damage does</h2>
+
+  <p>The trick to every lesion question: <strong>the left visual field goes to the right hemisphere</strong>.
+  Light from the left side of the world lands on the <em>right</em> half of each retina (the lens flips it).
+  The fibres from the inner (<strong>nasal</strong>) half of each retina <strong>cross</strong> at the optic
+  chiasm; the outer (<strong>temporal</strong>) fibres don't. After the chiasm, each optic tract carries one
+  half of the visual world from <em>both</em> eyes.</p>
+
+  <div class="viz">
+    <div class="viz-title">Lesion simulator — click a numbered site</div>
+    <svg id="vpSvg" viewBox="0 0 640 420" role="img" aria-label="Top-down diagram of eyes, optic nerves, chiasm, tracts, LGN, radiations and V1, with visual fields for each eye"></svg>
+    <div class="controls" id="vpBtns"></div>
+    <div class="caption" id="vpOut">Teal = left visual field, pink = right visual field. Pick a site; the two
+    circles show what each eye sees (dark = lost).</div>
+  </div>
+
+  <div class="scroll-x"><table>
+    <tr><th>#</th><th>Damage</th><th>Deficit</th></tr>
+    <tr><td>1</td><td>Loss of <strong>rods</strong></td><td>Impaired peripheral vision; difficulty seeing in the dark</td></tr>
+    <tr><td>2</td><td>Loss of <strong>cones</strong></td><td>Loss of colour vision; impaired central (foveal) vision; difficulty seeing in daylight</td></tr>
+    <tr><td>3</td><td>Loss of <strong>temporal optic nerve</strong> fibres (one eye)</td><td><strong>Central scotoma</strong>: a blind spot in the affected eye (right eye, affecting the left visual field); overall vision may stay fairly intact because the other eye compensates</td></tr>
+    <tr><td>4</td><td>Loss of one <strong>optic nerve</strong></td><td><strong>Monocular</strong> blindness: all vision in that eye lost; field reduced on that side</td></tr>
+    <tr><td>5</td><td><strong>Optic chiasm</strong></td><td><strong>Bitemporal hemianopia</strong>: peripheral (outer) vision lost on both sides</td></tr>
+    <tr><td>6, 7, 8</td><td>Right <strong>optic tract / LGN / radiation → V1</strong></td><td><strong>Contralateral homonymous hemianopia</strong>: the <em>left</em> visual field lost in <em>both</em> eyes</td></tr>
+  </table></div>
+  <p class="tiny muted">Sites 6–8 come from the lecture diagram, which says only that "6, 7 and 8 all lead to the
+  same deficit"; which number labels which structure is my reconstruction. The lesion-3 wording follows the
+  slide; its exact extent is a reconstruction — check the original figure.</p>
+
+  <div class="box intuition"><span class="label">The rule behind the table</span>
+  <strong>Before the chiasm</strong> (retina, optic nerve) → damage affects <strong>one eye</strong>.
+  <strong>At the chiasm</strong> → the crossing (nasal) fibres are hit → both <strong>outer</strong> fields.
+  <strong>After the chiasm</strong> → damage affects <strong>one side of the world in both eyes</strong>, on the
+  side <em>opposite</em> the lesion ("contralateral"), the same side in each eye ("homonymous").</div>
+
+  <h2 id="check-yourself">7. Check yourself</h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">A stroke destroys the left primary visual cortex. The patient loses…</div>
+    <button class="opt">All vision in the left eye</button>
+    <button class="opt">The left visual field in both eyes</button>
+    <button class="opt">The right visual field in both eyes</button>
+    <button class="opt">The outer half of each eye's field</button>
+    <div class="why"><strong>Why:</strong> After the chiasm, each hemisphere handles the <em>opposite</em>
+    visual field from both eyes. Left V1 → right field lost (contralateral homonymous hemianopia). "All vision
+    in the left eye" would need damage before the chiasm.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">A pituitary tumour presses on the optic chiasm from below. Expected deficit?</div>
+    <button class="opt">Loss of peripheral (outer) vision on both sides</button>
+    <button class="opt">Blindness in one eye</button>
+    <button class="opt">Loss of colour vision</button>
+    <button class="opt">Left homonymous hemianopia</button>
+    <div class="why"><strong>Why:</strong> The chiasm is where nasal fibres cross; nasal retina sees the
+    <em>temporal</em> (outer) field. Hit them and both outer fields go: bitemporal hemianopia.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">You're trying to spot a dim star. You should…</div>
+    <button class="opt">Stare directly at it so it lands on the fovea</button>
+    <button class="opt">Close one eye to avoid the blind spot</button>
+    <button class="opt">Look at it through a pinhole</button>
+    <button class="opt">Look about 10° away so it lands on rods in the periphery</button>
+    <div class="why"><strong>Why:</strong> The fovea is packed with cones, which need bright light. Rods —
+    scotopic, low-light — are in the periphery. That's averted vision.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">You don't see the shadows of your retinal blood vessels because of…</div>
+    <button class="opt">Perceptual completion</button>
+    <button class="opt">Visual adaptation — they never move relative to the photoreceptors</button>
+    <button class="opt">The blind spot</button>
+    <button class="opt">Accommodation</button>
+    <div class="why"><strong>Why:</strong> The key word is <em>unchanging</em>. Perceptual completion is the
+    blind-spot answer (filling a gap); adaptation is the blood-vessel answer (filtering a constant).</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Rhodopsin is to ___ as photopsin is to ___.</div>
+    <button class="opt">cones; rods</button>
+    <button class="opt">fovea; periphery</button>
+    <button class="opt">rods (scotopic); cones (photopic)</button>
+    <button class="opt">colour; low light</button>
+    <div class="why"><strong>Why:</strong> Rhodopsin → rods → dim light. Photopsins → cones → bright light and
+    colour. The fovea/periphery option is the right association backwards.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const T = (svg, x, y, s, a = {}) => { const t = SG.el("text", Object.assign({x, y, "text-anchor":"middle", fill:"var(--ink)", "font-size":13}, a)); t.textContent = s; svg.appendChild(t); return t; };
+
+  // ---------- pinhole ----------
+  const ph = document.getElementById("phSvg"), phD = document.getElementById("phD"), phL = document.getElementById("phLens"), phOut = document.getElementById("phOut");
+  function drawPh() {
+    ph.innerHTML = ""; const d = +phD.value, lens = phL.checked;
+    const ax = 300, obj = [[90, 70, "var(--rose)"], [90, 190, "var(--accent)"]], sx = 540;
+    // object arrow
+    ph.appendChild(SG.el("line", {x1:90, y1:190, x2:90, y2:70, stroke:"var(--ink)", "stroke-width":3}));
+    ph.appendChild(SG.el("polygon", {points:"80,85 90,62 100,85", fill:"var(--ink)"}));
+    // wall with hole
+    ph.appendChild(SG.el("rect", {x:ax - 4, y:10, width:8, height:130 - d / 2 - 10, fill:"var(--ink-mute)"}));
+    ph.appendChild(SG.el("rect", {x:ax - 4, y:130 + d / 2, width:8, height:240 - 130 - d / 2, fill:"var(--ink-mute)"}));
+    if (lens) ph.appendChild(SG.el("ellipse", {cx:ax, cy:130, rx:8, ry:Math.max(6, d / 2), fill:"var(--accent-2)", opacity:.5}));
+    // screen
+    ph.appendChild(SG.el("line", {x1:sx, y1:10, x2:sx, y2:250, stroke:"var(--ink-soft)", "stroke-width":3}));
+    const spreads = [];
+    obj.forEach(([ox, oy, col]) => {
+      const edges = [130 - d / 2, 130 + d / 2];
+      const hits = edges.map(hy => lens ? 130 + (130 - oy) * (sx - ax) / (ax - ox) : hy + (hy - oy) * (sx - ax) / (ax - ox));
+      edges.forEach((hy, i) => { ph.appendChild(SG.el("line", {x1:ox, y1:oy, x2:ax, y2:hy, stroke:col, "stroke-width":1.5, opacity:.8})); ph.appendChild(SG.el("line", {x1:ax, y1:hy, x2:sx, y2:hits[i], stroke:col, "stroke-width":1.5, opacity:.8})); });
+      const lo = Math.min(...hits), hi = Math.max(...hits);
+      ph.appendChild(SG.el("rect", {x:sx + 4, y:lo - 2, width:18, height:Math.max(4, hi - lo + 4), fill:col, opacity:Math.min(1, 0.15 + d * d / 900)}));
+      spreads.push(hi - lo);
+    });
+    T(ph, 90, 225, "object", {"font-size":12, fill:"var(--ink-soft)"}); T(ph, ax, 256, "aperture", {"font-size":12, fill:"var(--ink-soft)"}); T(ph, sx, 256, "screen / retina (image inverted)", {"font-size":12, fill:"var(--ink-soft)"});
+    const bright = d * d, blur = Math.round(Math.max(...spreads));
+    phOut.textContent = `relative brightness ${(bright / 64).toFixed(2)}× · blur spot ≈ ${blur}px` + (lens ? " (lens focuses it)" : "");
+  }
+  [phD, phL].forEach(e => { e.addEventListener("input", drawPh); e.addEventListener("change", drawPh); }); drawPh();
+
+  // ---------- rod/cone density schematic ----------
+  const ds = document.getElementById("dsSvg");
+  (function () {
+    const X = e => 60 + (e + 70) / 140 * 550, Y = v => 210 - v * 170;
+    ds.appendChild(SG.el("line", {x1:60, y1:210, x2:610, y2:210, stroke:"var(--ink-mute)"}));
+    const cone = e => 0.05 + 0.95 * Math.exp(-Math.abs(e) / 2.5);
+    const rod = e => Math.min(0.75, 0.75 * (1 - Math.exp(-Math.abs(e) / 6))) * (1 - 0.35 * Math.max(0, (Math.abs(e) - 20) / 50));
+    const bs = e => e > 13 && e < 18; // blind spot on nasal side
+    const path = f => { let s = ""; for (let i = 0; i <= 280; i++) { const e = -70 + i / 2; const v = bs(e) ? 0 : f(e); s += (i ? "L" : "M") + X(e) + "," + Y(v); } return s; };
+    ds.appendChild(SG.el("rect", {x:X(13), y:30, width:X(18) - X(13), height:180, fill:"var(--ink-mute)", opacity:.2}));
+    ds.appendChild(SG.el("path", {d:path(rod), fill:"none", stroke:"var(--accent)", "stroke-width":3}));
+    ds.appendChild(SG.el("path", {d:path(cone), fill:"none", stroke:"var(--rose)", "stroke-width":3}));
+    T(ds, X(0), 238, "fovea (0°)", {"font-size":12, fill:"var(--ink-soft)"}); T(ds, X(-55), 238, "← periphery", {"font-size":12, fill:"var(--ink-soft)"}); T(ds, X(55), 238, "periphery →", {"font-size":12, fill:"var(--ink-soft)"});
+    T(ds, X(15.5), 26, "blind spot", {"font-size":12, fill:"var(--ink-soft)"});
+    T(ds, X(-8), Y(0.95), "cones", {"font-size":13, fill:"var(--rose)", "text-anchor":"end"}); T(ds, X(-40), Y(0.72) - 8, "rods", {"font-size":13, fill:"var(--accent)"});
+  })();
+
+  // ---------- visual pathway lesion simulator ----------
+  const vp = document.getElementById("vpSvg"), vpOut = document.getElementById("vpOut"), btns = document.getElementById("vpBtns");
+  const L = "var(--accent-2)", R = "var(--rose)";
+  const sites = {
+    0: {lab:"None", pos:null, msg:"Healthy: each eye sees both halves of the world; the two fields overlap."},
+    1: {lab:"1 · Rods", pos:[190, 45], msg:"<strong>1. Rods lost</strong> (both eyes): peripheral vision impaired, can't see in the dark. Central vision survives on cones.", loss:{Le:"periph", Re:"periph"}},
+    2: {lab:"2 · Cones", pos:[450, 45], msg:"<strong>2. Cones lost</strong> (both eyes): colour vision gone, central/foveal vision impaired, poor daytime vision.", loss:{Le:"center", Re:"center"}},
+    3: {lab:"3 · Temporal fibres (R eye)", pos:[413, 108], msg:"<strong>3. Temporal optic-nerve fibres, right eye</strong>: a scotoma in the right eye's view of the left visual field. Overall vision may seem fine — the left eye covers for it.", loss:{Re:"scotomaL"}},
+    4: {lab:"4 · R optic nerve", pos:[378, 130], msg:"<strong>4. Right optic nerve cut</strong>: total blindness in the right eye (monocular vision); the field shrinks on the right side.", loss:{Re:"all"}},
+    5: {lab:"5 · Chiasm", pos:[320, 170], msg:"<strong>5. Optic chiasm</strong>: the crossing nasal fibres carry each eye's outer (temporal) field → <strong>bitemporal hemianopia</strong>: peripheral vision lost on both sides.", loss:{Le:"left", Re:"right"}},
+    6: {lab:"6 · R optic tract", pos:[361, 220], msg:"<strong>6. Right optic tract</strong>: carries the left visual field from both eyes → <strong>left homonymous hemianopia</strong>.", loss:{Le:"left", Re:"left"}},
+    7: {lab:"7 · R LGN", pos:[390, 262], msg:"<strong>7. Right LGN</strong>: same fibres, same deficit → left homonymous hemianopia.", loss:{Le:"left", Re:"left"}},
+    8: {lab:"8 · R radiation / V1", pos:[400, 305], msg:"<strong>8. Right optic radiation / V1</strong>: same deficit → left homonymous hemianopia. Damage after the chiasm always costs the <em>opposite</em> visual field in <em>both</em> eyes.", loss:{Le:"left", Re:"left"}}
+  };
+  let cur = 0;
+  function field(cx, cy, loss, title) {
+    const r = 48, g = SG.el("g", {});
+    g.appendChild(SG.el("path", {d:`M${cx},${cy - r} A${r},${r} 0 0 0 ${cx},${cy + r} Z`, fill:L, opacity:.35}));
+    g.appendChild(SG.el("path", {d:`M${cx},${cy - r} A${r},${r} 0 0 1 ${cx},${cy + r} Z`, fill:R, opacity:.35}));
+    const dark = {fill:"var(--ink)", opacity:.85};
+    if (loss === "all") g.appendChild(SG.el("circle", Object.assign({cx, cy, r}, dark)));
+    if (loss === "left") g.appendChild(SG.el("path", Object.assign({d:`M${cx},${cy - r} A${r},${r} 0 0 0 ${cx},${cy + r} Z`}, dark)));
+    if (loss === "right") g.appendChild(SG.el("path", Object.assign({d:`M${cx},${cy - r} A${r},${r} 0 0 1 ${cx},${cy + r} Z`}, dark)));
+    if (loss === "periph") { g.appendChild(SG.el("circle", {cx, cy, r:r - 10, fill:"none", stroke:"var(--ink)", "stroke-width":20, opacity:.7})); }
+    if (loss === "center") g.appendChild(SG.el("circle", Object.assign({cx, cy, r:16}, dark)));
+    if (loss === "scotomaL") g.appendChild(SG.el("ellipse", Object.assign({cx:cx - 18, cy, rx:16, ry:20}, dark)));
+    g.appendChild(SG.el("circle", {cx, cy, r, fill:"none", stroke:"var(--ink-soft)", "stroke-width":2}));
+    g.appendChild(SG.el("line", {x1:cx, y1:cy - r, x2:cx, y2:cy + r, stroke:"var(--ink-soft)", "stroke-dasharray":"3 3"}));
+    const t = SG.el("text", {x:cx, y:cy + r + 18, "text-anchor":"middle", fill:"var(--ink)", "font-size":12}); t.textContent = title; g.appendChild(t);
+    return g;
+  }
+  function drawVp() {
+    vp.innerHTML = "";
+    const s = sites[cur], loss = s.loss || {};
+    // eyes
+    [[240, 70], [400, 70]].forEach(([x, y]) => vp.appendChild(SG.el("circle", {cx:x, cy:y, r:34, fill:"var(--panel)", stroke:"var(--ink-soft)", "stroke-width":2})));
+    T(vp, 240, 24, "Left eye", {"font-size":12}); T(vp, 400, 24, "Right eye", {"font-size":12});
+    // fibres: left eye temporal (sees R field) -> left hemisphere; left eye nasal (sees L field) -> crosses -> right hemisphere
+    const fib = (d, col) => vp.appendChild(SG.el("path", {d, fill:"none", stroke:col, "stroke-width":4, opacity:.85}));
+    fib("M218,100 L300,170 L262,262 L240,330", R);      // L eye temporal -> left LGN/V1 (right field)
+    fib("M258,102 L316,170 L390,262 L400,330", L);      // L eye nasal crosses -> right (left field)
+    fib("M422,100 L340,170 L378,262 L400,330", L);      // R eye temporal -> right (left field)
+    fib("M382,102 L324,170 L250,262 L240,330", R);      // R eye nasal crosses -> left (right field)
+    [[250, 262], [390, 262]].forEach(([x, y]) => vp.appendChild(SG.el("ellipse", {cx:x, cy:y, rx:24, ry:14, fill:"var(--gold)", opacity:.6})));
+    T(vp, 205, 266, "LGN", {"font-size":11, fill:"var(--ink-soft)"}); T(vp, 438, 266, "LGN", {"font-size":11, fill:"var(--ink-soft)"});
+    vp.appendChild(SG.el("rect", {x:200, y:330, width:80, height:24, rx:6, fill:"var(--accent-2)", opacity:.4})); vp.appendChild(SG.el("rect", {x:360, y:330, width:80, height:24, rx:6, fill:"var(--accent-2)", opacity:.4}));
+    T(vp, 240, 347, "L V1", {"font-size":12}); T(vp, 400, 347, "R V1", {"font-size":12});
+    T(vp, 300, 176, "chiasm", {"font-size":11, "text-anchor":"end", fill:"var(--ink-soft)"});
+    // lesion markers
+    Object.entries(sites).forEach(([k, v]) => {
+      if (!v.pos) return;
+      const on = +k === cur, [x, y] = v.pos;
+      const c = SG.el("circle", {cx:x, cy:y, r:12, fill: on ? "var(--ink)" : "var(--panel)", stroke:"var(--ink)", "stroke-width":2, style:"cursor:pointer"});
+      c.addEventListener("click", () => { cur = +k; drawVp(); }); vp.appendChild(c);
+      const t = SG.el("text", {x, y:y + 4, "text-anchor":"middle", fill: on ? "var(--panel)" : "var(--ink)", "font-size":12, "font-weight":700, style:"pointer-events:none"}); t.textContent = k; vp.appendChild(t);
+    });
+    // fields
+    vp.appendChild(field(90, 250, loss.Le, "Left eye sees"));
+    vp.appendChild(field(550, 250, loss.Re, "Right eye sees"));
+    T(vp, 320, 400, "Fields drawn as the patient sees them: left half = left visual field (teal).", {"font-size":12, fill:"var(--ink-mute)"});
+    vpOut.innerHTML = s.msg;
+    btns.querySelectorAll("button").forEach(b => b.classList.toggle("primary", +b.dataset.k === cur));
+  }
+  Object.entries(sites).forEach(([k, v]) => { const b = document.createElement("button"); b.className = "btn"; b.textContent = v.lab; b.dataset.k = k; b.onclick = () => { cur = +k; drawVp(); }; btns.appendChild(b); });
+  drawVp();
+});
+</script>
+</body>
+</html>

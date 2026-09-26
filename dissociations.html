@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neuropsychology &amp; dissociations · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="dissociations">
+<main>
+
+  <div class="eyebrow">Part II · Chapter 5 · Lectures 4 &amp; 5</div>
+  <h1>Neuropsychology &amp; dissociations</h1>
+  <p class="subtitle">How studying damaged brains links a mental process to a brain region — why you need
+  controls, why ceiling and floor effects hide deficits, and exactly what a double dissociation buys you
+  that a single one can't.</p>
+
+  <div data-toc></div>
+
+  <h2 id="the-logic">1. The logic of a neuropsychological experiment</h2>
+
+  <p>Cognitive neuroscientists <strong>bridge Marr's algorithmic and implementation levels</strong>: they link
+  representations and processes to the tissue that runs them. You can't ethically switch off part of a
+  healthy person's brain, but nature sometimes does it for you — stroke, tumour, injury.</p>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Neuropsychological experiment</strong> — a behavioral experiment with patients who have
+  neurological disorders, used to relate brain and behavior: how is behavior disrupted when a particular
+  part of the brain is damaged? How is a cognitive process linked to a particular area?</div>
+
+  <h2 id="controls">2. Round 1: no control group</h2>
+
+  <p><strong>Hypothesis:</strong> the right hemisphere is essential for music perception.
+  <strong>Participants:</strong> 10 patients with right-hemisphere (RH) damage.
+  <strong>Task:</strong> recognize songs.</p>
+
+  <div class="scroll-x"><table class="tight center">
+    <tr><th>Music</th><th>RH patients</th></tr>
+    <tr><td>Folk songs</td><td>25%</td></tr>
+    <tr><td>TV jingles</td><td>98%</td></tr>
+    <tr><td>Pop hits</td><td>3%</td></tr>
+  </table></div>
+
+  <p>Is the hypothesis supported? <strong>You can't tell.</strong> 25% on folk songs might be how everyone
+  does. We don't know the <em>baseline</em> performance of people without RH damage. So: add 10 matched
+  controls.</p>
+
+  <div class="scroll-x"><table class="tight center">
+    <tr><th>Music</th><th>RH patients</th><th>Matched controls</th><th>Verdict</th></tr>
+    <tr><td>Folk songs</td><td>25%</td><td>90%</td><td><strong>Impaired</strong> — big gap</td></tr>
+    <tr><td>TV jingles</td><td>98%</td><td>99%</td><td>Ceiling — everyone near max</td></tr>
+    <tr><td>Pop hits</td><td>3%</td><td>5%</td><td>Floor — everyone near min</td></tr>
+  </table></div>
+  <p class="tiny muted">Lecture 4's numbers. Lecture 5 reshows the table with slightly different values
+  (TV 97/98, pop 5/7); the conclusion is identical.</p>
+
+  <div class="grid2">
+    <div class="box defn"><span class="label">Ceiling effect</span>Performance so <strong>high</strong> (task too
+    easy) that differences can't be detected — everyone is near the maximum.</div>
+    <div class="box defn"><span class="label">Floor effect</span>Performance so <strong>low</strong> (task too
+    hard, near chance) that differences can't be detected — everyone is near the minimum.</div>
+  </div>
+
+  <p>Drag the difficulty slider. The patient group really <em>is</em> impaired in this simulation, by the same
+  amount at every setting — watch when you can and can't see it:</p>
+
+  <div class="viz">
+    <div class="viz-title">A real deficit hidden by ceiling and floor</div>
+    <canvas id="cfCanvas" height="260" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <label>Task difficulty <input type="range" id="cfD" min="-6" max="6" step="0.1" value="0" data-out="cfDv" data-dp="1"><span class="val" id="cfDv"></span></label>
+      <span class="val" id="cfOut"></span>
+    </div>
+    <div class="caption">What to notice: patient ability is lower than control ability by a fixed amount, but
+    the gap in <em>percent correct</em> collapses at both ends of the slider. A null result on an easy (TV
+    jingles) or impossible (pop hits) task says nothing about whether a deficit exists — the test lacked
+    <strong>sensitivity</strong>. Toy logistic model.</div>
+  </div>
+
+  <p>The lecture's two conclusions from round 1:</p>
+  <ol>
+    <li><strong>Unclear support:</strong> impaired on folk songs, but the jingles and pop results are
+    inconclusive (no sensitivity), so we can't claim a <em>general</em> music deficit.</li>
+    <li><strong>Limited explanatory depth:</strong> even if true, it links "music" to a region without saying
+    <em>which mental process</em> is involved.</li>
+  </ol>
+
+  <h2 id="single-dissociation">3. Round 2: add a cognitive model → single dissociation</h2>
+
+  <p>Fix the second problem with a model. <strong>Music perception = two processes:</strong></p>
+  <ul>
+    <li><strong>Rhythm recognition</strong> — extracting the timing and beat.</li>
+    <li><strong>Melody recognition</strong> — extracting the sequence and relationship of pitches.</li>
+  </ul>
+  <p>New hypothesis: <strong>the right hemisphere is essential for melody recognition.</strong> Rhythm becomes
+  the <em>control task</em>. Which result supports it?</p>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">RH patients vs controls. Rhythm (control task) / Melody (experimental task):</div>
+    <button class="opt">(1) Normal / Normal</button>
+    <button class="opt">(2) Normal / Impaired</button>
+    <button class="opt">(3) Impaired / Normal</button>
+    <button class="opt">(4) Impaired / Impaired</button>
+    <div class="why"><strong>Why:</strong> Melody impaired <em>while rhythm is spared</em> points specifically at
+    melody. (4) looks like support but can't be told apart from general brain damage — the patients are just
+    worse at everything. (3) supports the opposite claim. (1) means no deficit.</div>
+  </div>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Single dissociation</strong> — a brain lesion impairs one cognitive process while sparing another,
+  suggesting the two are at least partly distinct. Uses <em>one</em> patient group.</div>
+
+  <h3>Three weaknesses of a single dissociation</h3>
+  <div class="scroll-x"><table>
+    <tr><th>Weakness</th><th>What it means here</th></tr>
+    <tr><td><strong>1. Task sensitivity</strong></td><td>Maybe the melody task is just <em>harder</em> — more sensitive to any damage — than the rhythm task.</td></tr>
+    <tr><td><strong>2. General impairment</strong></td><td>Maybe poor melody performance is a general consequence of brain damage, not damage to a specific process.</td></tr>
+    <tr><td><strong>3. Model ambiguity</strong></td><td>Can't tell whether the two processes are <strong>serial</strong> (one after the other) or <strong>parallel</strong> (independent).</td></tr>
+  </table></div>
+
+  <h3>Serial vs parallel — why one patient group can't decide</h3>
+  <div class="viz">
+    <div class="viz-title">Two models of music perception</div>
+    <svg viewBox="0 0 640 220" role="img" aria-label="Serial model: rhythm then melody then music. Parallel model: rhythm and melody both feed music independently">
+      <defs><marker id="dA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs>
+      <text x="20" y="30" fill="var(--ink)" font-size="14" font-weight="700">Serial</text>
+      <g font-size="13" text-anchor="middle">
+        <rect x="90" y="40" width="130" height="40" rx="8" fill="var(--panel)" stroke="var(--accent)" stroke-width="2"/><text x="155" y="65" fill="var(--ink)">Rhythm</text>
+        <rect x="280" y="40" width="130" height="40" rx="8" fill="var(--panel)" stroke="var(--rose)" stroke-width="2"/><text x="345" y="65" fill="var(--ink)">Melody</text>
+        <rect x="470" y="40" width="140" height="40" rx="8" fill="var(--panel)" stroke="var(--ink-soft)" stroke-width="2"/><text x="540" y="65" fill="var(--ink)">Music perception</text>
+        <line x1="220" y1="60" x2="278" y2="60" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#dA)"/><line x1="410" y1="60" x2="468" y2="60" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#dA)"/>
+      </g>
+      <text x="20" y="130" fill="var(--ink)" font-size="14" font-weight="700">Parallel</text>
+      <g font-size="13" text-anchor="middle">
+        <rect x="90" y="115" width="130" height="40" rx="8" fill="var(--panel)" stroke="var(--accent)" stroke-width="2"/><text x="155" y="140" fill="var(--ink)">Rhythm</text>
+        <rect x="90" y="170" width="130" height="40" rx="8" fill="var(--panel)" stroke="var(--rose)" stroke-width="2"/><text x="155" y="195" fill="var(--ink)">Melody</text>
+        <rect x="470" y="140" width="140" height="40" rx="8" fill="var(--panel)" stroke="var(--ink-soft)" stroke-width="2"/><text x="540" y="165" fill="var(--ink)">Music perception</text>
+        <line x1="220" y1="135" x2="468" y2="155" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#dA)"/><line x1="220" y1="190" x2="468" y2="168" stroke="var(--ink-soft)" stroke-width="2" marker-end="url(#dA)"/>
+      </g>
+    </svg>
+    <div class="caption">What to notice: in the serial model, melody sits <em>downstream</em> of rhythm. Break
+    melody → only melody fails; that's what both models predict. Break rhythm → in the serial model melody
+    loses its input and fails too. So the telling case is the one the RH group didn't show: <em>rhythm
+    impaired, melody spared</em>.</div>
+  </div>
+
+  <div class="box intuition"><span class="label">The step the slides skip</span>
+  Why does a double dissociation "support the parallel model"? Because the second group (rhythm broken,
+  melody fine) is <strong>impossible under the serial model</strong> — if melody needed rhythm's output, it
+  couldn't survive rhythm's loss. The RH result alone (melody broken, rhythm fine) is compatible with both
+  models, which is the "model ambiguity" weakness.</div>
+
+  <h2 id="double-dissociation">4. Round 3: double dissociation</h2>
+
+  <p>Add a group impaired in the <em>other</em> process: 10 RH patients, 10 left-hemisphere (LH) patients, 10
+  matched controls.</p>
+
+  <div class="scroll-x"><table class="tight center">
+    <tr><th></th><th>Rhythm</th><th>Melody</th></tr>
+    <tr><td>Controls</td><td>Baseline</td><td>Baseline</td></tr>
+    <tr><td>RH group</td><td>Normal</td><td><strong>Impaired</strong></td></tr>
+    <tr><td>LH group</td><td><strong>Impaired</strong></td><td>Normal</td></tr>
+  </table></div>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Double dissociation</strong> — two patient groups show <em>opposite</em> patterns: damage to area A
+  impairs process 1 but spares 2; damage to area B impairs process 2 but spares 1.</div>
+
+  <div class="scroll-x"><table>
+    <tr><th>Single-dissociation weakness</th><th>How the double dissociation fixes it</th></tr>
+    <tr><td>Task sensitivity</td><td>Shows <strong>both tasks can detect impairment</strong> — rhythm isn't just "too easy".</td></tr>
+    <tr><td>General impairment</td><td><strong>Rules out a generic effect</strong> of brain damage — each group is fine on one task.</td></tr>
+    <tr><td>Model ambiguity</td><td>Helps distinguish serial vs parallel — <strong>supports separate, parallel processes</strong>.</td></tr>
+  </table></div>
+
+  <div class="viz">
+    <div class="viz-title">Dissociation lab — set the results, get the verdict</div>
+    <div class="scroll-x"><table class="tight center" id="dlTable">
+      <tr><th>Group</th><th>Rhythm task</th><th>Melody task</th></tr>
+      <tr><td>RH patients</td><td><button class="btn" data-g="RH" data-t="r">Normal</button></td><td><button class="btn" data-g="RH" data-t="m">Impaired</button></td></tr>
+      <tr><td>LH patients</td><td><button class="btn" data-g="LH" data-t="r">—</button></td><td><button class="btn" data-g="LH" data-t="m">—</button></td></tr>
+    </table></div>
+    <div class="caption" id="dlOut"></div>
+    <div class="caption">Click a cell to cycle Normal → Impaired → not tested (—). What to notice: the
+    verdict only reaches "double dissociation" when the two groups are <em>mirror images</em>.</div>
+  </div>
+
+  <div class="box key"><span class="label">One-liners to memorize</span>
+  <strong>Single:</strong> lesion impairs X but spares Y.<br>
+  <strong>Double:</strong> lesion A impairs X not Y; lesion B impairs Y not X.</div>
+
+  <h3>Double dissociations you'll meet in this course</h3>
+  <div class="scroll-x"><table>
+    <tr><th>Process 1</th><th>Process 2</th><th>Patients</th><th>Chapter</th></tr>
+    <tr><td>Language comprehension</td><td>Language production</td><td>Wernicke's aphasia (comprehension ✗) vs Broca's aphasia (production ✗)</td><td>6</td></tr>
+    <tr><td>Face recognition</td><td>Object recognition</td><td>Prosopagnosia (faces ✗) vs object agnosia, patient CK (objects ✗)</td><td>8</td></tr>
+    <tr><td>Melody</td><td>Rhythm</td><td>RH vs LH damage</td><td>5</td></tr>
+  </table></div>
+
+  <h2 id="check-yourself">5. Check yourself</h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Patients with frontal damage score 99% on a memory test; controls score 100%. The researcher concludes frontal cortex isn't involved in memory. The biggest problem is…</div>
+    <button class="opt">Floor effect</button>
+    <button class="opt">No control group</button>
+    <button class="opt">Ceiling effect</button>
+    <button class="opt">It's a double dissociation</button>
+    <div class="why"><strong>Why:</strong> Everyone is near maximum, so a real deficit couldn't show up. There
+    <em>is</em> a control group. Floor would be everyone near zero.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">Group A is impaired on both task X and task Y. What can you conclude about X and Y?</div>
+    <button class="opt">Nothing specific — it could be general impairment</button>
+    <button class="opt">X and Y are parallel processes</button>
+    <button class="opt">X and Y are serial processes</button>
+    <button class="opt">Single dissociation between X and Y</button>
+    <div class="why"><strong>Why:</strong> No dissociation at all — no task was spared. Could be a shared
+    process, a serial dependency, or just general brain damage.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Under a serial model Rhythm → Melody → Music, which patient pattern should be <em>impossible</em>?</div>
+    <button class="opt">Rhythm normal, melody impaired</button>
+    <button class="opt">Both impaired</button>
+    <button class="opt">Both normal</button>
+    <button class="opt">Rhythm impaired, melody normal</button>
+    <div class="why"><strong>Why:</strong> Melody depends on rhythm's output in the serial model; lose rhythm and
+    melody should fail too. Finding this pattern (the LH group) is what supports the parallel model.</div>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Design a double dissociation for faces vs objects</div>
+    <div class="g-body"><p>A patient with a lesion near the fusiform gyrus can't recognize his wife's face but
+    names the shrine behind a sumo wrestler instantly. Someone argues: "faces are just harder objects; any
+    damage hurts them first." What evidence would defeat that argument?</p></div>
+    <details class="step"><summary>Step 1 — Which weakness is the critic using?</summary><div><p>Task sensitivity:
+    the face task might just be harder.</p></div></details>
+    <details class="step"><summary>Step 2 — What would defeat it?</summary><div><p>A patient with the opposite
+    pattern: object recognition impaired, face recognition intact. If faces were just harder objects, anyone
+    bad at objects should be even worse at faces.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>Patient CK (object agnosia) is exactly
+    that — Chapter 8. Prosopagnosia + object agnosia = double dissociation → faces and objects are
+    distinct processes. The pattern you're practicing: <strong>when someone says "that task is just harder",
+    find the mirror-image patient.</strong></p></div></details>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  // ---------- ceiling / floor ----------
+  const cv = document.getElementById("cfCanvas"), D = document.getElementById("cfD"), out = document.getElementById("cfOut");
+  const pc = (ability, diff) => 100 / (1 + Math.exp(-(ability - diff)));
+  const CTRL = 1.2, PAT = -1.2;
+  function draw() {
+    const W = cv.clientWidth || 600, H = 260; cv.width = W * devicePixelRatio; cv.height = H * devicePixelRatio; cv.style.height = H + "px";
+    const c = cv.getContext("2d"); c.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); c.clearRect(0, 0, W, H);
+    const ink = SG.css("--ink-mute"), a1 = SG.css("--accent"), a2 = SG.css("--rose"), gold = SG.css("--gold");
+    const X = d => 50 + (d + 6) / 12 * (W - 80), Y = p => 220 - p * 1.9;
+    c.strokeStyle = ink; c.fillStyle = ink; c.font = "12px sans-serif"; c.lineWidth = 1;
+    c.beginPath(); c.moveTo(50, 20); c.lineTo(50, 220); c.lineTo(W - 30, 220); c.stroke();
+    c.fillText("100%", 12, Y(100) + 4); c.fillText("0%", 22, Y(0) + 4);
+    c.fillText("easy", 50, 240); c.fillText("hard", W - 60, 240);
+    [[CTRL, a1, "controls"], [PAT, a2, "patients"]].forEach(([ab, col, lab]) => {
+      c.strokeStyle = col; c.lineWidth = 3; c.beginPath();
+      for (let i = 0; i <= 120; i++) { const d = -6 + i / 10; const x = X(d), y = Y(pc(ab, d)); i ? c.lineTo(x, y) : c.moveTo(x, y); }
+      c.stroke(); c.fillStyle = col; c.fillText(lab, X(ab) + 8, Y(50) - 8 + (ab < 0 ? 26 : 0));
+    });
+    const d = +D.value, p1 = pc(CTRL, d), p2 = pc(PAT, d);
+    c.strokeStyle = gold; c.lineWidth = 2; c.setLineDash([5, 4]); c.beginPath(); c.moveTo(X(d), 20); c.lineTo(X(d), 220); c.stroke(); c.setLineDash([]);
+    c.fillStyle = a1; c.beginPath(); c.arc(X(d), Y(p1), 6, 0, 7); c.fill();
+    c.fillStyle = a2; c.beginPath(); c.arc(X(d), Y(p2), 6, 0, 7); c.fill();
+    const gap = p1 - p2;
+    const tag = gap < 10 ? (p1 > 80 ? " → ceiling: deficit invisible" : p1 < 20 ? " → floor: deficit invisible" : "") : " → deficit detectable";
+    out.textContent = `controls ${p1.toFixed(0)}%, patients ${p2.toFixed(0)}%, gap ${gap.toFixed(0)} pts${tag}`;
+  }
+  D.addEventListener("input", draw); document.addEventListener("themechange", draw); window.addEventListener("resize", draw); draw();
+
+  // ---------- dissociation lab ----------
+  const st = {RH: {r:"N", m:"I"}, LH: {r:"-", m:"-"}};
+  const lab = {N:"Normal", I:"Impaired", "-":"—"}, next = {N:"I", I:"-", "-":"N"};
+  const dOut = document.getElementById("dlOut");
+  function verdict() {
+    const groups = ["RH", "LH"].filter(g => st[g].r !== "-" && st[g].m !== "-");
+    const single = g => (st[g].r === "N" && st[g].m === "I") ? "m" : (st[g].r === "I" && st[g].m === "N") ? "r" : null;
+    const s = groups.map(single);
+    if (groups.length === 2 && s[0] && s[1] && s[0] !== s[1]) return "<strong>Double dissociation.</strong> Both tasks can detect impairment, generic damage is ruled out, and the serial model is contradicted by whichever group has rhythm impaired but melody spared → supports <strong>parallel</strong> processes.";
+    const sg = groups.filter((g, i) => s[i]);
+    if (sg.length) {
+      const g = sg[0], which = single(g);
+      const serialOK = which === "m";
+      return `<strong>Single dissociation</strong> (${g}: ${which === "m" ? "melody" : "rhythm"} impaired, ${which === "m" ? "rhythm" : "melody"} spared). Open to task-sensitivity and general-impairment objections. ` +
+        (serialOK ? "Consistent with <em>both</em> serial and parallel models." : "Note: rhythm-impaired/melody-spared already contradicts the serial Rhythm → Melody model.") +
+        (groups.length === 2 ? " The other group doesn't mirror it, so it's not a double dissociation." : " Add a group with the mirror-image pattern.");
+    }
+    if (groups.some(g => st[g].r === "I" && st[g].m === "I")) return "<strong>No dissociation.</strong> Impaired on both — could be general impairment from brain damage. Tells you nothing about which process the region supports.";
+    if (groups.length) return "<strong>No deficit.</strong> (Check for ceiling effects before concluding the region isn't involved!)";
+    return "Set at least one group's results on both tasks.";
+  }
+  function render() {
+    document.querySelectorAll("#dlTable [data-g]").forEach(b => {
+      const v = st[b.dataset.g][b.dataset.t]; b.textContent = lab[v];
+      b.classList.toggle("primary", v === "I");
+    });
+    dOut.innerHTML = verdict();
+  }
+  document.querySelectorAll("#dlTable [data-g]").forEach(b => b.onclick = () => { const g = b.dataset.g, t = b.dataset.t; st[g][t] = next[st[g][t]]; render(); });
+  render();
+});
+</script>
+</body>
+</html>

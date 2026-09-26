@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LGN, V1 &amp; receptive fields · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="v1-receptive-fields">
+<main>
+
+  <div class="eyebrow">Part IV · Chapter 10 · Lectures 8 &amp; 9</div>
+  <h1>LGN, V1 &amp; receptive fields</h1>
+  <p class="subtitle">The two pathways through the thalamus, the four properties of primary visual cortex, and
+  how receptive fields are built step by step — from a single photoreceptor to an orientation-tuned simple
+  cell — with the Hermann grid and tilt adaptation explained by the mechanism.</p>
+
+  <div data-toc></div>
+
+  <h2 id="lgn">1. The lateral geniculate nucleus (LGN)</h2>
+
+  <p>The LGN is the thalamus's visual relay. It has <strong>6 layers</strong>, receives input from <em>both</em>
+  eyes in <em>different</em> layers, and sends out different kinds of information along two pathways:</p>
+
+  <div class="scroll-x"><table>
+    <tr><th></th><th>Magnocellular (M)</th><th>Parvocellular (P)</th></tr>
+    <tr><td>LGN layers</td><td><strong>1–2</strong></td><td><strong>3–6</strong></td></tr>
+    <tr><td>Carries</td><td>Motion &amp; coarse detail; less colour</td><td>Colour &amp; fine detail</td></tr>
+    <tr><td>Speed</td><td><strong>Fast</strong></td><td><strong>Slow</strong></td></tr>
+    <tr><td>Input</td><td>More rods, more peripheral, low resolution</td><td>More cones, more central, high resolution</td></tr>
+    <tr><td>Hook</td><td><strong>M</strong> = <strong>M</strong>otion, <strong>M</strong>assive (big, coarse)</td><td><strong>P</strong> = <strong>P</strong>recise, <strong>P</strong>igment (colour)</td></tr>
+  </table></div>
+
+  <p>Recall the Monroe/Einstein hybrid (Ch. 9): the coarse, blurry Monroe is magno-style information; the fine
+  Einstein detail is parvo-style. From the LGN, information goes to <strong>layer 4 of primary visual cortex
+  (V1)</strong> — the input layer from Chapter 3.</p>
+
+  <h2 id="v1-properties">2. Four properties of V1</h2>
+
+  <div class="grid2">
+    <div class="box key"><span class="label">1 · Retinotopic</span>
+    V1 keeps a <strong>map</strong> of visual space: neighbouring points in the world → neighbouring neurons.
+    Evidence: an anaesthetized monkey viewed a flickering bull's-eye; injected radioactive glucose was taken up
+    by active neurons; the flattened V1, laid on film, showed the bull's-eye pattern.</div>
+    <div class="box key"><span class="label">2 · Corticomagnification</span>
+    The <strong>fovea</strong> (central field, dense cones) is represented <strong>disproportionately</strong>:
+    a tiny patch of the central field gets a large patch of cortex.</div>
+    <div class="box key"><span class="label">3 · Eye-specific</span>
+    <strong>Ocular dominance columns</strong>: stripes of cells processing input from one eye. Evidence: a
+    patient who lost one eye before death donated their brain; cytochrome-oxidase stain showed dark stripes
+    where recently active (one-eye) regions were.</div>
+    <div class="box key"><span class="label">4 · Orientation-specific</span>
+    <strong>Orientation columns</strong>: orientation-tuned cells arranged so preferred orientation changes in
+    an orderly way across the cortex. Also <strong>blobs</strong>: colour-sensitive cells. Human fMRI shows both
+    eye and orientation maps.</div>
+  </div>
+
+  <div class="viz">
+    <div class="viz-title">Corticomagnification — the same rings, before and after V1's map</div>
+    <svg id="cmSvg" viewBox="0 0 640 260" role="img" aria-label="Rings at doubling eccentricities in the visual field map to equally spaced bands in cortex"></svg>
+    <div class="caption">What to notice: in the visual field (left) the rings are at 1°, 2°, 4°, 8°, 16°, 32° —
+    each twice the last. In cortex (right) they come out <strong>roughly evenly spaced</strong> (band widths
+    0.41 → 0.66 in model units). So the 1–2° ring, which covers 1/256 of the area of the 16–32° ring, still
+    gets over 60% as wide a strip of cortex. That's what "the fovea is disproportionately represented"
+    means. Computed with a standard log-polar model of V1 (w = log(z + 1)), not the lecture's
+    figure.</div>
+  </div>
+
+  <div class="box example"><span class="label">Clinical link — strabismus and amblyopia (L8 study guide)</span>
+  <strong>Strabismus</strong> (a wandering eye) sends the brain mismatched images; the brain starts ignoring the
+  weaker eye, which can progress to <strong>amblyopia</strong> ("lazy eye"). Treatment: patch the
+  <strong>strong</strong> eye to force the brain to develop and process signals from the weaker eye. It must
+  happen during the <strong>critical period</strong> of development. Mechanism: ocular dominance columns are
+  plastic early in life — the patched eye's columns shrink and the weak eye's grow (Ch. 2's plasticity at the
+  column scale).</div>
+
+  <h2 id="receptive-fields">3. Receptive fields, built up step by step</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Receptive field</strong> — the specific region on the retina where light affects a cell's
+  activity.</div>
+
+  <p>The lecture builds them in four steps. Each step <em>pools</em> the previous one:</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>#</th><th>Cell</th><th>Receptive field</th><th>Sensitive to</th></tr>
+    <tr><td>1</td><td>Photoreceptor</td><td>Itself — its own spot on the retina</td><td>Light at that spot</td></tr>
+    <tr><td>2</td><td>Retinal ganglion cell</td><td><strong>Center–surround</strong> (many photoreceptors pooled)</td><td>Contrast, position</td></tr>
+    <tr><td>3</td><td>LGN cell</td><td>Center–surround</td><td>Contrast, position</td></tr>
+    <tr><td>4</td><td>V1 simple cell</td><td>Elongated — lines &amp; edges (LGN cells lined up)</td><td>Contrast, position, <strong>orientation</strong></td></tr>
+  </table></div>
+
+  <h3>Center–surround</h3>
+  <p><strong>ON-center, OFF-surround</strong>: light in the center excites the cell; light in the surround inhibits
+  it. <strong>OFF-center, ON-surround</strong> is the reverse. Why build it that way? Uniform light excites the
+  center and inhibits the surround about equally — they cancel. The cell only fires strongly when center and
+  surround <em>differ</em>. It's a <strong>contrast detector</strong>.</p>
+
+  <div class="viz">
+    <div class="viz-title">An ON-center ganglion cell — move the spot of light</div>
+    <canvas id="csCanvas" height="300" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <label>Spot x <input type="range" id="csX" min="-120" max="120" step="2" value="0" data-out="csXv" data-fmt="int"><span class="val" id="csXv"></span></label>
+      <label>Spot size <input type="range" id="csR" min="5" max="120" step="1" value="25" data-out="csRv" data-fmt="int"><span class="val" id="csRv"></span></label>
+      <label><input type="checkbox" id="csOff"> OFF-center cell</label>
+    </div>
+    <div class="caption">What to notice: a small spot filling the center gives the biggest response. Grow the spot
+    until it covers the surround too, and the response <em>falls back</em> — more light, less firing. Slide a
+    small spot into the ring and the cell is pushed <em>below</em> its baseline. Firing depends on contrast, not
+    on the amount of light.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">Which stimulus excites an ON-center, OFF-surround ganglion cell most?</div>
+    <button class="opt">Uniform bright light over the whole receptive field</button>
+    <button class="opt">A bright spot exactly filling the center, dark surround</button>
+    <button class="opt">A bright ring on the surround, dark center</button>
+    <button class="opt">Darkness everywhere</button>
+    <div class="why"><strong>Why:</strong> Center excited, surround not inhibiting = max. Uniform light is the
+    tempting answer — "more light, more firing" — but the surround cancels it. The ring is the <em>best</em>
+    stimulus for an OFF-center cell.</div>
+  </div>
+
+  <h3>The Hermann grid (exit-ticket question, answered)</h3>
+
+  <div class="viz">
+    <div class="viz-title">Why grey dots appear at the intersections</div>
+    <svg id="hgSvg" viewBox="0 0 640 330" role="img" aria-label="Hermann grid with two ON-center receptive fields, one at an intersection and one in a corridor"></svg>
+    <div class="caption" id="hgOut"></div>
+  </div>
+
+  <div class="box key"><span class="label">The answer</span>
+  Both cells' centers sit on white. But at an <strong>intersection</strong>, white extends in four directions,
+  so <strong>more light falls on the OFF-surround</strong> than in a corridor, where white runs in only two
+  directions. More surround light → more inhibition → the intersection cell fires <em>less</em> → you perceive
+  that spot as darker: a grey dot. <span class="pill">going deeper</span> Look straight at an intersection and the
+  dot vanishes — foveal receptive fields are much smaller than the white bars, so the effect disappears.</div>
+
+  <h3>Simple cells: lines up the center–surrounds</h3>
+  <p>A V1 <strong>simple cell</strong> combines LGN inputs whose centers lie along a line. The result is an
+  elongated receptive field: an excitatory strip flanked by inhibitory strips. It responds best to a bar of
+  light at one position, contrast and <strong>orientation</strong>. Discovered in cat V1 by <strong>Hubel &amp;
+  Wiesel</strong> (Nobel Prize 1981).</p>
+
+  <div class="viz">
+    <div class="viz-title">Orientation tuning — rotate the bar</div>
+    <canvas id="scCanvas" height="280" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <label>Bar orientation (°) <input type="range" id="scA" min="-90" max="90" step="1" value="30" data-out="scAv" data-fmt="int"><span class="val" id="scAv"></span></label>
+      <label>Bar offset <input type="range" id="scO" min="-40" max="40" step="1" value="0" data-out="scOv" data-fmt="int"><span class="val" id="scOv"></span></label>
+    </div>
+    <div class="caption">What to notice: the response (right) is a peaked <strong>tuning curve</strong> — maximal
+    when the bar lines up with the excitatory strip (vertical, 0°), near zero when perpendicular. Slide the bar
+    sideways onto the inhibitory flank and the response drops even when the orientation is perfect: simple cells
+    care about <em>position</em> too. Response is computed as the overlap of the bar with the receptive field.</div>
+  </div>
+
+  <h3>Tilt adaptation: fatigue a channel, bias the percept</h3>
+  <p>Stare at lines tilted one way for a while, then look at vertical lines: they seem tilted the <em>other</em>
+  way. Mechanism: many simple cells, each tuned to a different orientation, vote on what you see. Prolonged
+  exposure <strong>fatigues</strong> the cells tuned near the adapting tilt. When a vertical line arrives, the
+  tired cells on one side vote less, so the population's "average" lands on the other side.</p>
+
+  <div class="viz">
+    <div class="viz-title">Population of orientation-tuned cells — adapt, then test with vertical</div>
+    <canvas id="taCanvas" height="260" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <label>Adapting tilt (°) <input type="range" id="taAdapt" min="-45" max="45" step="1" value="15" data-out="taAv" data-fmt="int"><span class="val" id="taAv"></span></label>
+      <label>Adaptation strength <input type="range" id="taK" min="0" max="0.9" step="0.05" value="0.6" data-out="taKv" data-dp="2"><span class="val" id="taKv"></span></label>
+      <span class="val" id="taOut"></span>
+    </div>
+    <div class="caption">What to notice: each bar is one cell's response to a <em>vertical</em> test line. With
+    strength at 0 the pattern is symmetric and the decoded orientation is 0°. Add adaptation and the cells near
+    the adapting tilt are suppressed; the decoded percept moves <strong>away</strong> from the adapting tilt. Adapt
+    at exactly 0° and there's no bias at all — only a weaker response. Population-vector decoding, toy tuning
+    widths.</div>
+  </div>
+
+  <div class="box key"><span class="label">Population coding</span>
+  The lecture's final point: no single cell "sees" the line. A group of cells tuned to the line's orientation
+  is excited, others are inhibited, and the <strong>pattern across the population</strong> generates the
+  perception. Tilt adaptation is evidence for exactly that — you can bias the percept by fatiguing part of the
+  population.</div>
+
+  <h2 id="edge-marr">4. Edge detection at Marr's three levels — now with the implementation filled in</h2>
+  <div class="scroll-x"><table>
+    <tr><th>Level</th><th>Answer</th></tr>
+    <tr><td>Computational</td><td>Recognize objects, detect motion, spatial navigation</td></tr>
+    <tr><td>Algorithmic</td><td>Sobel operator — find where intensity changes sharply (Ch. 4)</td></tr>
+    <tr><td>Implementation</td><td><strong>Receptive fields</strong> (different cells respond to different places) · <strong>contrast sensitivity</strong> (center–surround) · <strong>orientation sensitivity</strong> (simple cells). Edge detection is supported by <strong>V1</strong>.</td></tr>
+  </table></div>
+
+  <h2 id="check-yourself">5. Check yourself</h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">A cell responds strongly to a 45° bar at one location and hardly at all to a 135° bar there. It's most likely a…</div>
+    <button class="opt">Photoreceptor</button>
+    <button class="opt">Retinal ganglion cell</button>
+    <button class="opt">V1 simple cell</button>
+    <button class="opt">LGN magno cell</button>
+    <div class="why"><strong>Why:</strong> Orientation selectivity first appears in V1 simple cells. Ganglion and
+    LGN cells have circular center–surround fields — they don't care about orientation.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">Information about fast motion and coarse shape travels through…</div>
+    <button class="opt">Magnocellular layers 1–2 of the LGN</button>
+    <button class="opt">Parvocellular layers 3–6 of the LGN</button>
+    <button class="opt">V1 blobs</button>
+    <button class="opt">Layer 6 of V1</button>
+    <div class="why"><strong>Why:</strong> Magno = motion, coarse, fast. Parvo = colour, fine, slow. Blobs are
+    V1's colour cells.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">After staring at lines tilted 15° clockwise, a vertical line looks…</div>
+    <button class="opt">Tilted clockwise</button>
+    <button class="opt">Perfectly vertical but dimmer</button>
+    <button class="opt">Invisible</button>
+    <button class="opt">Tilted counter-clockwise</button>
+    <div class="why"><strong>Why:</strong> The clockwise-tuned cells are fatigued, so the population is biased
+    <em>away</em> from the adapting tilt. The first option is the most common wrong answer.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">A child's wandering eye is untreated past the critical period. The likely outcome and its V1 basis?</div>
+    <button class="opt">Tilt adaptation; orientation columns fatigue</button>
+    <button class="opt">Amblyopia; the weak eye loses territory in the ocular dominance columns</button>
+    <button class="opt">Blindsight; LGN magno damage</button>
+    <button class="opt">Nothing — patching works at any age</button>
+    <div class="why"><strong>Why:</strong> Strabismus → amblyopia if untreated. Patching the strong eye only
+    works while the columns are still plastic (the critical period).</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const T = (svg, x, y, s, a = {}) => { const t = SG.el("text", Object.assign({x, y, "text-anchor":"middle", fill:"var(--ink)", "font-size":13}, a)); t.textContent = s; svg.appendChild(t); return t; };
+  const setup = (cv, H) => { const W = cv.clientWidth || 600; cv.width = W * devicePixelRatio; cv.height = H * devicePixelRatio; cv.style.height = H + "px"; const c = cv.getContext("2d"); c.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); c.clearRect(0, 0, W, H); return [c, W]; };
+
+  // ---------- corticomagnification (log-polar) ----------
+  (function () {
+    const svg = document.getElementById("cmSvg"), eccs = [1, 2, 4, 8, 16, 32];
+    const cols = ["var(--rose)", "var(--gold)", "var(--accent-3)", "var(--accent)", "var(--accent-2)", "var(--ink-soft)"];
+    // visual field (right hemifield), radius scaled linearly: 32° -> 110px
+    const cx = 60, cy = 130, s = 110 / 32;
+    eccs.forEach((e, i) => svg.appendChild(SG.el("path", {d:`M${cx},${cy - e * s} A${e * s},${e * s} 0 0 1 ${cx},${cy + e * s}`, fill:"none", stroke:cols[i], "stroke-width":2.5})));
+    T(svg, 120, 250, "Visual field (right half), linear degrees", {"font-size":12, fill:"var(--ink-soft)"});
+    // cortex: w = log(z + 1); map ring e at angle th (-90..90)
+    const map = (e, th) => { const zx = e * Math.cos(th) + 1, zy = e * Math.sin(th); return [Math.log(Math.hypot(zx, zy)), Math.atan2(zy, zx)]; };
+    const ox = 280, sx = 88, sy = 60;
+    eccs.forEach((e, i) => {
+      let d = ""; for (let k = 0; k <= 60; k++) { const th = -Math.PI / 2 + k / 60 * Math.PI; const [u, v] = map(e, th); d += (k ? "L" : "M") + (ox + u * sx) + "," + (130 + v * sy); }
+      svg.appendChild(SG.el("path", {d, fill:"none", stroke:cols[i], "stroke-width":2.5}));
+      const [u] = map(e, 0); T(svg, ox + u * sx, 245, e + "°", {"font-size":11, fill:cols[i]});
+    });
+    T(svg, 480, 20, "V1 (log-polar model)", {"font-size":12, fill:"var(--ink-soft)"});
+  })();
+
+  // ---------- center-surround ----------
+  const cs = document.getElementById("csCanvas"), csX = document.getElementById("csX"), csR = document.getElementById("csR"), csOff = document.getElementById("csOff");
+  const RC = 30, RS = 75;
+  function csResponse(x0, r, off) {
+    let cIn = 0, sIn = 0, cA = 0, sA = 0;
+    for (let x = -RS; x <= RS; x += 2) for (let y = -RS; y <= RS; y += 2) {
+      const d = Math.hypot(x, y); if (d > RS) continue;
+      const lit = Math.hypot(x - x0, y) <= r ? 1 : 0;
+      if (d <= RC) { cA++; cIn += lit; } else { sA++; sIn += lit; }
+    }
+    const drive = (cIn / cA) - (sIn / sA);
+    return 20 + 60 * (off ? -drive : drive);
+  }
+  function drawCs() {
+    const [c, W] = setup(cs, 300);
+    const cx = Math.min(W * 0.35, 220), cy = 150, off = csOff.checked, x0 = +csX.value, r = +csR.value;
+    c.fillStyle = SG.css("--bg-soft"); c.fillRect(0, 0, W, 300);
+    c.globalAlpha = .35; c.fillStyle = SG.css(off ? "--accent" : "--rose"); c.beginPath(); c.arc(cx, cy, RS, 0, 7); c.fill();
+    c.fillStyle = SG.css(off ? "--rose" : "--accent"); c.beginPath(); c.arc(cx, cy, RC, 0, 7); c.fill(); c.globalAlpha = 1;
+    c.fillStyle = SG.css("--gold"); c.globalAlpha = .75; c.beginPath(); c.arc(cx + x0, cy, r, 0, 7); c.fill(); c.globalAlpha = 1;
+    c.fillStyle = SG.css("--ink"); c.font = "13px sans-serif"; c.textAlign = "center";
+    c.fillText(off ? "OFF center (−)" : "ON center (+)", cx, cy + 4); c.fillText(off ? "ON surround (+)" : "OFF surround (−)", cx, cy - RS - 8);
+    // response bar
+    const resp = Math.max(0, csResponse(x0, r, off)), bx = Math.max(cx + RS + 60, W - 170);
+    c.strokeStyle = SG.css("--ink-mute"); c.beginPath(); c.moveTo(bx, 270); c.lineTo(bx + 120, 270); c.stroke();
+    c.fillStyle = SG.css("--accent"); c.fillRect(bx + 35, 270 - resp * 2.8, 50, resp * 2.8);
+    c.setLineDash([5, 4]); c.strokeStyle = SG.css("--ink-mute"); c.beginPath(); c.moveTo(bx, 270 - 20 * 2.8); c.lineTo(bx + 120, 270 - 20 * 2.8); c.stroke(); c.setLineDash([]);
+    c.fillStyle = SG.css("--ink"); c.fillText(`firing ≈ ${resp.toFixed(0)} spikes/s`, bx + 60, 290);
+    c.fillStyle = SG.css("--ink-mute"); c.fillText("baseline", bx + 60, 270 - 20 * 2.8 - 6);
+  }
+  [csX, csR, csOff].forEach(e => { e.addEventListener("input", drawCs); e.addEventListener("change", drawCs); });
+  document.addEventListener("themechange", drawCs); window.addEventListener("resize", drawCs); drawCs();
+
+  // ---------- Hermann grid ----------
+  (function () {
+    const svg = document.getElementById("hgSvg"), out = document.getElementById("hgOut");
+    const sq = 70, gap = 20, ox = 20, oy = 20, n = 4;
+    // A Hermann grid is a fixed black-on-white stimulus, so it deliberately ignores the theme.
+    svg.appendChild(SG.el("rect", {x:ox, y:oy - gap, width:n * (sq + gap) + gap, height:n * (sq + gap) + gap, fill:"white"}));
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) svg.appendChild(SG.el("rect", {x:ox + gap + i * (sq + gap), y:oy + j * (sq + gap), width:sq, height:sq, fill:"black"}));
+    const isWhite = (x, y) => { // white = the gaps
+      const lx = x - ox - gap, ly = y - oy; if (lx < 0 || ly < 0 || lx > n * (sq + gap) || ly > n * (sq + gap)) return true;
+      const inX = (lx % (sq + gap)) < sq, inY = (ly % (sq + gap)) < sq; return !(inX && inY);
+    };
+    const rc = 8, rs = 26;
+    const measure = (x0, y0) => { let c = 0, cn = 0, s = 0, sn = 0; for (let x = -rs; x <= rs; x++) for (let y = -rs; y <= rs; y++) { const d = Math.hypot(x, y); if (d > rs) continue; const w = isWhite(x0 + x, y0 + y) ? 1 : 0; if (d <= rc) { c += w; cn++; } else { s += w; sn++; } } return {c: c / cn, s: s / sn}; };
+    const Ix = ox + gap + sq + gap / 2, Iy = oy + sq + gap / 2 + (sq + gap);            // an intersection
+    const Cx = ox + gap + sq + gap / 2, Cy = oy + (sq + gap) * 2 + sq / 2;              // mid-corridor
+    const drawRF = (x, y, lab) => {
+      svg.appendChild(SG.el("circle", {cx:x, cy:y, r:rs, fill:"var(--rose)", opacity:.35, stroke:"var(--rose)", "stroke-width":2}));
+      svg.appendChild(SG.el("circle", {cx:x, cy:y, r:rc, fill:"var(--accent)", opacity:.8}));
+      T(svg, x + 38, y + 4, lab, {"font-size":12, "text-anchor":"start", fill:"var(--accent)", "font-weight":700});
+    };
+    drawRF(Ix, Iy, "A"); drawRF(Cx, Cy, "B");
+    const a = measure(Ix, Iy), b = measure(Cx, Cy);
+    const ra = a.c - a.s, rb = b.c - b.s;
+    const px = 420;
+    T(svg, px + 100, 40, "Light on each part (fraction white)", {"font-size":12, fill:"var(--ink-soft)"});
+    [["A · intersection", a, ra, 80], ["B · corridor", b, rb, 190]].forEach(([lab, m, r, y]) => {
+      T(svg, px + 100, y, lab, {"font-weight":700});
+      T(svg, px + 100, y + 22, `center ${(m.c * 100).toFixed(0)}%   surround ${(m.s * 100).toFixed(0)}%`, {"font-size":12});
+      T(svg, px + 100, y + 44, `net drive (center − surround) = ${r.toFixed(2)}`, {"font-size":12, fill:"var(--accent)"});
+    });
+    out.innerHTML = `What to notice: both centers are fully on white, but A's surround is ${(a.s * 100).toFixed(0)}% white versus B's ${(b.s * 100).toFixed(0)}%. A gets more inhibition, so its net drive (${ra.toFixed(2)}) is lower than B's (${rb.toFixed(2)}) → the intersection looks darker. Numbers are computed from this drawing.`;
+  })();
+
+  // ---------- simple cell ----------
+  const sc = document.getElementById("scCanvas"), scA = document.getElementById("scA"), scO = document.getElementById("scO");
+  function scResp(angDeg, off) {
+    const th = angDeg * Math.PI / 180, L = 70, w = 8; let e = 0, i = 0;
+    for (let x = -60; x <= 60; x += 2) for (let y = -60; y <= 60; y += 2) {
+      // point inside bar? bar centred at (off,0), direction (sin th, cos th) from vertical
+      const dx = x - off, dy = y, along = dx * Math.sin(th) + dy * Math.cos(th), across = dx * Math.cos(th) - dy * Math.sin(th);
+      if (Math.abs(along) > L || Math.abs(across) > w) continue;
+      if (Math.abs(y) > 55) continue;
+      if (Math.abs(x) <= 10) e++; else if (Math.abs(x) <= 30) i++;
+    }
+    return Math.max(0, (e - 0.5 * i) / 3.1);
+  }
+  function drawSc() {
+    const [c, W] = setup(sc, 280), ang = +scA.value, off = +scO.value, cx = 140, cy = 140;
+    c.globalAlpha = .35; c.fillStyle = SG.css("--rose"); c.fillRect(cx - 30, cy - 55, 20, 110); c.fillRect(cx + 10, cy - 55, 20, 110);
+    c.fillStyle = SG.css("--accent"); c.fillRect(cx - 10, cy - 55, 20, 110); c.globalAlpha = 1;
+    c.save(); c.translate(cx + off, cy); c.rotate(ang * Math.PI / 180); c.fillStyle = SG.css("--gold"); c.globalAlpha = .8; c.fillRect(-8, -70, 16, 140); c.restore(); c.globalAlpha = 1;
+    c.fillStyle = SG.css("--ink-soft"); c.font = "12px sans-serif"; c.textAlign = "center"; c.fillText("+ strip flanked by − strips", cx, 270);
+    // tuning curve
+    const gx = 300, gw = W - gx - 20, gy = 240, gh = 200;
+    const X = a => gx + (a + 90) / 180 * gw;
+    const vals = []; for (let a = -90; a <= 90; a += 3) vals.push([a, scResp(a, off)]);
+    const mx = Math.max(scResp(0, 0), 1);
+    c.strokeStyle = SG.css("--ink-mute"); c.lineWidth = 1; c.beginPath(); c.moveTo(gx, gy - gh); c.lineTo(gx, gy); c.lineTo(gx + gw, gy); c.stroke();
+    c.strokeStyle = SG.css("--accent"); c.lineWidth = 2.5; c.beginPath(); vals.forEach(([a, v], k) => { const y = gy - v / mx * (gh - 20); k ? c.lineTo(X(a), y) : c.moveTo(X(a), y); }); c.stroke();
+    const cur = scResp(ang, off); c.fillStyle = SG.css("--gold"); c.beginPath(); c.arc(X(ang), gy - cur / mx * (gh - 20), 7, 0, 7); c.fill();
+    c.fillStyle = SG.css("--ink-soft"); c.fillText("bar orientation (−90° … 0° … 90°)", gx + gw / 2, gy + 18); c.fillText(`response ${(cur / mx * 100).toFixed(0)}% of max`, gx + gw / 2, gy - gh + 4);
+  }
+  [scA, scO].forEach(e => e.addEventListener("input", drawSc)); document.addEventListener("themechange", drawSc); window.addEventListener("resize", drawSc); drawSc();
+
+  // ---------- tilt adaptation ----------
+  const ta = document.getElementById("taCanvas"), tA = document.getElementById("taAdapt"), tK = document.getElementById("taK"), tOut = document.getElementById("taOut");
+  function drawTa() {
+    const [c, W] = setup(ta, 260), adapt = +tA.value, k = +tK.value;
+    const prefs = []; for (let p = -85; p <= 90; p += 5) prefs.push(p);
+    const circ = d => { d = ((d + 90) % 180 + 180) % 180 - 90; return d; };
+    const tune = (p, s) => Math.exp(-Math.pow(circ(p - s), 2) / (2 * 20 * 20));
+    const gain = p => 1 - k * tune(p, adapt);
+    const resp = prefs.map(p => gain(p) * tune(p, 0));
+    let sx = 0, sy = 0; prefs.forEach((p, i) => { const a = p * Math.PI / 90; sx += resp[i] * Math.cos(a); sy += resp[i] * Math.sin(a); });
+    const decoded = Math.atan2(sy, sx) * 90 / Math.PI;
+    const gx = 40, gw = W - 60, gy = 210, bw = gw / prefs.length;
+    c.strokeStyle = SG.css("--ink-mute"); c.beginPath(); c.moveTo(gx, gy); c.lineTo(gx + gw, gy); c.stroke();
+    prefs.forEach((p, i) => { c.fillStyle = SG.css(Math.abs(circ(p - adapt)) < 25 && k > 0 ? "--rose" : "--accent"); c.fillRect(gx + i * bw + 1, gy - resp[i] * 170, bw - 2, resp[i] * 170); });
+    const X = a => gx + (a + 87.5) / 180 * gw;
+    c.setLineDash([5, 4]); c.strokeStyle = SG.css("--ink-soft"); c.beginPath(); c.moveTo(X(0), 20); c.lineTo(X(0), gy); c.stroke();
+    c.strokeStyle = SG.css("--gold"); c.lineWidth = 3; c.setLineDash([]); c.beginPath(); c.moveTo(X(decoded), 20); c.lineTo(X(decoded), gy); c.stroke(); c.lineWidth = 1;
+    c.fillStyle = SG.css("--ink-soft"); c.font = "12px sans-serif"; c.textAlign = "center";
+    c.fillText("cells' preferred orientation (−85° … 90°)", gx + gw / 2, gy + 20); c.fillText("true: 0°", X(0), 14);
+    c.fillStyle = SG.css("--gold"); c.fillText("decoded", X(decoded), 32);
+    tOut.textContent = `vertical line is perceived at ${decoded >= 0 ? "+" : ""}${decoded.toFixed(1)}°`;
+  }
+  [tA, tK].forEach(e => e.addEventListener("input", drawTa)); document.addEventListener("themechange", drawTa); window.addEventListener("resize", drawTa); drawTa();
+});
+</script>
+</body>
+</html>

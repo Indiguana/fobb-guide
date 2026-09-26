@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stroke, aphasia &amp; head trauma · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="stroke-trauma">
+<main>
+
+  <div class="eyebrow">Part II · Chapter 6 · Lectures 5 &amp; 6</div>
+  <h1>Stroke, aphasia &amp; head trauma</h1>
+  <p class="subtitle">Why the brain's blood supply is its weak point, the three arteries and what they feed,
+  how vessels fail, what aphasia taught us about language, and the two ways a blow to the head injures the
+  brain.</p>
+
+  <div data-toc></div>
+
+  <h2 id="blood-supply">1. Blood supply: the brain's single point of failure</h2>
+
+  <p>The brain is about 2% of body weight but takes <strong>~20% of the body's blood flow</strong>, through
+  roughly <strong>500 miles of blood vessels</strong>. It has almost no energy reserve: it cannot function
+  with prolonged oxygen deprivation, and <strong>10 seconds of blocked blood supply means
+  unconsciousness</strong>. That's why vascular problems are the first category of brain dysfunction the
+  course covers.</p>
+
+  <h3>The three cerebral arteries</h3>
+  <div class="viz">
+    <div class="viz-title">Arterial territories (as given in lecture) — click an artery</div>
+    <svg id="arSvg" viewBox="0 0 640 300" role="img" aria-label="Lateral brain with frontal, parietal, temporal and occipital lobes highlighted according to the chosen artery"></svg>
+    <div class="controls">
+      <button class="btn" data-ar="ACA">Anterior (ACA)</button>
+      <button class="btn" data-ar="MCA">Middle (MCA)</button>
+      <button class="btn" data-ar="PCA">Posterior (PCA)</button>
+    </div>
+    <div class="caption" id="arOut">Schematic by lobe, following the study guide. Real territories follow the
+    vessels rather than lobe borders.</div>
+  </div>
+
+  <div class="scroll-x"><table class="tight">
+    <tr><th>Artery</th><th>Supplies</th><th>Hook</th></tr>
+    <tr><td><strong>Anterior</strong> cerebral artery</td><td>Frontal + parietal</td><td>Anterior = front → starts at frontal</td></tr>
+    <tr><td><strong>Middle</strong> cerebral artery</td><td>Temporal + parietal</td><td>Middle = the side of the head (temporal)</td></tr>
+    <tr><td><strong>Posterior</strong> cerebral artery</td><td>Occipital + temporal</td><td>Posterior = back → occipital (vision)</td></tr>
+  </table></div>
+
+  <div class="box intuition"><span class="label">Intuition</span>
+  Each artery is named for where it <em>starts</em> its territory, and the neighbouring lobe is shared. Frontal,
+  occipital are each owned by one artery; parietal (ACA + MCA) and temporal (MCA + PCA) are each shared by two.
+  <span class="pill">going deeper</span> Clinically, a PCA stroke often shows up as a visual-field loss
+  because it feeds occipital cortex (Ch. 9).</div>
+
+  <h2 id="vessel-failure">2. How vessels fail — and the two kinds of stroke</h2>
+
+  <div class="viz">
+    <div class="viz-title">Three vessel vulnerabilities</div>
+    <svg viewBox="0 0 640 200" role="img" aria-label="A vessel narrowed by plaque; an artery connected directly to a vein by a tangle; a vessel with a bulging weak wall">
+      <g font-size="13" text-anchor="middle">
+        <!-- atherosclerosis -->
+        <path d="M20,60 L190,60 M20,120 L190,120" stroke="var(--rose)" stroke-width="4"/>
+        <path d="M80,60 Q105,90 130,60 Z" fill="var(--gold)"/><path d="M70,120 Q100,95 135,120 Z" fill="var(--gold)"/>
+        <line x1="30" y1="90" x2="70" y2="90" stroke="var(--accent)" stroke-width="3"/><line x1="140" y1="90" x2="180" y2="90" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="105" y="155" fill="var(--ink)" font-weight="700">Atherosclerosis</text>
+        <text x="105" y="173" fill="var(--ink-soft)">build-up of plaques</text>
+        <!-- AVM -->
+        <line x1="230" y1="70" x2="280" y2="70" stroke="var(--rose)" stroke-width="6"/>
+        <path d="M280,70 C300,40 320,110 330,70 C340,30 360,120 370,80 C380,50 395,100 410,80" fill="none" stroke="var(--ink-soft)" stroke-width="3"/>
+        <line x1="410" y1="80" x2="440" y2="80" stroke="var(--accent-2)" stroke-width="6"/>
+        <text x="245" y="58" fill="var(--rose)" font-size="12">artery</text><text x="430" y="68" fill="var(--accent-2)" font-size="12">vein</text>
+        <text x="335" y="155" fill="var(--ink)" font-weight="700">Arteriovenous malformation</text>
+        <text x="335" y="173" fill="var(--ink-soft)">abnormal tangle: artery → vein directly</text>
+        <!-- aneurysm -->
+        <path d="M470,60 L620,60 M470,120 L530,120 C530,175 590,175 590,120 L620,120" fill="none" stroke="var(--rose)" stroke-width="4"/>
+        <text x="560" y="155" fill="var(--ink)" font-weight="700">Aneurysm</text>
+        <text x="560" y="173" fill="var(--ink-soft)">bulging, weak vessel wall</text>
+      </g>
+    </svg>
+    <div class="caption">What to notice: the first narrows the pipe (→ blockage); the other two are weak spots
+    that can <em>burst</em>. Two ways to stop an aneurysm bursting: <strong>clipping</strong> (a clip across its
+    neck) and <strong>coiling</strong> (filling it with a coil so it clots off). The lecture's case: actor Emilia
+    Clarke's ruptured aneurysm.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="box defn"><span class="label">Ischemic stroke</span>Blood flow to part of the brain is
+    <strong>blocked or reduced</strong> — usually a blood clot or atherosclerosis. (Ischemia = not enough
+    blood.)</div>
+    <div class="box defn"><span class="label">Hemorrhagic stroke</span>A blood vessel in the brain
+    <strong>bursts</strong>. (Hemorrhage = bleeding — think aneurysm or AVM rupturing.)</div>
+  </div>
+
+  <div class="box example"><span class="label">Practical relevance — act F.A.S.T.</span>
+  <strong>F</strong>ace drooping · <strong>A</strong>rm weakness · <strong>S</strong>peech difficulty ·
+  <strong>T</strong>ime to call 911. Minutes matter because of that 10-second, no-reserve fact above.</div>
+
+  <h2 id="aphasia">3. What stroke taught us about language</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Aphasia</strong> — a language disorder resulting from damage to brain regions responsible for
+  language.</div>
+
+  <div class="scroll-x"><table class="tight center">
+    <tr><th></th><th>Production</th><th>Comprehension</th><th>What it sounds like</th></tr>
+    <tr><td><strong>Broca's aphasia</strong></td><td>✗ Impaired</td><td>✓ Intact</td><td>Effortful, halting, few words — but understands you</td></tr>
+    <tr><td><strong>Wernicke's aphasia</strong></td><td>✓ Intact</td><td>✗ Impaired</td><td>Fluent, flowing speech that doesn't make sense; doesn't understand you</td></tr>
+  </table></div>
+
+  <div class="box key"><span class="label">Key idea</span>
+  Broca's + Wernicke's = a <strong>double dissociation</strong> between language production and
+  comprehension (Ch. 5) → they rely on distinct processes and regions.</div>
+
+  <div class="box warn"><span class="label">Common mistake</span>
+  Swapping them. Hook: <strong>B</strong>roca = <strong>B</strong>roken speech (production). Wernicke = Wordy
+  but Weird (fluent, can't comprehend). And "fluent" ≠ "intact meaning" — Wernicke's patients produce fluent
+  but often meaningless speech; the study guide's "intact production" means fluent output.</div>
+
+  <p><strong>Singing is intact in Broca's aphasia patients</strong> — and not just for over-learned songs. A
+  patient who can't speak a sentence can sing its words. That's another dissociation: speech production vs
+  singing, suggesting music draws on partly different machinery (recall the RH-melody result in Ch. 5).</p>
+
+  <h2 id="tbi">4. Traumatic brain injury: two mechanisms</h2>
+
+  <div class="viz">
+    <div class="viz-title">Coup–contrecoup vs rotational shear</div>
+    <svg id="tbSvg" viewBox="0 0 640 260" role="img" aria-label="Brain inside skull moving on impact"></svg>
+    <div class="controls">
+      <button class="btn primary" id="tbHit">Straight blow (coup–contrecoup)</button>
+      <button class="btn" id="tbRot">Rotational blow (diffuse axonal)</button>
+    </div>
+    <div class="caption" id="tbOut">What to notice: the brain floats in fluid, so on impact it keeps moving and
+    hits the skull — first where the blow landed, then on the opposite side.</div>
+  </div>
+
+  <div class="scroll-x"><table>
+    <tr><th>Mechanism</th><th>What happens</th><th>Result</th></tr>
+    <tr><td><strong>1. Direct force</strong> (coup–contrecoup)</td><td>Brain hits the skull and shears against bony ridges — at the impact site (coup) and the opposite side (contrecoup)</td><td><strong>Contusions</strong>: bruises in the brain — injured tissue where capillaries rupture. <strong>Orbitofrontal damage → social regulation problems</strong> (the orbital frontal cortex sits on bony ridges above the eyes).</td></tr>
+    <tr><td><strong>2. Diffuse axonal injury</strong></td><td>Rotational components put major <strong>shear stress on axons</strong> connecting brain cells</td><td>Axon tearing, cognitive changes; can cause <strong>immediate coma</strong></td></tr>
+  </table></div>
+
+  <h3>Chronic traumatic encephalopathy (CTE): trauma meets degeneration</h3>
+  <p><strong>CTE</strong> — repeated head trauma, <em>with or without</em> loss of consciousness. Leads to a
+  build-up of <strong>tau</strong> in the <strong>frontal cortex</strong> (tau also appears in Alzheimer's —
+  Ch. 7). Ranked by football position, the players who take the most repeated hits carry the most risk.</p>
+
+  <div class="viz">
+    <div class="viz-title">CTE symptom progression</div>
+    <svg id="ctSvg" viewBox="0 0 640 130" role="img" aria-label="Four stages of CTE symptoms"></svg>
+    <div class="controls"><label>Stage <input type="range" id="ctS" min="1" max="4" step="1" value="1" data-out="ctSv" data-fmt="int"><span class="val" id="ctSv"></span></label></div>
+    <div class="caption">What to notice: attention and mood come first; memory, executive function and dementia
+    come later — tracking tau spreading from frontal cortex outward.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Someone you like hits their head and loses consciousness at a party. You should…</div>
+    <button class="opt">Take them home, pull the shades, put them to bed</button>
+    <button class="opt">Pour ice water on them</button>
+    <button class="opt">Let them sleep it off, then check in the morning</button>
+    <button class="opt">Take them to the ER / call 911, and keep them talking and awake</button>
+    <div class="why"><strong>Why:</strong> The lecture's answer is options 1 and 4 together: medical attention
+    immediately (concussion or internal bleeding — e.g. a hemorrhage — can be serious), and keeping them
+    awake and talking so you can monitor for confusion or disorientation.</div>
+  </div>
+
+  <h2 id="check-yourself">5. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">A clot blocks the posterior cerebral artery. Which lobes are most at risk?</div>
+    <button class="opt">Frontal + parietal</button>
+    <button class="opt">Occipital + temporal</button>
+    <button class="opt">Temporal + parietal</button>
+    <button class="opt">Frontal only</button>
+    <div class="why"><strong>Why:</strong> PCA → occipital + temporal. Frontal + parietal is ACA; temporal +
+    parietal is MCA. This is an <em>ischemic</em> stroke.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">A patient speaks fluently in long sentences that make little sense and can't follow simple instructions. Diagnosis?</div>
+    <button class="opt">Wernicke's aphasia</button>
+    <button class="opt">Broca's aphasia</button>
+    <button class="opt">Ataxia</button>
+    <button class="opt">Prosopagnosia</button>
+    <div class="why"><strong>Why:</strong> Fluent production + impaired comprehension. Broca's is the reverse:
+    halting speech, good comprehension.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">An aneurysm ruptures. This is a…</div>
+    <button class="opt">Ischemic stroke</button>
+    <button class="opt">Diffuse axonal injury</button>
+    <button class="opt">Hemorrhagic stroke</button>
+    <button class="opt">Atherosclerosis</button>
+    <div class="why"><strong>Why:</strong> A burst vessel = hemorrhage. Ischemic is a blockage (clot or plaque).</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">After a car crash with a lot of head rotation, a patient is in an immediate coma but scans show few bruises. Most likely mechanism?</div>
+    <button class="opt">Coup–contrecoup contusions</button>
+    <button class="opt">Diffuse axonal injury</button>
+    <button class="opt">CTE</button>
+    <button class="opt">Atherosclerosis</button>
+    <div class="why"><strong>Why:</strong> Rotation shears axons throughout the brain — "diffuse", not a
+    localized bruise. CTE needs <em>repeated</em> trauma over time.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const T = (svg, x, y, s, a = {}) => { const t = SG.el("text", Object.assign({x, y, "text-anchor":"middle", fill:"var(--ink)", "font-size":13}, a)); t.textContent = s; svg.appendChild(t); return t; };
+  // ---------- arteries ----------
+  const lobes = {
+    Frontal:   {d:"M70,170 C60,100 120,45 220,40 L250,42 C245,90 240,130 230,165 C180,165 120,175 70,170 Z", tx:150, ty:110},
+    Parietal:  {d:"M250,42 C300,35 380,45 420,70 C400,110 380,135 360,150 C320,155 270,160 230,165 C240,130 245,90 250,42 Z", tx:320, ty:95},
+    Occipital: {d:"M420,70 C470,100 505,160 490,200 C475,225 440,235 405,232 C395,200 375,170 360,150 C380,135 400,110 420,70 Z", tx:440, ty:165},
+    Temporal:  {d:"M70,170 C120,175 180,165 230,165 C270,160 320,155 360,150 C375,170 395,200 405,232 C380,238 340,262 260,258 C200,250 120,230 70,170 Z", tx:270, ty:210}
+  };
+  const terr = {ACA:["Frontal","Parietal"], MCA:["Temporal","Parietal"], PCA:["Occipital","Temporal"]};
+  const deficit = {
+    ACA: "<strong>ACA → frontal + parietal.</strong> Expect problems with movement planning/control and body sensation (motor cortex sits at the back of frontal, somatosensory at the front of parietal).",
+    MCA: "<strong>MCA → temporal + parietal.</strong> The side of the brain — in the left hemisphere, this is where language regions sit, so aphasia is a classic MCA-stroke outcome.",
+    PCA: "<strong>PCA → occipital + temporal.</strong> Occipital = visual cortex, so expect visual-field loss; ventral temporal damage can hit face/object recognition areas."
+  };
+  const ar = document.getElementById("arSvg"), arOut = document.getElementById("arOut");
+  function drawAr(a) {
+    ar.innerHTML = "";
+    const g = SG.el("g", {transform:"translate(60,10)"}); ar.appendChild(g);
+    Object.entries(lobes).forEach(([n, L]) => {
+      const on = a && terr[a].includes(n);
+      g.appendChild(SG.el("path", {d:L.d, fill: on ? "var(--rose)" : "var(--bg-soft)", opacity: on ? .6 : 1, stroke:"var(--line-2)", "stroke-width":2}));
+      const t = SG.el("text", {x:L.tx, y:L.ty, "text-anchor":"middle", fill:"var(--ink)", "font-size":13, "font-weight": on ? 700 : 400}); t.textContent = n; g.appendChild(t);
+    });
+    g.appendChild(SG.el("ellipse", {cx:430, cy:268, rx:55, ry:26, fill:"var(--bg-soft)", stroke:"var(--line-2)"}));
+    if (a) arOut.innerHTML = deficit[a];
+  }
+  drawAr(null);
+  document.querySelectorAll("[data-ar]").forEach(b => b.onclick = () => drawAr(b.dataset.ar));
+
+  // ---------- TBI animation ----------
+  const tb = document.getElementById("tbSvg"), tbOut = document.getElementById("tbOut");
+  let anim = null;
+  function frame(dx, rot, hits) {
+    tb.innerHTML = "";
+    tb.appendChild(SG.el("ellipse", {cx:320, cy:130, rx:200, ry:110, fill:"none", stroke:"var(--ink-mute)", "stroke-width":10}));
+    tb.appendChild(SG.el("ellipse", {cx:320, cy:130, rx:188, ry:98, fill:"var(--accent)", opacity:.08}));
+    const g = SG.el("g", {transform:`translate(${dx},0) rotate(${rot} 320 130)`}); tb.appendChild(g);
+    g.appendChild(SG.el("ellipse", {cx:320, cy:130, rx:165, ry:82, fill:"var(--rose)", opacity:.45, stroke:"var(--rose)", "stroke-width":2}));
+    if (rot) for (let i = 0; i < 7; i++) g.appendChild(SG.el("path", {d:`M${200 + i * 40},${95 + (i % 2) * 20} q20,${rot > 0 ? 25 : -25} 40,0`, fill:"none", stroke:"var(--gold)", "stroke-width":3}));
+    hits.forEach(([x, s]) => { tb.appendChild(SG.el("circle", {cx:x, cy:130, r:16, fill:"var(--gold)", opacity:.9})); T(tb, x, 250, s, {"font-size":12}); });
+    T(tb, 40, 135, "→", {"font-size":34, fill:"var(--ink-soft)"});
+  }
+  frame(0, 0, []);
+  function run(kind) {
+    if (anim) cancelAnimationFrame(anim);
+    const t0 = performance.now();
+    const step = now => {
+      const t = (now - t0) / 1000;
+      if (kind === "hit") {
+        const dx = t < 0.4 ? -30 * Math.sin(t / 0.4 * Math.PI / 2) : t < 1.0 ? -30 + 60 * ((t - 0.4) / 0.6) : 30 * Math.max(0, 1 - (t - 1.0) / 0.6);
+        const hits = []; if (t > 0.3) hits.push([140, "coup (impact side)"]); if (t > 0.95) hits.push([500, "contrecoup (opposite)"]);
+        frame(dx, 0, hits);
+        tbOut.innerHTML = "<strong>Coup–contrecoup:</strong> the brain lags the skull, strikes the impact side, rebounds and strikes the opposite side → <strong>contusions</strong> at both.";
+      } else {
+        const rot = 14 * Math.sin(Math.min(t, 1.6) / 1.6 * Math.PI * 2) * Math.max(0, 1 - t / 2);
+        frame(0, rot, []);
+        tbOut.innerHTML = "<strong>Diffuse axonal injury:</strong> rotation twists the brain around itself; axons (gold) crossing between regions are stretched and torn throughout — no single bruise, but widespread damage and possible immediate coma.";
+      }
+      if (t < 2) anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+  }
+  document.getElementById("tbHit").onclick = () => run("hit");
+  document.getElementById("tbRot").onclick = () => run("rot");
+
+  // ---------- CTE stages ----------
+  const ct = document.getElementById("ctSvg"), cs = document.getElementById("ctS");
+  const stages = ["Headache; impaired attention & concentration", "Depression; explosivity; short-term memory loss", "Executive dysfunction; cognitive impairment", "Dementia; word-finding difficulty; aggression"];
+  function drawCt() {
+    ct.innerHTML = ""; const s = +cs.value;
+    stages.forEach((txt, i) => {
+      const x = 10 + i * 157, on = i < s;
+      ct.appendChild(SG.el("rect", {x, y:20, width:150, height:90, rx:10, fill: on ? "var(--rose)" : "var(--bg-soft)", opacity: on ? (0.25 + 0.18 * i) : 1, stroke:"var(--line-2)"}));
+      T(ct, x + 75, 42, "Stage " + (i + 1), {"font-weight":700});
+      const words = txt.split("; ");
+      words.forEach((w, k) => T(ct, x + 75, 64 + k * 16, w, {"font-size":11.5, fill: on ? "var(--ink)" : "var(--ink-mute)"}));
+    });
+  }
+  cs.addEventListener("input", drawCt); drawCt();
+});
+</script>
+</body>
+</html>

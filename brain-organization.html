@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organizing &amp; dissecting the brain · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="brain-organization">
+<main>
+
+  <div class="eyebrow">Part I · Chapter 3 · Lectures 2 &amp; 3</div>
+  <h1>Organizing &amp; dissecting the brain</h1>
+  <p class="subtitle">The six cortical layers, the directions and planes anatomists use, the four ways to
+  carve up the brain, and what you saw in the sheep-brain dissection.</p>
+
+  <div data-toc></div>
+
+  <h2 id="cortical-layers">1. Cortical columns and the six layers</h2>
+
+  <p>The <strong>cerebral cortex</strong> is the thin, folded outer layer of the cerebrum. Cut straight down
+  through it and you see <strong>six distinct layers</strong>, stacked like floors in a building, organized
+  into columns. Each floor has a different job in the building's mail system:</p>
+
+  <div class="viz">
+    <div class="viz-title">Who talks to whom in a cortical column — click a layer group</div>
+    <svg id="lySvg" viewBox="0 0 640 300" role="img" aria-label="Six cortical layers with input from thalamus to layer 4, cortico-cortical connections in layers 1–3, output from layers 5–6"></svg>
+    <div class="controls">
+      <button class="btn" data-ly="in">Layer 4 — input</button>
+      <button class="btn" data-ly="cc">Layers 1–3 — cortex ↔ cortex</button>
+      <button class="btn" data-ly="out">Layers 5–6 — output</button>
+    </div>
+    <div class="caption" id="lyOut">What to notice: input and output live on <em>different</em> floors. The
+    thalamus is both where most input comes from and where layer 6 sends output back.</div>
+  </div>
+
+  <div class="box warn"><span class="label">Common mistake — the source changed</span>
+  The Lecture 2 study guide says "Layer 1 = cortex-to-cortex, Layer 6 = output". Lecture 3 opened by
+  <em>correcting</em> this after exit tickets showed confusion: <strong>Layers 1, 2, 3</strong> =
+  connections from one cortical region to another; <strong>Layers 5, 6</strong> = output (to thalamus);
+  <strong>Layer 4</strong> = input (from thalamus and other cortex). Use the Lecture 3 version. You'll use
+  "LGN → layer 4 of V1" again in Chapter 10.</div>
+
+  <h2 id="coordinates">2. Directions and planes</h2>
+
+  <p>"Top", "front" and "side" are ambiguous — top of what, facing which way? Anatomists use fixed terms.
+  Learn them as pairs:</p>
+
+  <div class="grid2">
+    <div class="scroll-x"><table class="tight">
+      <tr><th>Term</th><th>Means</th><th>Hook</th></tr>
+      <tr><td><strong>Dorsal</strong></td><td>Top of the brain</td><td>A dolphin's <em>dorsal</em> fin is on top</td></tr>
+      <tr><td><strong>Ventral</strong></td><td>Bottom of the brain</td><td>"Venter" = belly</td></tr>
+      <tr><td><strong>Rostral</strong></td><td>Front of the brain</td><td>Rostrum = beak / nose</td></tr>
+      <tr><td><strong>Caudal</strong></td><td>Back of the brain</td><td>Cauda = tail</td></tr>
+      <tr><td><strong>Lateral</strong></td><td>Side of the brain</td><td>Lateral = side (as in a football lateral)</td></tr>
+    </table></div>
+    <div class="scroll-x"><table class="tight">
+      <tr><th>Plane</th><th>Definition (lecture)</th></tr>
+      <tr><td><strong>Horizontal</strong></td><td>Orthogonal to the main axis of the body — parallel to the floor</td></tr>
+      <tr><td><strong>Sagittal</strong></td><td>Aligned with the central tissue that splits the brain into two hemispheres — the "arrow" plane, front to back</td></tr>
+      <tr><td><strong>Coronal</strong></td><td>Cuts through the two ears and the top of the head — like a headband / crown</td></tr>
+    </table></div>
+  </div>
+
+  <div class="viz">
+    <div class="viz-title">Slice the brain — pick a plane</div>
+    <svg id="plSvg" viewBox="0 0 640 300" role="img" aria-label="Lateral view of a brain with a cutting plane and a sketch of the resulting slice"></svg>
+    <div class="controls">
+      <button class="btn" data-pl="sag">Sagittal</button>
+      <button class="btn" data-pl="cor">Coronal</button>
+      <button class="btn" data-pl="hor">Horizontal</button>
+    </div>
+    <div class="caption" id="plOut"></div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">You look at a slice showing both hemispheres side by side, with the top of the head at the top and both temporal lobes hanging down on either side. Which plane is it?</div>
+    <button class="opt">Sagittal</button>
+    <button class="opt">Horizontal</button>
+    <button class="opt">Coronal</button>
+    <div class="why"><strong>Why:</strong> A slice that shows <em>both</em> hemispheres and runs top-to-bottom
+    goes through both ears — coronal. A sagittal slice shows only one hemisphere (front-to-back). A
+    horizontal slice would show both hemispheres but viewed from above, front at one end and back at the
+    other.</div>
+  </div>
+
+  <h2 id="four-divisions">3. Four ways to divide the brain</h2>
+
+  <p>Why four? Because "where does one part end and the next begin" has different answers depending on what
+  you measure — tissue colour, cell shape, folds, or function.</p>
+
+  <div class="viz">
+    <div class="viz-title">Anatomical division: the four lobes (lateral view, front = left)</div>
+    <svg id="lbSvg" viewBox="0 0 640 320" role="img" aria-label="Lateral view of the brain with frontal, parietal, occipital and temporal lobes, cerebellum and brainstem"></svg>
+    <div class="controls"><span class="val" id="lbOut">Click a lobe</span></div>
+    <div class="caption">Schematic, not to scale. What to notice: the lobes are defined by <em>landmarks</em>
+    (the big sulci), which is exactly why the lecture says sulci and gyri are used as landmarks for
+    surgery.</div>
+  </div>
+
+  <div class="scroll-x"><table>
+    <tr><th>Division</th><th>Based on</th><th>Details from lecture</th></tr>
+    <tr><td><strong>1. Grey vs white matter</strong></td><td>Tissue colour</td><td>Grey = <strong>cell bodies</strong> (somas). White = <strong>axons</strong> — white because of the fatty myelin.</td></tr>
+    <tr><td><strong>2. Cytoarchitectural</strong></td><td>Cell <em>composition</em></td><td><strong>Brodmann areas</strong>: divisions based on the size, shape and density of neurons in different regions of cortex.</td></tr>
+    <tr><td><strong>3. Anatomical</strong></td><td>Folds</td><td>Four lobes: frontal, parietal, occipital, temporal. <strong>Gyri</strong> (ridges) and <strong>sulci</strong> (grooves) form to maximize surface area; used as surgical landmarks.</td></tr>
+    <tr><td><strong>4. Functional</strong></td><td>What a region does</td><td>Specific locations have specific functions — but general functions like language are <em>distributed</em> across regions. Historical (wrong) version: <strong>phrenology</strong> — skull bumps linked to personality (chart from 1883; idea goes back hundreds of years).</td></tr>
+  </table></div>
+
+  <div class="grid2">
+    <div class="box example"><span class="label">Across species</span>
+    Compared with other animals, humans have <strong>more grey matter</strong> (neurons), <strong>more
+    folds</strong> (convolutions), and <strong>more white-matter pathways</strong>.</div>
+    <div class="box example"><span class="label">Across people</span>
+    Human brains differ in size and shape, but general organization is consistent. Because we often study
+    <em>group-average</em> brains, we can miss small indentations (<strong>tertiary sulci</strong>). Manually
+    labelling 4,511 sulci in 572 hemispheres found a new one — the <strong>inframarginal sulcus</strong>,
+    absent from atlases.</div>
+  </div>
+
+  <div class="box intuition"><span class="label">Intuition</span>
+  Why fold at all? A sheet of cortex needs area (more neurons), but the skull is a fixed box. Crumpling a
+  sheet lets a large area fit in a small volume — like crumpling paper into a ball. More folds = more
+  cortex per skull.</div>
+
+  <h2 id="dissection">4. The sheep-brain dissection</h2>
+
+  <h3>The three meninges</h3>
+  <p>The meninges are the protective outer layers of the brain. From outside in — mnemonic
+  <strong>"DAP"</strong>, or "the brain is protected by a <strong>D</strong>ad, an <strong>A</strong>unt and a
+  <strong>P</strong>arent":</p>
+
+  <div class="viz">
+    <div class="viz-title">Meninges in cross-section (skull at top, brain at bottom)</div>
+    <svg viewBox="0 0 640 250" role="img" aria-label="Layers from skull: dura mater, arachnoid mater with CSF beneath it, pia mater on the brain surface following the folds">
+      <rect x="20" y="10" width="600" height="36" fill="var(--ink-mute)" opacity=".5"/>
+      <text x="320" y="33" text-anchor="middle" fill="var(--ink)" font-size="14">Skull</text>
+      <rect x="20" y="46" width="600" height="30" fill="var(--rose)" opacity=".75"/>
+      <text x="630" y="66" text-anchor="end" fill="var(--ink)" font-size="13" font-weight="600">Dura mater — tough, thick, lines the skull (removed in our sheep brains)</text>
+      <rect x="20" y="76" width="600" height="14" fill="var(--gold)" opacity=".8"/>
+      <g stroke="var(--gold)" stroke-width="1.5">
+        <line x1="60" y1="90" x2="75" y2="132"/><line x1="120" y1="90" x2="110" y2="120"/><line x1="200" y1="90" x2="215" y2="128"/><line x1="290" y1="90" x2="280" y2="125"/><line x1="380" y1="90" x2="395" y2="130"/><line x1="470" y1="90" x2="460" y2="120"/><line x1="560" y1="90" x2="575" y2="130"/>
+      </g>
+      <text x="630" y="87" text-anchor="end" fill="var(--ink)" font-size="13" font-weight="600">Arachnoid mater — web-like middle layer</text>
+      <text x="330" y="112" text-anchor="middle" fill="var(--accent)" font-size="13" font-style="italic">subarachnoid space: CSF circulates here</text>
+      <path d="M20,135 Q70,120 110,135 Q140,200 170,135 Q230,115 290,135 Q320,210 350,135 Q420,118 480,135 Q510,195 540,135 Q580,122 620,135 L620,250 L20,250 Z" fill="var(--accent-2)" opacity=".35"/>
+      <path d="M20,135 Q70,120 110,135 Q140,200 170,135 Q230,115 290,135 Q320,210 350,135 Q420,118 480,135 Q510,195 540,135 Q580,122 620,135" fill="none" stroke="var(--accent-3)" stroke-width="4"/>
+      <text x="320" y="238" text-anchor="middle" fill="var(--ink)" font-size="13" font-weight="600">Pia mater (thick line) — thin, stuck to the brain, follows every gyrus and sulcus</text>
+    </svg>
+    <div class="caption">What to notice: only the pia dips into the sulci; the arachnoid bridges over them.
+    Cerebrospinal fluid sits <em>beneath the arachnoid</em> — a favourite exam detail.</div>
+  </div>
+
+  <h3>What you identified in each view</h3>
+  <div class="scroll-x"><table>
+    <tr><th>View</th><th>Structures</th></tr>
+    <tr><td><strong>Dorsal</strong> (from above)</td><td>Meninges; <strong>motor cortex</strong> and <strong>somatosensory cortex</strong> (on either side of the central sulcus)</td></tr>
+    <tr><td><strong>Ventral</strong> (from below)</td><td>Underside of the brain (brainstem, optic nerves/chiasm)</td></tr>
+    <tr><td><strong>Sagittal</strong> (cut down the middle)</td><td><strong>White matter</strong> (myelinated axons) vs <strong>grey matter</strong> (cell bodies); cerebral cortex as the thin folded outer layer; subcortical structures</td></tr>
+    <tr><td><strong>Coronal</strong></td><td><strong>Thalamus</strong>, <strong>basal ganglia</strong>, <strong>hippocampus</strong></td></tr>
+  </table></div>
+
+  <p class="muted">The slides were mostly photographs with labels; the table rebuilds the labels that came
+  through in text. The ventral-view contents are my reconstruction — check against your lab notes.</p>
+
+  <div class="box key"><span class="label">Key idea — why these three coronal structures matter</span>
+  They reappear throughout the midterm material: <strong>basal ganglia</strong> → Parkinson's and
+  Huntington's (Ch. 7); <strong>hippocampus</strong> → Alzheimer's (Ch. 7); <strong>thalamus</strong> →
+  layer 4 input, the basal-ganglia output target, and the LGN relay in vision (Ch. 10).</div>
+
+  <h2 id="check-yourself">5. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">White matter looks white because it is mostly…</div>
+    <button class="opt">Cell bodies</button>
+    <button class="opt">Myelinated axons</button>
+    <button class="opt">Astrocytes</button>
+    <button class="opt">Cerebrospinal fluid</button>
+    <div class="why"><strong>Why:</strong> Myelin is fatty and pale. Cell bodies are the grey matter.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">A map dividing cortex by the size, shape and density of its neurons is a…</div>
+    <button class="opt">Phrenology chart</button>
+    <button class="opt">Lobe map</button>
+    <button class="opt">Functional map</button>
+    <button class="opt">Brodmann (cytoarchitectural) map</button>
+    <div class="why"><strong>Why:</strong> "Cyto" = cell; cytoarchitecture = cellular composition. Lobes are
+    defined by folds; functional maps by what regions do; phrenology by skull bumps.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">A tumour sits at the caudal end of the brain. It's most likely in the…</div>
+    <button class="opt">Occipital lobe</button>
+    <button class="opt">Frontal lobe</button>
+    <button class="opt">Top of the parietal lobe</button>
+    <button class="opt">Temporal pole</button>
+    <div class="why"><strong>Why:</strong> Caudal = back ("tail"). The occipital lobe is the back of the
+    cerebrum. Frontal would be rostral; top of parietal would be dorsal.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Axons arriving from the thalamus mostly terminate in cortical layer…</div>
+    <button class="opt">1</button>
+    <button class="opt">6</button>
+    <button class="opt">4</button>
+    <button class="opt">2–3</button>
+    <div class="why"><strong>Why:</strong> Layer 4 is the input layer. Layer 6 is where output goes
+    <em>back</em> to the thalamus — the tempting mix-up.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const T = (svg, x, y, s, a = {}) => { const t = SG.el("text", Object.assign({x, y, "text-anchor":"middle", fill:"var(--ink)", "font-size":13}, a)); t.textContent = s; svg.appendChild(t); return t; };
+  const marker = (svg, id, col) => { const d = SG.el("defs", {}), m = SG.el("marker", {id, viewBox:"0 0 10 10", refX:9, refY:5, markerWidth:7, markerHeight:7, orient:"auto"}); m.appendChild(SG.el("path", {d:"M0,0 L10,5 L0,10 z", fill:col})); d.appendChild(m); svg.appendChild(d); };
+
+  // ---------- cortical layers ----------
+  const ly = document.getElementById("lySvg"), lyOut = document.getElementById("lyOut");
+  function drawLy(sel) {
+    ly.innerHTML = ""; marker(ly, "lyA", "var(--accent)"); marker(ly, "lyB", "var(--rose)"); marker(ly, "lyC", "var(--accent-3)");
+    const grp = n => n <= 3 ? "cc" : n === 4 ? "in" : "out";
+    for (let n = 1; n <= 6; n++) {
+      const y = 20 + (n - 1) * 40, hi = sel && grp(n) === sel;
+      ly.appendChild(SG.el("rect", {x:220, y, width:200, height:38, fill: hi ? "var(--accent)" : "var(--bg-soft)", opacity: hi ? .3 : 1, stroke:"var(--line-2)"}));
+      T(ly, 320, y + 24, "Layer " + n, {"font-weight": hi ? 700 : 400});
+    }
+    T(ly, 320, 285, "white matter below ↓", {fill:"var(--ink-mute)", "font-size":12});
+    T(ly, 320, 14, "brain surface (pia)", {fill:"var(--ink-mute)", "font-size":12});
+    // thalamus
+    ly.appendChild(SG.el("ellipse", {cx:90, cy:230, rx:60, ry:28, fill:"var(--gold)", opacity:.5})); T(ly, 90, 235, "Thalamus");
+    ly.appendChild(SG.el("rect", {x:500, y:40, width:120, height:60, rx:10, fill:"var(--accent-2)", opacity:.3})); T(ly, 560, 67, "Other cortical"); T(ly, 560, 85, "region");
+    if (!sel || sel === "in") { ly.appendChild(SG.el("path", {d:"M130,215 Q180,160 220,160", fill:"none", stroke:"var(--accent)", "stroke-width":3, "marker-end":"url(#lyA)"})); ly.appendChild(SG.el("path", {d:"M500,95 Q460,150 420,160", fill:"none", stroke:"var(--accent)", "stroke-width":3, "marker-end":"url(#lyA)"})); }
+    if (!sel || sel === "cc") ly.appendChild(SG.el("path", {d:"M420,70 Q460,60 500,68", fill:"none", stroke:"var(--accent-3)", "stroke-width":3, "marker-end":"url(#lyC)"}));
+    if (!sel || sel === "out") ly.appendChild(SG.el("path", {d:"M220,240 Q180,250 150,238", fill:"none", stroke:"var(--rose)", "stroke-width":3, "marker-end":"url(#lyB)"}));
+    const msgs = {
+      in: "<strong>Layer 4 = input.</strong> Axons arriving from the thalamus and from other regions of cortex. (In vision: LGN → layer 4 of V1.)",
+      cc: "<strong>Layers 1, 2, 3 = cortex ↔ cortex.</strong> Connections from one region of cortex to another.",
+      out: "<strong>Layers 5, 6 = output.</strong> Connections from one location in cortex to the thalamus (and beyond)."
+    };
+    if (sel) lyOut.innerHTML = msgs[sel];
+  }
+  drawLy(null);
+  document.querySelectorAll("[data-ly]").forEach(b => b.onclick = () => drawLy(b.dataset.ly));
+
+  // ---------- brain outline shared ----------
+  const BRAIN = "M70,170 C60,100 120,45 220,40 C300,35 380,45 440,80 C490,110 505,160 490,200 C470,235 420,245 380,238 C340,262 260,262 210,250 C150,245 90,225 70,170 Z";
+  // ---------- planes ----------
+  const pl = document.getElementById("plSvg"), plOut = document.getElementById("plOut");
+  function drawPl(p) {
+    pl.innerHTML = ""; marker(pl, "plA", "var(--ink-soft)");
+    const g = SG.el("g", {transform:"translate(-40,10) scale(0.9)"}); pl.appendChild(g);
+    g.appendChild(SG.el("path", {d:BRAIN, fill:"var(--rose)", opacity:.35, stroke:"var(--rose)", "stroke-width":2}));
+    g.appendChild(SG.el("ellipse", {cx:420, cy:250, rx:55, ry:30, fill:"var(--accent-2)", opacity:.4}));
+    g.appendChild(SG.el("rect", {x:330, y:240, width:34, height:60, rx:10, fill:"var(--ink-mute)", opacity:.5}));
+    // direction arrows
+    const ar = (x1, y1, x2, y2, s, tx, ty) => { pl.appendChild(SG.el("line", {x1, y1, x2, y2, stroke:"var(--ink-soft)", "stroke-width":2, "marker-end":"url(#plA)"})); T(pl, tx, ty, s, {fill:"var(--ink-soft)", "font-size":12}); };
+    ar(250, 22, 250, 4, "", 0, 0); T(pl, 290, 16, "Dorsal", {"font-size":12, fill:"var(--ink-soft)"});
+    ar(250, 272, 250, 292, "", 0, 0); T(pl, 290, 290, "Ventral", {"font-size":12, fill:"var(--ink-soft)"});
+    ar(40, 150, 14, 150, "", 0, 0); T(pl, 30, 135, "Rostral", {"font-size":12, fill:"var(--ink-soft)"});
+    ar(450, 150, 476, 150, "", 0, 0); T(pl, 462, 135, "Caudal", {"font-size":12, fill:"var(--ink-soft)"});
+    // plane
+    const hl = {stroke:"var(--accent)", "stroke-width":4, "stroke-dasharray":"8 5"};
+    let msg = "Pick a plane to see where the cut goes and what the slice looks like.";
+    if (p === "sag") { pl.appendChild(SG.el("rect", {x:30, y:30, width:420, height:230, fill:"var(--accent)", opacity:.12})); T(pl, 240, 150, "cut runs through the midline, in the plane of the page", {fill:"var(--accent)", "font-size":12}); msg = "<strong>Sagittal</strong> — the cut is in the plane of this picture, down the midline between the hemispheres. The slice shows <em>one</em> hemisphere, front to back (the view where you saw white vs grey matter and the cortex as a thin folded rim)."; }
+    if (p === "cor") { pl.appendChild(SG.el("line", Object.assign({x1:230, y1:25, x2:230, y2:270}, hl))); msg = "<strong>Coronal</strong> — a vertical cut through both ears and the top of the head. The slice shows <em>both</em> hemispheres side by side (the view where you found thalamus, basal ganglia, hippocampus)."; }
+    if (p === "hor") { pl.appendChild(SG.el("line", Object.assign({x1:40, y1:150, x2:460, y2:150}, hl))); msg = "<strong>Horizontal</strong> — orthogonal to the body's main axis, parallel to the floor. The slice is seen from above: both hemispheres, front at one end, back at the other."; }
+    // slice sketch
+    const sx = 560, sy = 150;
+    if (p === "sag") { pl.appendChild(SG.el("path", {d:"M500,170 C495,110 540,80 590,90 C630,100 640,150 620,190 C600,215 520,215 500,170 Z", fill:"var(--rose)", opacity:.35, stroke:"var(--rose)"})); T(pl, sx, 245, "one hemisphere, side-on", {"font-size":12, fill:"var(--ink-soft)"}); }
+    if (p === "cor") { pl.appendChild(SG.el("path", {d:"M560,90 C510,90 495,140 510,180 C520,205 545,210 558,195 Z M562,90 C612,90 627,140 612,180 C602,205 577,210 564,195 Z", fill:"var(--rose)", opacity:.35, stroke:"var(--rose)"})); pl.appendChild(SG.el("ellipse", {cx:548, cy:160, rx:9, ry:12, fill:"var(--gold)"})); pl.appendChild(SG.el("ellipse", {cx:574, cy:160, rx:9, ry:12, fill:"var(--gold)"})); T(pl, sx, 245, "both hemispheres, face-on", {"font-size":12, fill:"var(--ink-soft)"}); }
+    if (p === "hor") { pl.appendChild(SG.el("path", {d:"M559,70 C520,75 505,130 515,190 C525,225 550,230 559,220 Z M563,70 C602,75 617,130 607,190 C597,225 572,230 563,220 Z", fill:"var(--rose)", opacity:.35, stroke:"var(--rose)"})); T(pl, sx, 60, "front", {"font-size":11, fill:"var(--ink-mute)"}); T(pl, sx, 240, "both hemispheres, from above", {"font-size":12, fill:"var(--ink-soft)"}); }
+    plOut.innerHTML = msg;
+  }
+  drawPl(null);
+  document.querySelectorAll("[data-pl]").forEach(b => b.onclick = () => drawPl(b.dataset.pl));
+
+  // ---------- lobes ----------
+  const lb = document.getElementById("lbSvg"), lbOut = document.getElementById("lbOut");
+  const lobes = [
+    {n:"Frontal", c:"var(--accent)", d:"M70,170 C60,100 120,45 220,40 L250,42 C245,90 240,130 230,165 C180,165 120,175 70,170 Z", tx:150, ty:110, info:"Frontal lobe — front (rostral). Contains motor cortex just in front of the central sulcus. Orbitofrontal damage → social-regulation problems (Ch. 6)."},
+    {n:"Parietal", c:"var(--accent-3)", d:"M250,42 C300,35 380,45 420,70 C400,110 380,135 360,150 C320,155 270,160 230,165 C240,130 245,90 250,42 Z", tx:320, ty:95, info:"Parietal lobe — top-back. Somatosensory cortex just behind the central sulcus."},
+    {n:"Occipital", c:"var(--gold)", d:"M420,70 C470,100 505,160 490,200 C475,225 440,235 405,232 C395,200 375,170 360,150 C380,135 400,110 420,70 Z", tx:440, ty:165, info:"Occipital lobe — the back (caudal). Primary visual cortex, V1 (Ch. 10)."},
+    {n:"Temporal", c:"var(--rose)", d:"M70,170 C120,175 180,165 230,165 C270,160 320,155 360,150 C375,170 395,200 405,232 C380,238 340,262 260,258 C200,250 120,230 70,170 Z", tx:270, ty:210, info:"Temporal lobe — the side, below the lateral sulcus. Houses the fusiform face area on its underside (Ch. 8) and MT/V5 near the occipital border (Ch. 12)."}
+  ];
+  lobes.forEach(L => {
+    const p = SG.el("path", {d:L.d, fill:L.c, opacity:.45, stroke:"var(--panel)", "stroke-width":2, style:"cursor:pointer"});
+    p.addEventListener("click", () => { lobes.forEach(o => o.el.setAttribute("opacity", .25)); p.setAttribute("opacity", .8); lbOut.textContent = L.info; });
+    L.el = p; lb.appendChild(p); T(lb, L.tx, L.ty, L.n, {"font-weight":600, style:"pointer-events:none"});
+  });
+  lb.appendChild(SG.el("ellipse", {cx:430, cy:268, rx:60, ry:32, fill:"var(--accent-2)", opacity:.4})); T(lb, 430, 273, "Cerebellum", {"font-size":12});
+  lb.appendChild(SG.el("rect", {x:330, y:255, width:36, height:62, rx:10, fill:"var(--ink-mute)", opacity:.45})); T(lb, 300, 305, "Brainstem", {"font-size":12});
+  T(lb, 40, 30, "← rostral (front)", {"text-anchor":"start", fill:"var(--ink-mute)", "font-size":12});
+});
+</script>
+</body>
+</html>

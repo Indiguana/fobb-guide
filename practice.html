@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Midterm practice · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="practice">
+<main>
+
+  <div class="eyebrow">Reference</div>
+  <h1>Midterm practice</h1>
+  <p class="subtitle">Exam-shaped problems that mix chapters the way a real exam does. Commit to an answer —
+  out loud or on paper — before opening each step. If a problem feels effortful, that's the active learning
+  from Chapter 1 doing its job.</p>
+
+  <div data-toc></div>
+
+  <div class="box key"><span class="label">What the study guides explicitly ask for</span>
+  <ul>
+    <li>Benefits and limitations of <strong>behavior research</strong> and <strong>patient studies</strong> (L7 Q1, Q2) — and of <strong>every</strong> brain-measuring technique</li>
+    <li>Apply <strong>Marr's 3 levels</strong> and <strong>Tinbergen's 4 questions</strong> to movement, flight, vision, and an example of your own</li>
+    <li>Understand the effects of <strong>damaging each point</strong> of the visual system</li>
+    <li>Single vs double dissociation, with their weaknesses and fixes</li>
+  </ul>
+  Every one of those is drilled below.</div>
+
+  <h2 id="methods">1. Methods</h2>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Short answer</span>Benefits and limitations of behavior research (L7 study guide Q1)</div>
+    <div class="g-body"><p>Give three benefits and three limitations, each with an example from the face lectures.</p></div>
+    <details class="step"><summary>Benefits</summary><div><ol>
+      <li><strong>Characterizes representations</strong> — orientation-specific vs invariant (Dutch politicians).</li>
+      <li><strong>Dissociates representations</strong> — faces vs objects (inversion effect).</li>
+      <li><strong>Cheap and low-tech.</strong></li></ol></div></details>
+    <details class="step"><summary>Limitations</summary><div><ol>
+      <li><strong>Sparse, limited data</strong> — one response per trial.</li>
+      <li><strong>Hard to see fine-grained stages</strong> of processing — reaction time lumps perception, decision and motor planning together.</li>
+      <li><strong>No relation to the brain.</strong></li></ol></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Short answer</span>Benefits and limitations of patient studies (L7 study guide Q2)</div>
+    <div class="g-body"><p>Use prosopagnosia and patient CK.</p></div>
+    <details class="step"><summary>Benefits</summary><div><p>Evidence that a region is <strong>necessary</strong>
+    (a causal clue) — an FFA lesion abolishes face recognition. Double dissociations (prosopagnosia vs CK) show two
+    processes are distinct.</p></div></details>
+    <details class="step"><summary>Limitations</summary><div><ol>
+      <li>Hard to find patients with the "right" lesion.</li>
+      <li>Lesions are messy — affect multiple functions.</li>
+      <li>Chronic lesions → the brain reorganizes during recovery; effects may reflect recovery, not the lesion.</li>
+      <li>Not a direct manipulation — can't turn a region off <em>and back on</em>.</li></ol></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Design</span>Pick the method</div>
+    <div class="g-body"><p>For each question, name the best method and the one limitation that matters most:
+    (a) Is there a region that responds more to tools than to animals? (b) Does the tool response start before or
+    after 200 ms? (c) Is that region <em>necessary</em> for naming tools?</p></div>
+    <details class="step"><summary>(a) Where?</summary><div><p><strong>fMRI</strong> — best whole-brain spatial
+    resolution. Key limitation: correlational (can't show causality); also slow and indirect (BOLD).</p></div></details>
+    <details class="step"><summary>(b) When?</summary><div><p><strong>EEG/MEG</strong> (non-invasive, ms timing) —
+    but can't localize to the region. If you need both where and when: <strong>ECoG/sEEG</strong>, at the cost of
+    rare, invasive, limited-coverage recordings.</p></div></details>
+    <details class="step"><summary>(c) Necessary?</summary><div><p>Perturbation: <strong>patients</strong> with
+    lesions there (messy, recovery), or <strong>direct electrical stimulation</strong> via ECoG (strong causal
+    evidence; can't separate the region from its connections; special patient group).</p></div></details>
+    <details class="step"><summary>The takeaway</summary><div><p>Where → fMRI; when → EEG/MEG; where + when →
+    ECoG/sEEG; causal → patients/stimulation. And the big-picture sentence: <strong>no single method gives the
+    full picture — robust claims come from convergence.</strong></p></div></details>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">A researcher shows FFA activity correlates with face recognition in fMRI, EEG and sEEG. What is still missing for a causal claim?</div>
+    <button class="opt">Better temporal resolution</button>
+    <button class="opt">A bigger sample</button>
+    <button class="opt">A manipulation of FFA that changes face recognition</button>
+    <button class="opt">A 1-back task</button>
+    <div class="why"><strong>Why:</strong> Every one of those is a recording method. To test X → Y you must
+    disrupt X and watch Y — patients or stimulation.</div>
+  </div>
+
+  <h2 id="dissociation">2. Dissociation logic</h2>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Data</span>Read the table</div>
+    <div class="g-body"><p>Percent correct:</p>
+    <div class="scroll-x"><table class="tight center">
+      <tr><th></th><th>Task A: name tools</th><th>Task B: name animals</th><th>Task C: name colours</th></tr>
+      <tr><td>Controls</td><td>92</td><td>90</td><td>99</td></tr>
+      <tr><td>Group 1 (lesion X)</td><td>45</td><td>88</td><td>98</td></tr>
+      <tr><td>Group 2 (lesion Y)</td><td>89</td><td>41</td><td>97</td></tr>
+    </table></div>
+    <p>What can you conclude, and which task is useless?</p></div>
+    <details class="step"><summary>Step 1 — What's being asked?</summary><div><p>Classify the pattern (none /
+    single / double dissociation) and spot any task that lacks sensitivity.</p></div></details>
+    <details class="step"><summary>Step 2 — Tools vs animals</summary><div><p>Group 1: tools impaired, animals
+    spared. Group 2: animals impaired, tools spared. Opposite patterns → <strong>double dissociation</strong>
+    between tool and animal naming, supporting separate (parallel) processes, and ruling out general impairment
+    and task difficulty.</p></div></details>
+    <details class="step"><summary>Step 3 — Colours</summary><div><p>Everyone is at 97–99%: a <strong>ceiling
+    effect</strong>. You can't conclude colour naming is unaffected — the task can't detect a deficit.</p></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Explain</span>Why a double dissociation supports the parallel model</div>
+    <div class="g-body"><p>Serial: Rhythm → Melody → Music. Parallel: Rhythm → Music and Melody → Music. The RH
+    group shows melody impaired / rhythm spared; the LH group shows rhythm impaired / melody spared. Explain which
+    result does the work.</p></div>
+    <details class="step"><summary>Answer</summary><div><p>Melody-impaired / rhythm-spared (RH) fits both models —
+    break the melody stage in either and only melody fails. Rhythm-impaired / melody-spared (LH) is
+    <strong>impossible under the serial model</strong> — melody depends on rhythm's output. So the LH result is
+    what rules out serial and favours parallel.</p></div></details>
+  </div>
+
+  <h2 id="frameworks">3. Frameworks</h2>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Apply</span>Marr + Tinbergen for depth perception</div>
+    <div class="g-body"><p>Give all three Marr levels and all four Tinbergen questions for depth perception.</p></div>
+    <details class="step"><summary>Marr</summary><div><p><strong>Computational:</strong> reach and grasp accurately,
+    navigate safely, judge approaching objects. <strong>Algorithmic:</strong> combine pictorial cues (occlusion,
+    perspective, height, known size, texture, atmosphere, shadows) with non-pictorial cues (disparity, parallax,
+    vergence, accommodation), choosing the interpretation that fits the most cues.
+    <strong>Implementation:</strong> V1–V5; disparity processed from V1 to V5/MT.</p></div></details>
+    <details class="step"><summary>Tinbergen</summary><div><p><strong>Function:</strong> same as computational.
+    <strong>Mechanism:</strong> algorithm + implementation above. <strong>Development:</strong> how depth perception
+    emerges in infancy — e.g. stereopsis needs both eyes aligned during the critical period (strabismus →
+    amblyopia). <strong>Evolution:</strong> predators (forward-facing eyes, disparity) vs prey (wide field of view);
+    the praying mantis's head-swaying for motion parallax.</p></div></details>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">"The cerebellum generates sensory predictions" is an answer at which Marr level?</div>
+    <button class="opt">Computational</button>
+    <button class="opt">Algorithmic</button>
+    <button class="opt">Implementation</button>
+    <button class="opt">Tinbergen's development</button>
+    <div class="why"><strong>Why:</strong> The lecture explicitly frames it at the algorithmic level — the
+    computation the cerebellum performs. "The cerebellum" names hardware, but the claim is about the
+    computation.</div>
+  </div>
+
+  <h2 id="clinical">4. Clinical reasoning</h2>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Case</span>Three patients, one circuit</div>
+    <div class="g-body"><p>Patient 1: slow, small movements, resting tremor. Patient 2: involuntary dance-like
+    movements, cognitive decline, family history. Patient 3: a Parkinson's patient on high-dose medication for
+    eight years, now with writhing involuntary movements. For each: diagnosis, pathway, and chain of effects.</p></div>
+    <details class="step"><summary>Patient 1</summary><div><p><strong>Parkinson's.</strong> Dopamine loss (substantia
+    nigra) → striatum less active → less inhibition of GPi → more inhibition of thalamus → less excitation of cortex.
+    Go pathway.</p></div></details>
+    <details class="step"><summary>Patient 2</summary><div><p><strong>Huntington's</strong> (genetic). Striatal loss in
+    the no-go pathway → less inhibition of GPe → more inhibition of STN → less excitation of GPi → less inhibition of
+    thalamus → chorea. Plus dementia.</p></div></details>
+    <details class="step"><summary>Patient 3</summary><div><p><strong>L-dopa-induced dyskinesia</strong>: unnatural
+    dopamine influx + receptor sensitization → small amounts of dopamine now trigger involuntary movement. Option:
+    DBS of GPi, which releases the thalamus directly without extra dopamine.</p></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Case</span>Where is the lesion?</div>
+    <div class="g-body"><p>(a) Loses the left half of the visual field in both eyes. (b) Loses the outer half of
+    each eye's field. (c) Blind in the right eye only. (d) Fluent nonsense speech, poor comprehension. (e) Can't
+    recognize her husband's face but recognizes his voice and names objects fine. (f) Sees moving cars as a series
+    of snapshots.</p></div>
+    <details class="step"><summary>Answers</summary><div><p>(a) Right optic tract / LGN / radiation / V1 — after the
+    chiasm (contralateral homonymous hemianopia). (b) Optic chiasm (bitemporal hemianopia). (c) Right optic nerve,
+    before the chiasm. (d) Wernicke's area (Wernicke's aphasia). (e) FFA — prosopagnosia. (f) MT/V5 —
+    akinetopsia (patient LM).</p></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Case</span>Stroke or trauma?</div>
+    <div class="g-body"><p>(a) A retired linebacker with depression, explosive temper and memory complaints.
+    (b) A cyclist in an immediate coma after a crash with a violent head twist. (c) Sudden worst-ever headache,
+    vomiting, collapse. (d) A clot in the anterior cerebral artery.</p></div>
+    <details class="step"><summary>Answers</summary><div><p>(a) <strong>CTE</strong> stage 2 — repeated head trauma,
+    frontal tau. (b) <strong>Diffuse axonal injury</strong> — rotational shear. (c) <strong>Hemorrhagic
+    stroke</strong> from a ruptured aneurysm (treat unruptured ones by clipping or coiling). (d)
+    <strong>Ischemic stroke</strong> in frontal + parietal territory.</p></div></details>
+  </div>
+
+  <h2 id="vision">5. Vision mechanisms</h2>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Explain</span>Hermann grid in three sentences</div>
+    <div class="g-body"><p>Explain the grey dots using ON-center, OFF-surround ganglion cells at an intersection
+    vs a corridor.</p></div>
+    <details class="step"><summary>Model answer</summary><div><p>Both cells' centers sit on white and are equally
+    excited. At an intersection, white extends in four directions, so more light hits the OFF-surround than in a
+    corridor, where white runs in only two. More surround inhibition → weaker response → the intersection is seen
+    as darker, a grey dot.</p></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Explain</span>Three adaptation effects, one mechanism</div>
+    <div class="g-body"><p>Connect: not seeing your retinal blood vessels; tilt aftereffect; waterfall
+    (motion) aftereffect.</p></div>
+    <details class="step"><summary>Model answer</summary><div><p>All three come from neurons reducing their response
+    to sustained stimulation. Blood vessels: unchanging input is filtered out (visual adaptation). Tilt: fatigued
+    orientation-tuned simple cells bias the population away from the adapting tilt. Motion: fatigued
+    direction-tuned MT cells let the opposite direction dominate, so a static scene seems to move the opposite way.
+    The brain codes <em>change</em> and <em>balance</em>, not absolute input.</p></div></details>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Order the receptive fields from simplest to most complex.</div>
+    <button class="opt">Simple cell → ganglion cell → LGN → photoreceptor</button>
+    <button class="opt">Photoreceptor → LGN → simple cell → ganglion cell</button>
+    <button class="opt">Ganglion cell → photoreceptor → LGN → simple cell</button>
+    <button class="opt">Photoreceptor → ganglion cell → LGN → simple cell</button>
+    <div class="why"><strong>Why:</strong> Itself → center–surround → center–surround → oriented lines/edges.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">In the Kanizsa figure you perceive an illusory triangle on top and whole discs continuing behind it. Which is which?</div>
+    <button class="opt">Illusory triangle = modal; discs behind = amodal</button>
+    <button class="opt">Illusory triangle = amodal; discs behind = modal</button>
+    <button class="opt">Both are border ownership</button>
+    <button class="opt">Both are modal</button>
+    <div class="why"><strong>Why:</strong> Modal = you actually see an illusory surface. Amodal = you infer an
+    occluded part without seeing it.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Cones are to ___ as rods are to ___.</div>
+    <button class="opt">scotopic, photopic</button>
+    <button class="opt">magno, parvo</button>
+    <button class="opt">fovea and colour, periphery and dim light</button>
+    <button class="opt">rhodopsin, photopsin</button>
+    <div class="why"><strong>Why:</strong> Every other option is reversed. (Cones feed parvo more, rods feed
+    magno more — so "magno, parvo" is the wrong order too.)</div>
+  </div>
+
+  <h2 id="foundations">6. Foundations</h2>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Explain</span>Three drug mechanisms</div>
+    <div class="g-body"><p>Explain how each raises effective neurotransmitter signalling: SSRIs, dopamine agonists,
+    MAO-B inhibitors.</p></div>
+    <details class="step"><summary>Answer</summary><div><p><strong>SSRIs</strong>: block serotonin reuptake → more
+    serotonin stays in the synapse. <strong>Dopamine agonists</strong>: mimic dopamine and bind its receptors
+    directly. <strong>MAO-B inhibitors</strong>: block an enzyme that breaks dopamine down → it lasts longer.</p></div></details>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">If action potentials are all-or-none, a neuron signals a stronger stimulus by…</div>
+    <button class="opt">Larger spikes</button>
+    <button class="opt">Firing more often (frequency coding)</button>
+    <button class="opt">Switching to an electrical synapse</button>
+    <button class="opt">Hyperpolarizing</button>
+    <div class="why"><strong>Why:</strong> Frequency coding.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Output from a cortical column back to the thalamus leaves from layers…</div>
+    <button class="opt">1–3</button>
+    <button class="opt">4</button>
+    <button class="opt">1 only</button>
+    <button class="opt">5–6</button>
+    <div class="why"><strong>Why:</strong> 4 = input, 1–3 = cortex ↔ cortex, 5–6 = output (the Lecture 3
+    correction).</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">CSF circulates beneath which meninx?</div>
+    <button class="opt">Arachnoid mater</button>
+    <button class="opt">Dura mater</button>
+    <button class="opt">Pia mater</button>
+    <button class="opt">None — CSF is inside neurons</button>
+    <div class="why"><strong>Why:</strong> The subarachnoid space, between arachnoid and pia.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

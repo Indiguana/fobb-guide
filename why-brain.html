@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why study brain &amp; behavior · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="why-brain">
+<main>
+
+  <div class="eyebrow">Part I · Chapter 1 · Lecture 1</div>
+  <h1>Why study brain &amp; behavior</h1>
+  <p class="subtitle">The five reasons the course gives, the three disciplines it draws on, and the
+  reading model that shows how a cognitive model turns into a testable brain prediction.</p>
+
+  <div data-toc></div>
+
+  <h2 id="the-brain-constructs">1. The brain constructs what you experience</h2>
+
+  <p>Start with something that should bother you. You feel like you see the whole scene in front of
+  you, in full detail, all the time. You don't. Try the figure below: two versions of the same picture
+  alternate with a blank flash between them. One thing differs. Most people take a surprisingly long
+  time to find it — even though, once found, it's obvious.</p>
+
+  <div class="viz">
+    <div class="viz-title">Change blindness — find the difference</div>
+    <svg id="cbSvg" viewBox="0 0 640 300" role="img" aria-label="A scene of a house, tree, sun and car that alternates with a slightly changed version"></svg>
+    <div class="controls">
+      <button class="btn primary" id="cbStart">Start flicker</button>
+      <button class="btn" id="cbReveal">Reveal the change</button>
+      <span class="val" id="cbTime">—</span>
+    </div>
+    <div class="caption">What to notice: the change is large, but the blank frame wipes out the
+    motion signal your visual system normally uses to spot changes. Without it you have to search
+    object by object — which shows how little of the scene you were actually holding onto.</div>
+  </div>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Change blindness</strong> — the surprising failure to notice even large changes in our visual
+  environment. The lecture's takeaway: <em>what we perceive and remember is far less complete than it
+  feels.</em></div>
+
+  <p>The same lesson holds for hearing. <strong>Shepard's tone</strong> is an auditory illusion in which a
+  tone seems to rise (or fall) forever, even though the overall pitch never actually changes. Press play:</p>
+
+  <div class="viz">
+    <div class="viz-title">Shepard's tone — a staircase that never gets higher</div>
+    <svg id="shSvg" viewBox="0 0 640 220" role="img" aria-label="Spectrum of octave-spaced tones under a fixed bell-shaped loudness envelope"></svg>
+    <div class="controls">
+      <button class="btn primary" id="shPlay">Play (rising)</button>
+      <button class="btn" id="shStop">Stop</button>
+      <label>Volume <input type="range" id="shVol" min="0" max="0.3" step="0.01" value="0.12" data-out="shVolV" data-dp="2"><span class="val" id="shVolV"></span></label>
+    </div>
+    <div class="caption">What to notice: every bar slides right (every component rises by an
+    octave), but the loudness envelope never moves. A component fades in at the low end as another
+    fades out at the high end, so after one full cycle the sound is <em>identical</em> to where it
+    started — yet every step sounded like "up".</div>
+  </div>
+
+  <div class="box key"><span class="label">Key idea</span>
+  The brain doesn't just record sound or light as it is — it <strong>constructs</strong> what we hear
+  and see. Depth in a 2D painting, the endless rise of Shepard's tone ("things keep building but never
+  resolve → tension"), the scene you think you see in full — all built, not recorded. This theme returns
+  in every vision chapter.</div>
+
+  <h2 id="five-reasons">2. Five reasons to study the brain</h2>
+
+  <div class="scroll-x"><table>
+    <tr><th>#</th><th>Reason</th><th>The lecture's example</th></tr>
+    <tr><td>1</td><td><strong>Clinical implications</strong></td><td><strong>Parkinson's disease (PD)</strong> — a progressive neurological disorder with tremor, stiffness and slowness of movement, caused mainly by degeneration of dopamine-producing neurons. Treated with drugs and deep brain stimulation (Ch. 7).</td></tr>
+    <tr><td>2</td><td><strong>To know thyself and others</strong></td><td>Change blindness — your perception is less complete than it feels.</td></tr>
+    <tr><td>3</td><td><strong>To appreciate culture</strong> (art &amp; music)</td><td>Depth cues in paintings (Ch. 11); Shepard's tone creating tension in music.</td></tr>
+    <tr><td>4</td><td><strong>To design better AI</strong></td><td><strong>NeuroAI</strong>; CAPTCHA = Completely Automated Public Turing test to tell Computers and Humans Apart — it works exactly because some things are easy for brains and (were) hard for machines.</td></tr>
+    <tr><td>5</td><td><strong>To design better robots</strong></td><td>Listed in the study guide alongside AI.</td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Common mistake</span>
+  Treating these as trivia. On an exam they usually appear as "give an example of why…" — have one
+  concrete example ready per reason (PD, change blindness, Shepard's tone, CAPTCHA).</div>
+
+  <h2 id="three-disciplines">3. Three disciplines, one question</h2>
+
+  <div class="grid3">
+    <div class="card"><div class="kicker">Mind</div><h3>Cognitive psychology</h3>
+    <p>Studies the <strong>mental processes</strong> that shape how we think and behave. Its models can be
+    built <em>without</em> considering biology — boxes and arrows of representations and processes.</p></div>
+    <div class="card"><div class="kicker">Mind ↔ brain</div><h3>Cognitive neuroscience</h3>
+    <p>Studies how the <strong>brain gives rise to</strong> those mental processes. Takes the psychologist's
+    model and asks where and how each box is implemented.</p></div>
+    <div class="card"><div class="kicker">Brain ↔ machine</div><h3>NeuroAI</h3>
+    <p>Brings neuroscience and AI together to <strong>understand and build</strong> intelligent systems.
+    (Plus many others: systems, molecular, cellular neuroscience.)</p></div>
+  </div>
+
+  <div class="box analogy"><span class="label">Analogy</span>
+  Cognitive psychology writes the <em>flowchart</em> for a program; cognitive neuroscience finds which
+  <em>chips</em> run each step. (This is exactly Marr's algorithmic vs implementation levels — Ch. 4.)
+  The analogy leaks in one place: the brain has no clean separation between software and hardware —
+  plasticity means running the program physically rewires the chips (Ch. 2).</div>
+
+  <h2 id="reading-model">4. The reading model: from box-and-arrow to brain prediction</h2>
+
+  <p>Read these aloud: <strong>blick, plim, sproke</strong>. Now: <strong>yacht, sew, colonel</strong>.
+  Nobody taught you "blick", yet you pronounced it instantly. And nobody can sound out "colonel" from its
+  letters — you just <em>know</em> it. That suggests two different routes from print to sound.</p>
+
+  <div class="grid2">
+    <div class="box defn"><span class="label">Definition</span>
+    <strong>Phonological decoding</strong> — sounding out a word using letter-to-sound mappings.
+    Needed for <em>non-words</em> (blick).</div>
+    <div class="box defn"><span class="label">Definition</span>
+    <strong>Orthographic recognition</strong> — recognizing a familiar written word and retrieving its
+    learned pronunciation. Needed for <em>irregular words</em> (colonel).</div>
+  </div>
+
+  <p>Now the cognitive-neuroscience move the lecture makes: <em>suppose a brain region converts letters
+  to sounds, and it's damaged — what pattern would you predict?</em> Click a route to damage it.</p>
+
+  <div class="viz">
+    <div class="viz-title">Dual-route reading model — lesion a route</div>
+    <svg id="rdSvg" viewBox="0 0 640 260" role="img" aria-label="Visual analysis feeds a phonological route and an orthographic route, both leading to reading aloud"></svg>
+    <div class="controls">
+      <button class="btn" id="rdNone">Healthy</button>
+      <button class="btn" id="rdPhon">Damage phonological route</button>
+      <button class="btn" id="rdOrth">Damage orthographic route</button>
+    </div>
+    <div id="rdOut" class="caption"></div>
+  </div>
+
+  <p>The lecture's answer: damage the phonological route and <strong>irregular words stay relatively
+  preserved</strong> (colonel can be recognized from stored orthographic knowledge) while
+  <strong>non-words are impaired</strong> (blick must be sounded out). And then the loop closes:
+  <em>experimental results are used to refine the cognitive model.</em></p>
+
+  <div class="box intuition"><span class="label">Intuition</span>
+  A cognitive model is valuable to a neuroscientist because it <strong>makes predictions</strong>. Without
+  the two-route model you'd just see "reading is worse". With it, you know to test non-words and irregular
+  words <em>separately</em> — and the pattern tells you which route broke. This is the seed of the
+  dissociation logic in Chapter 5.</div>
+
+  <p><span class="pill">going deeper</span> What about regular words like "mint"? Either route can read
+  them, so they survive damage to <em>either</em> route — that's why they're useless as a test. The two
+  real clinical patterns match the widget: damage to phonology ≈ "phonological dyslexia" (non-words fail),
+  damage to orthography ≈ "surface dyslexia" (irregular words get regularized: colonel → "coll-oh-nel").
+  Finding both patterns in different patients is a double dissociation.</p>
+
+  <h2 id="active-learning">5. Why active learning feels worse and works better</h2>
+
+  <p>Deslauriers et al. (2019): 149 Harvard students in intro calculus. Group A watched problems solved in
+  a standard lecture (<strong>passive</strong>); Group B solved them in small groups (<strong>active</strong>).
+  They measured <em>feeling</em> of learning (self-report 1–5) and a <em>test</em> of learning.</p>
+
+  <div class="viz">
+    <div class="viz-title">The dissociation between feeling and learning (schematic)</div>
+    <svg viewBox="0 0 640 240" role="img" aria-label="Passive learning scores higher on feeling of learning, active learning scores higher on actual learning">
+      <line x1="60" y1="200" x2="600" y2="200" stroke="var(--ink-mute)"/>
+      <text x="170" y="225" text-anchor="middle" fill="var(--ink-soft)" font-size="14">Feeling of learning</text>
+      <text x="470" y="225" text-anchor="middle" fill="var(--ink-soft)" font-size="14">Test of learning</text>
+      <rect x="110" y="60" width="50" height="140" fill="var(--accent-2)" opacity=".85"/>
+      <rect x="180" y="100" width="50" height="100" fill="var(--accent)" opacity=".85"/>
+      <rect x="410" y="110" width="50" height="90" fill="var(--accent-2)" opacity=".85"/>
+      <rect x="480" y="60" width="50" height="140" fill="var(--accent)" opacity=".85"/>
+      <rect x="440" y="18" width="14" height="14" fill="var(--accent-2)"/><text x="460" y="30" fill="var(--ink)" font-size="13">Passive</text>
+      <rect x="520" y="18" width="14" height="14" fill="var(--accent)"/><text x="540" y="30" fill="var(--ink)" font-size="13">Active</text>
+    </svg>
+    <div class="caption">Schematic of the direction of the result only — bar heights are illustrative,
+    not the paper's values. What to notice: the two measures point in <em>opposite</em> directions.</div>
+  </div>
+
+  <div class="box key"><span class="label">Key idea</span>
+  <strong>Active learning</strong> (generating: explaining, discussing, applying, testing yourself) leads to
+  more learning — but students feel they learn less and enjoy it less. Why? Generating predictions
+  <strong>takes effort and invites errors</strong>, and effort and errors make you feel less smart even
+  while they promote learning. <strong>Passive learning</strong> (listening, watching, rereading) is easy,
+  and that ease creates an <em>illusion of learning</em>.</div>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Dunning–Kruger effect</strong> — when you know less, you are less able to recognize what you
+  don't know. It's why rereading notes feels like mastery: you can't see the gaps you'd need to know the
+  material to see.</div>
+
+  <p>Practical upshot for this midterm: every chapter here has hidden-step problems and quizzes. Commit to
+  an answer <em>before</em> opening the reveal. If it feels harder than rereading, that's the point.</p>
+
+  <h2 id="check-yourself">6. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">A patient can read "yacht" and "colonel" aloud perfectly but can't read "plim". Which route is most likely damaged?</div>
+    <button class="opt">Orthographic recognition</button>
+    <button class="opt">Phonological decoding</button>
+    <button class="opt">Visual analysis</button>
+    <button class="opt">Both routes</button>
+    <div class="why"><strong>Why:</strong> Irregular words (yacht, colonel) can only be read by the
+    orthographic route, so it's working. Non-words (plim) can only be read by sounding out — so the
+    phonological route is the broken one. Visual analysis damage would hurt everything, including
+    yacht.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Which statement best describes the difference between cognitive psychology and cognitive neuroscience?</div>
+    <button class="opt">Psychology studies animals; neuroscience studies humans</button>
+    <button class="opt">Psychology uses brain imaging; neuroscience uses behavior</button>
+    <button class="opt">Psychology asks what mental processes let us read; neuroscience asks how the brain implements them</button>
+    <button class="opt">They are the same field with different names</button>
+    <div class="why"><strong>Why:</strong> That's the lecture's exit-ticket answer, word for word. The
+    second option is backwards — and note cognitive models can be built without any biology at all.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">Students in an active-learning section rate their learning lower than a lecture section, but score higher on the exam. The best explanation from lecture is:</div>
+    <button class="opt">Effort and errors feel like failing, but they drive learning; ease creates an illusion of learning</button>
+    <button class="opt">The active group was simply smarter to begin with</button>
+    <button class="opt">Self-reports are always the opposite of reality</button>
+    <button class="opt">Change blindness</button>
+    <div class="why"><strong>Why:</strong> The study randomized students, so the "smarter" option is the
+    thing the design rules out. Self-reports aren't <em>always</em> wrong — they're specifically fooled by
+    fluency. Dunning–Kruger adds that knowing less makes you worse at spotting what you don't know.</div>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Design the reading experiment</div>
+    <div class="g-body"><p>You suspect region R in a patient's brain converts letters to sounds. You have
+    one hour with the patient and a list of words. What do you test, and what result supports your
+    hypothesis?</p></div>
+    <details class="step"><summary>Step 1 — What's actually being asked?</summary><div><p>Not "is reading
+    impaired" — you need a pattern that is specific to letter-to-sound conversion. So you need at least two
+    word types that load on different routes.</p></div></details>
+    <details class="step"><summary>Step 2 — Pick the stimuli</summary><div><p>Non-words (blick, plim,
+    sproke) require phonological decoding. Irregular words (yacht, sew, colonel) require orthographic
+    recognition.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>Support = non-words impaired,
+    irregular words relatively preserved. If <em>both</em> were impaired you couldn't tell a specific
+    phonology deficit from general damage — which is exactly the weakness of single measures you'll meet
+    again in Chapter 5. The transferable skill: <strong>a cognitive model tells you which contrasting
+    conditions to test.</strong></p></div></details>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  // ---------- change blindness ----------
+  const cb = document.getElementById("cbSvg");
+  function scene(changed) {
+    cb.innerHTML = "";
+    const add = (t, a) => { const e = SG.el(t, a); cb.appendChild(e); return e; };
+    add("rect", {x:0, y:230, width:640, height:70, fill:"var(--bg-soft)"});
+    add("circle", {cx:560, cy:60, r:32, fill:"var(--gold)"});
+    // house
+    add("rect", {x:80, y:130, width:170, height:100, fill:"var(--panel)", stroke:"var(--ink-soft)", "stroke-width":2});
+    add("polygon", {points:"70,130 165,70 260,130", fill:"var(--rose)", opacity:.8});
+    add("rect", {x:150, y:170, width:32, height:60, fill:"var(--accent-2)"});
+    add("rect", {x:100, y:150, width:32, height:28, fill:"var(--accent)", opacity:.5});
+    if (!changed) add("rect", {x:200, y:150, width:32, height:28, fill:"var(--accent)", opacity:.5}); // the window that vanishes
+    // chimney
+    add("rect", {x:210, y:82, width:18, height:34, fill:"var(--ink-mute)"});
+    // tree
+    add("rect", {x:330, y:170, width:16, height:60, fill:"var(--ink-mute)"});
+    add("circle", {cx:338, cy:150, r:42, fill:"var(--accent-3)", opacity:.85});
+    // car
+    add("rect", {x:420, y:200, width:130, height:30, rx:8, fill:"var(--accent)"});
+    add("rect", {x:445, y:180, width:70, height:25, rx:6, fill:"var(--accent)", opacity:.7});
+    add("circle", {cx:450, cy:232, r:12, fill:"var(--ink)"});
+    add("circle", {cx:520, cy:232, r:12, fill:"var(--ink)"});
+  }
+  function blank() { cb.innerHTML = ""; cb.appendChild(SG.el("rect", {x:0,y:0,width:640,height:300,fill:"var(--bg-soft)"})); }
+  scene(false);
+  let timer = null, t0 = 0, frame = 0;
+  const tOut = document.getElementById("cbTime");
+  document.getElementById("cbStart").onclick = () => {
+    if (timer) { clearInterval(timer); timer = null; document.getElementById("cbStart").textContent = "Start flicker"; return; }
+    t0 = performance.now(); frame = 0;
+    document.getElementById("cbStart").textContent = "Stop (found it!)";
+    timer = setInterval(() => {
+      frame = (frame + 1) % 4;
+      if (frame === 0) scene(false); else if (frame === 2) scene(true); else blank();
+      tOut.textContent = ((performance.now() - t0) / 1000).toFixed(1) + " s";
+    }, 300);
+  };
+  document.getElementById("cbReveal").onclick = () => {
+    if (timer) { clearInterval(timer); timer = null; document.getElementById("cbStart").textContent = "Start flicker"; }
+    scene(false);
+    cb.appendChild(SG.el("rect", {x:194, y:144, width:44, height:40, fill:"none", stroke:"var(--rose)", "stroke-width":4}));
+    tOut.textContent = "The right-hand window disappears";
+  };
+
+  // ---------- Shepard tone ----------
+  const sh = document.getElementById("shSvg");
+  const N = 8, fmin = 32.7, CYCLE = 8; // seconds for one octave of travel
+  let phase = 0, ctx = null, oscs = [], gains = [], master = null, raf = null, last = 0;
+  const env = x => Math.exp(-Math.pow((x - N/2) / (N/5), 2) * 1.2); // x in octaves from fmin
+  function drawSh() {
+    sh.innerHTML = "";
+    const X = o => 40 + o / N * 560;
+    const pts = [];
+    for (let i = 0; i <= 100; i++) { const o = i / 100 * N; pts.push(X(o) + "," + (190 - env(o) * 150)); }
+    sh.appendChild(SG.el("polyline", {points: pts.join(" "), fill:"none", stroke:"var(--ink-mute)", "stroke-dasharray":"5 4", "stroke-width":2}));
+    sh.appendChild(SG.el("line", {x1:40, y1:190, x2:600, y2:190, stroke:"var(--ink-mute)"}));
+    for (let k = 0; k < N; k++) {
+      const o = (k + phase) % N, a = env(o);
+      sh.appendChild(SG.el("line", {x1:X(o), y1:190, x2:X(o), y2:190 - a * 150, stroke:"var(--accent)", "stroke-width":6, "stroke-linecap":"round"}));
+    }
+    const t = SG.el("text", {x:320, y:212, "text-anchor":"middle", fill:"var(--ink-soft)", "font-size":13});
+    t.textContent = "log frequency (octaves) →   dashed = fixed loudness envelope";
+    sh.appendChild(t);
+  }
+  function tick(now) {
+    const dt = last ? (now - last) / 1000 : 0; last = now;
+    phase = (phase + dt / CYCLE) % 1;
+    if (ctx) for (let k = 0; k < N; k++) {
+      const o = (k + phase) % N;
+      oscs[k].frequency.setValueAtTime(fmin * Math.pow(2, o), ctx.currentTime);
+      gains[k].gain.setValueAtTime(env(o) / N * 2, ctx.currentTime);
+    }
+    drawSh();
+    raf = requestAnimationFrame(tick);
+  }
+  drawSh();
+  const vol = document.getElementById("shVol");
+  vol.addEventListener("input", () => { if (master) master.gain.value = +vol.value; });
+  document.getElementById("shPlay").onclick = () => {
+    if (ctx) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { document.getElementById("shPlay").textContent = "Audio not supported"; return; }
+    ctx = new AC(); master = ctx.createGain(); master.gain.value = +vol.value; master.connect(ctx.destination);
+    oscs = []; gains = [];
+    for (let k = 0; k < N; k++) {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sine"; o.connect(g); g.connect(master); o.start(); oscs.push(o); gains.push(g);
+    }
+    last = 0; raf = requestAnimationFrame(tick);
+  };
+  document.getElementById("shStop").onclick = () => {
+    if (raf) cancelAnimationFrame(raf); raf = null;
+    if (ctx) { ctx.close(); ctx = null; }
+  };
+
+  // ---------- dual-route reading ----------
+  const rd = document.getElementById("rdSvg"), out = document.getElementById("rdOut");
+  const words = [["blick","non"],["plim","non"],["sproke","non"],["yacht","irr"],["sew","irr"],["colonel","irr"],["mint","reg"]];
+  function drawRd(lesion) {
+    rd.innerHTML = "";
+    const box = (x, y, w, label, off) => {
+      rd.appendChild(SG.el("rect", {x, y, width:w, height:44, rx:8, fill: off ? "var(--bg-soft)" : "var(--panel)", stroke: off ? "var(--rose)" : "var(--accent)", "stroke-width":2, "stroke-dasharray": off ? "6 4" : ""}));
+      const t = SG.el("text", {x:x + w/2, y:y + 27, "text-anchor":"middle", fill: off ? "var(--ink-mute)" : "var(--ink)", "font-size":14}); t.textContent = label; rd.appendChild(t);
+    };
+    const arrow = (x1, y1, x2, y2, off) => rd.appendChild(SG.el("line", {x1, y1, x2, y2, stroke: off ? "var(--rose)" : "var(--ink-soft)", "stroke-width":2, "stroke-dasharray": off ? "6 4" : "", "marker-end":"url(#ah)"}));
+    const defs = SG.el("defs", {}); const m = SG.el("marker", {id:"ah", viewBox:"0 0 10 10", refX:9, refY:5, markerWidth:7, markerHeight:7, orient:"auto"});
+    m.appendChild(SG.el("path", {d:"M0,0 L10,5 L0,10 z", fill:"var(--ink-soft)"})); defs.appendChild(m); rd.appendChild(defs);
+    box(20, 108, 140, "Visual analysis");
+    box(245, 30, 180, "Phonological route", lesion === "phon");
+    box(245, 186, 180, "Orthographic route", lesion === "orth");
+    box(500, 108, 120, "Read aloud");
+    arrow(160, 120, 245, 60, lesion === "phon"); arrow(160, 142, 245, 200, lesion === "orth");
+    arrow(425, 55, 500, 120, lesion === "phon"); arrow(425, 208, 500, 142, lesion === "orth");
+    const lab = (x, y, s) => { const t = SG.el("text", {x, y, "text-anchor":"middle", fill:"var(--ink-mute)", "font-size":12}); t.textContent = s; rd.appendChild(t); };
+    lab(335, 22, "letter → sound rules (blick)"); lab(335, 250, "stored whole-word knowledge (colonel)");
+    const ok = w => w[1] === "reg" ? true : w[1] === "non" ? lesion !== "phon" : lesion !== "orth";
+    out.innerHTML = "<strong>" + (lesion === "phon" ? "Phonological route damaged:" : lesion === "orth" ? "Orthographic route damaged:" : "Healthy reader:") + "</strong> " +
+      words.map(w => `<span class="pill" style="opacity:${ok(w) ? 1 : .45}">${ok(w) ? "✓" : "✗"} ${w[0]}</span>`).join(" ") +
+      (lesion === "orth" ? " <br>Irregular words get sounded out by rule — “colonel” comes out as “coll-oh-nel”." : "") +
+      (lesion === "phon" ? " <br>Real words survive via stored knowledge; novel strings have no stored entry." : "") +
+      " <span class='muted'>(“mint” is regular, so either route reads it — useless as a test.)</span>";
+  }
+  drawRd(null);
+  document.getElementById("rdNone").onclick = () => drawRd(null);
+  document.getElementById("rdPhon").onclick = () => drawRd("phon");
+  document.getElementById("rdOrth").onclick = () => drawRd("orth");
+});
+</script>
+</body>
+</html>

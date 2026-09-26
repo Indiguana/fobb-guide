@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neurodegeneration &amp; basal ganglia · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="neurodegeneration">
+<main>
+
+  <div class="eyebrow">Part II · Chapter 7 · Lectures 5 &amp; 6</div>
+  <h1>Neurodegeneration &amp; the basal ganglia</h1>
+  <p class="subtitle">Cerebellar ataxia, Parkinson's, Huntington's and Alzheimer's — for each: cause, brain
+  area, symptoms, and what it taught us about the healthy brain. The centrepiece is the go / no-go circuit,
+  which you should be able to trace arrow by arrow.</p>
+
+  <div data-toc></div>
+
+  <h2 id="overview">1. Neural degeneration</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Neural degeneration</strong> — progressive loss of structure and function, and death, of neurons in
+  the nervous system. Causes include <strong>genes</strong>, <strong>environmental toxins</strong> and
+  <strong>autoimmune</strong> processes.</div>
+
+  <div class="scroll-x"><table>
+    <tr><th>Disease</th><th>Where</th><th>Cause</th><th>Onset / course</th><th>Hallmark</th></tr>
+    <tr><td><strong>Cerebellar degeneration</strong></td><td>Cerebellum</td><td>Often hereditary (autosomal dominant &amp; recessive; ~40 types)</td><td>—</td><td>Ataxia</td></tr>
+    <tr><td><strong>Parkinson's</strong></td><td>Dopamine neurons of the substantia nigra → basal ganglia "go" pathway</td><td>Not fully understood; <strong>mostly sporadic, not inherited</strong>; pesticides; multiple strokes</td><td>40–80 yrs; progresses over 10–20 yrs</td><td>Bradykinesia, rigidity, tremor at rest, loss of righting reflex</td></tr>
+    <tr><td><strong>Huntington's</strong></td><td>Striatum → "no-go" pathway</td><td><strong>Genetic mutation</strong></td><td>~40 yrs; 10–15 yrs</td><td>Chorea, dementia</td></tr>
+    <tr><td><strong>Alzheimer's</strong></td><td>Global; heavy hippocampal degeneration</td><td>Amyloid plaques + tau tangles</td><td>Gradual, 60–80 yrs</td><td>Dementia; can't form new memories</td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Heads-up — sources disagree</span>
+  The L5 study guide says Alzheimer's onset is "40–60 years old". Both lecture slide decks (L5 and L6) say
+  <strong>gradual onset at 60–80</strong>. Go with the slides, and if an exam question hinges on it, it will
+  almost certainly use the slides' number.</div>
+
+  <h2 id="cerebellum">2. The cerebellum and ataxia</h2>
+
+  <p>The cerebellum is often neglected, but it contains <strong>more than 80% of the neurons in the brain</strong>.
+  Its degeneration (usually hereditary) causes <strong>ataxia</strong>: uncoordinated movement — under- and
+  overshooting targets.</p>
+
+  <p>The lecture asks you to think at <strong>Marr's algorithmic level</strong>: what does the cerebellum
+  compute, such that losing it produces overshooting? The answer: it generates <strong>sensory
+  predictions</strong> — the predicted sensory outcome of a movement. Sensory feedback is slow; by the time
+  you <em>feel</em> where your hand is, it has moved on. A prediction lets you plan the next correction
+  without waiting.</p>
+
+  <div class="viz">
+    <div class="viz-title">Reaching with delayed feedback — with and without a cerebellum</div>
+    <canvas id="atCanvas" height="240" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <label>Feedback delay (ms) <input type="range" id="atDelay" min="0" max="350" step="10" value="200" data-out="atDv" data-fmt="int"><span class="val" id="atDv"></span></label>
+      <label><input type="checkbox" id="atPred" checked> Cerebellar prediction</label>
+      <span class="val" id="atOut"></span>
+    </div>
+    <div class="caption">What to notice: with prediction on, the hand glides to the target whatever the delay.
+    Untick it, and the controller acts on where the hand <em>was</em> — it keeps pushing after it has arrived,
+    overshoots, over-corrects, and oscillates. Drag the delay up to watch ataxia get worse; drag it to 0 and
+    prediction stops mattering. Toy control model.</div>
+  </div>
+
+  <div class="box example"><span class="label">Two everyday demos</span>
+  <strong>You can't tickle yourself</strong>: your brain predicts the sensation from your own movement and
+  cancels it. <strong>The heavy-object demo</strong>: when someone else lifts a heavy book off your hand, your
+  hand jumps up; when <em>you</em> lift it off, your hand stays still — because you predicted the change.</div>
+
+  <h2 id="basal-ganglia">3. The basal ganglia: go and no-go</h2>
+
+  <p>The basal ganglia decide how vigorously to move. They do it with a chain of <em>inhibitions</em>, which is
+  why the logic feels backwards. The one rule to hold on to: <strong>the GPi (globus pallidus internal) is a
+  brake on the thalamus</strong>, and the thalamus excites the cortex to move. Everything else either presses
+  or releases that brake.</p>
+
+  <div class="box analogy"><span class="label">Analogy</span>
+  The thalamus is a car that wants to go; the GPi is the handbrake, always partly on. The <strong>go
+  pathway</strong> releases the handbrake. The <strong>no-go pathway</strong> pulls it harder. Dopamine is the
+  driver's foot favouring "go". Where it leaks: a real handbrake isn't made of a chain of three inhibitory
+  links — the double negatives are what you must trace by hand.</div>
+
+  <div class="viz">
+    <div class="viz-title">Basal-ganglia circuit simulator</div>
+    <svg id="bgSvg" viewBox="0 0 640 360" role="img" aria-label="Cortex, striatum, GPe, STN, GPi, thalamus and substantia nigra with excitatory and inhibitory connections and activity levels"></svg>
+    <div class="controls">
+      <label>Dopamine level <input type="range" id="bgDA" min="0" max="2" step="0.05" value="1" data-out="bgDAv" data-dp="2"><span class="val" id="bgDAv"></span></label>
+      <label><input type="checkbox" id="bgHD"> Huntington's (lose no-go striatal neurons)</label>
+      <label><input type="checkbox" id="bgDBS"> DBS to GPi</label>
+      <label><input type="checkbox" id="bgSTN"> STN damage</label>
+    </div>
+    <div class="controls">
+      <button class="btn" data-pre="healthy">Healthy</button>
+      <button class="btn" data-pre="pd">Parkinson's</button>
+      <button class="btn" data-pre="ldopa">PD + L-dopa</button>
+      <button class="btn" data-pre="over">Too much L-dopa</button>
+      <button class="btn" data-pre="dbs">PD + DBS</button>
+      <button class="btn" data-pre="hd">Huntington's</button>
+    </div>
+    <div class="caption" id="bgOut"></div>
+    <div class="caption">Violet arrows excite; pink bar-ended lines inhibit. Box shading = activity relative to
+    healthy (1.00). What to notice: Parkinson's and Huntington's end up at opposite ends of the movement
+    meter by breaking <em>different</em> pathways that converge on the same GPi brake. Toy rate model; the
+    dopamine → no-go (D2) link is standard textbook physiology that the slides don't draw.</div>
+  </div>
+
+  <h3>Trace it by hand: Parkinson's</h3>
+  <p>The lecture's chain, one arrow at a time:</p>
+  <ol>
+    <li>Loss of dopamine neurons in the substantia nigra → <strong>less excitatory dopamine input</strong> to the striatum</li>
+    <li>→ striatum <strong>less activated</strong></li>
+    <li>→ <strong>less inhibition</strong> of the GPi (so the GPi is <em>more</em> active)</li>
+    <li>→ <strong>more inhibition</strong> of the thalamus</li>
+    <li>→ <strong>less excitatory input</strong> to cortex → less vigorous movement.</li>
+  </ol>
+
+  <div class="scroll-x"><table>
+    <tr><th>PD cardinal symptom</th><th>What it looks like</th></tr>
+    <tr><td><strong>Bradykinesia</strong></td><td>Slowness of movement (extreme form: freezing of gait)</td></tr>
+    <tr><td><strong>Rigidity</strong></td><td>Stiffness</td></tr>
+    <tr><td><strong>Tremor at rest</strong></td><td>~3 Hz, goes away with purposeful movement</td></tr>
+    <tr><td><strong>Loss of righting reflex</strong></td><td>Can't recover balance when pushed</td></tr>
+  </table></div>
+
+  <h3>Two treatments and their problems</h3>
+  <div class="grid2">
+    <div class="box example"><span class="label">Solution 1 — L-dopa</span>
+    Adds dopamine to the system (a precursor the brain converts into dopamine). <strong>Problem:</strong> over
+    time it causes <strong>dyskinesia</strong> — involuntary movements from irregular activity along the go
+    pathway. Why (L6): (1) unnatural dopamine influx; (2) <strong>dopamine receptor sensitization</strong> —
+    after excess L-dopa, receptors are over-stimulated/malfunction so that small amounts of dopamine now
+    trigger involuntary movement. Try "Too much L-dopa" above.</div>
+    <div class="box example"><span class="label">Solution 2 — Deep brain stimulation (DBS)</span>
+    Stimulation to the GPi <strong>shuts off the GPi</strong> → less inhibition of the thalamus → more
+    excitatory input to cortex → movement is invigorated. It skips the missing dopamine entirely by releasing
+    the brake directly.</div>
+  </div>
+
+  <h3>Huntington's: the no-go pathway breaks</h3>
+  <p>The lecture's exercise: <em>"What happens if I lesion the striatum — more or less movement?"</em> In
+  Huntington's, the striatal neurons lost are the ones driving the <strong>no-go</strong> (indirect) pathway,
+  whose normal job is to <em>inhibit</em> movement. The chain:</p>
+  <ol>
+    <li>Loss of striatal neurons → <strong>less inhibition</strong> of GPe (GPe more active)</li>
+    <li>→ STN <strong>more inhibited</strong></li>
+    <li>→ <strong>less excitation</strong> of GPi</li>
+    <li>→ <strong>less inhibition</strong> of thalamus → <strong>more involuntary movement</strong>.</li>
+  </ol>
+  <p>Result: <strong>chorea</strong> ("to dance") — involuntary, irregular muscle movements, a special type of
+  dyskinesia — plus <strong>dementia</strong> (global cognitive deficits).</p>
+
+  <div class="box warn"><span class="label">Common mistake</span>
+  Answering "less movement" because "damage = less". Here the damaged thing is a <em>brake</em>, so damage
+  means <em>more</em> movement. Always count the inhibitory links: an even number of inhibitions between the
+  lesion and the thalamus flips the sign an even number of times.</div>
+
+  <div class="box defn"><span class="label">Hemiballismus</span>
+  <strong>Demyelination</strong> (loss of myelin) of basal-ganglia circuitry can cause severe dyskinesia:
+  <strong>hemiballismus</strong> — a rare disorder of sudden, large-amplitude, flinging movements of
+  <em>one side</em> of the body. <span class="pill">going deeper</span> Classically from damage to the STN; tick
+  "STN damage" in the simulator — with its excitation of the GPi gone, the brake falls off.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Predict a lesion you haven't seen</div>
+    <div class="g-body"><p>Suppose a drug selectively <em>silences the GPe</em>. More or less movement?</p></div>
+    <details class="step"><summary>Step 1 — What does GPe normally do?</summary><div><p>GPe inhibits the STN.</p></div></details>
+    <details class="step"><summary>Step 2 — Follow the chain</summary><div><p>GPe silenced → STN released
+    (more active) → STN excites GPi more → GPi brakes the thalamus harder → less cortical excitation.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p><strong>Less movement</strong>
+    (Parkinson-like). The skill: <strong>find the GPi, then count signs.</strong> Anything that ends up raising
+    GPi activity reduces movement; anything that lowers it increases movement.</p></div></details>
+  </div>
+
+  <h2 id="alzheimers">4. Alzheimer's disease</h2>
+
+  <p>Global neurodegeneration causing <strong>dementia</strong> (global cognitive deficits), gradual onset at
+  60–80. Two molecular culprits — learn which is <em>between</em> and which is <em>inside</em> neurons:</p>
+
+  <div class="viz">
+    <div class="viz-title">Plaques outside, tangles inside</div>
+    <svg viewBox="0 0 640 210" role="img" aria-label="Two neurons with amyloid plaque between them and tau tangles inside one">
+      <g stroke="var(--accent)" stroke-width="3" fill="none">
+        <path d="M160,105 L290,105"/><path d="M110,70 L150,95 M100,130 L150,115 M120,160 L155,120"/>
+        <path d="M480,105 L350,105"/><path d="M530,70 L490,95 M540,130 L490,115 M520,160 L485,120"/>
+      </g>
+      <circle cx="150" cy="105" r="30" fill="var(--accent)" opacity=".25" stroke="var(--accent)" stroke-width="2"/>
+      <circle cx="490" cy="105" r="30" fill="var(--accent)" opacity=".25" stroke="var(--accent)" stroke-width="2"/>
+      <g fill="var(--gold)"><circle cx="315" cy="100" r="16"/><circle cx="330" cy="115" r="13"/><circle cx="305" cy="118" r="11"/><circle cx="325" cy="92" r="9"/></g>
+      <path d="M138,95 q6,10 0,20 q-6,-10 6,-15 q10,5 4,18 M150,92 q8,12 -2,24" fill="none" stroke="var(--rose)" stroke-width="3"/>
+      <g font-size="13" text-anchor="middle">
+        <text x="320" y="160" fill="var(--ink)" font-weight="700">Amyloid plaques</text>
+        <text x="320" y="178" fill="var(--ink-soft)">clumps of beta-amyloid <tspan font-weight="700">between</tspan> neurons</text>
+        <text x="320" y="195" fill="var(--ink-soft)">→ disrupt cell-to-cell communication</text>
+        <text x="150" y="30" fill="var(--ink)" font-weight="700">Neurofibrillary (tau) tangles</text>
+        <text x="150" y="48" fill="var(--ink-soft)">twisted tau fibres <tspan font-weight="700">inside</tspan> neurons</text>
+        <text x="150" y="190" fill="var(--ink-soft)">→ block nutrient transport, cell death</text>
+      </g>
+    </svg>
+  </div>
+
+  <p>Alzheimer's hits the <strong>hippocampus</strong> especially hard — and that tells us what the hippocampus
+  is for. The lecture's question: <em>what has Alzheimer's taught us about memory? Consider dissociations
+  between impaired and intact abilities.</em></p>
+
+  <div class="scroll-x"><table>
+    <tr><th>Memory type</th><th>In Alzheimer's</th><th>Definition &amp; example</th></tr>
+    <tr><td><strong>Working memory</strong></td><td>✓ Intact</td><td>Temporarily hold and manipulate small amounts of info — a phone number long enough to dial it</td></tr>
+    <tr><td><strong>Long-term memory</strong></td><td>✓ Intact</td><td>Well-consolidated memories from the past — childhood events, family names</td></tr>
+    <tr><td><strong>"Short-term" memory</strong> (course's term)</td><td>✗ Impaired</td><td>Forming and retaining <em>new</em> memories over minutes to hours — a recent conversation, where you put your keys</td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Watch the terminology</span>
+  In this course "short-term memory" means <em>forming new memories over minutes–hours</em>, which is what
+  fails. Many textbooks use "short-term memory" to mean what this course calls working memory — which is
+  <em>intact</em>. On the exam, use the course's definitions.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>"How do you rule out general effects of neurodegeneration?" (L6 asks, never answers)</div>
+    <div class="g-body"><p>Alzheimer's damages much of the brain. How can you claim the <em>hippocampus</em> is
+    specifically for forming new memories, rather than the patients just being generally impaired?</p></div>
+    <details class="step"><summary>Step 1 — Which weakness is this?</summary><div><p>The "general impairment"
+    weakness of a single measure (Ch. 5).</p></div></details>
+    <details class="step"><summary>Step 2 — What rules it out?</summary><div><p>The <em>spared</em> abilities.
+    Working memory and old long-term memory are intact in the same patients — generally impaired patients
+    wouldn't be fine on those. That's a dissociation.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>Show intact performance on
+    comparably demanding tasks (dissociation), and ideally find the reverse pattern elsewhere (double
+    dissociation). Also match task difficulty so the spared tasks aren't just easier — avoid ceiling
+    effects. The same logic from Ch. 5, applied to a disease.</p></div></details>
+  </div>
+
+  <p class="muted">The humanities side: philosopher Iris Murdoch described Alzheimer's as "an insidious fog,
+  barely noticeable until everything around has disappeared." Artist William Utermohlen (diagnosed 1995)
+  painted self-portraits that document the disease's gradual effects.</p>
+
+  <h2 id="check-yourself">5. Check yourself</h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">DBS of the GPi helps Parkinson's because it…</div>
+    <button class="opt">Adds dopamine to the striatum</button>
+    <button class="opt">Increases GPi inhibition of the thalamus</button>
+    <button class="opt">Shuts off the GPi, releasing the thalamus</button>
+    <button class="opt">Blocks dopamine reuptake</button>
+    <div class="why"><strong>Why:</strong> PD's problem is a GPi that brakes the thalamus too hard; DBS takes
+    the brake off. The second option is the disease, not the cure. L-dopa is the dopamine one.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">Which disease is <em>mostly sporadic, not inherited</em>?</div>
+    <button class="opt">Parkinson's</button>
+    <button class="opt">Huntington's</button>
+    <button class="opt">Cerebellar degeneration</button>
+    <button class="opt">All three are mostly inherited</button>
+    <div class="why"><strong>Why:</strong> Huntington's is a genetic mutation; cerebellar degeneration is often
+    hereditary (~40 types). PD is mostly sporadic, linked to things like pesticides and multiple strokes.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">A patient with a hereditary condition overshoots and undershoots when reaching and can't touch their nose smoothly. Most likely affected:</div>
+    <button class="opt">Substantia nigra</button>
+    <button class="opt">Hippocampus</button>
+    <button class="opt">Striatum</button>
+    <button class="opt">Cerebellum</button>
+    <div class="why"><strong>Why:</strong> Over/undershooting = ataxia = cerebellar degeneration (often
+    hereditary). PD would be slow and small movements, not overshooting.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">Tau tangles are found ___ neurons in Alzheimer's, and tau build-up in the frontal cortex also characterizes ___.</div>
+    <button class="opt">between; Huntington's</button>
+    <button class="opt">inside; CTE</button>
+    <button class="opt">inside; Parkinson's</button>
+    <button class="opt">between; CTE</button>
+    <div class="why"><strong>Why:</strong> Plaques (amyloid) are between; tangles (tau) are inside. CTE (Ch. 6)
+    is the other tau disease in this course.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">An Alzheimer's patient can repeat back a 7-digit number instantly and describe their wedding day, but can't remember what they ate an hour ago. This shows…</div>
+    <button class="opt">General impairment</button>
+    <button class="opt">A ceiling effect</button>
+    <button class="opt">A dissociation between forming new memories and working/long-term memory</button>
+    <button class="opt">Broca's aphasia</button>
+    <div class="why"><strong>Why:</strong> Some memory abilities are spared while one fails — exactly the
+    dissociation the lecture asks about. Spared abilities are what argue <em>against</em> general impairment.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  // ---------- ataxia: delayed-feedback reaching ----------
+  const cv = document.getElementById("atCanvas"), dl = document.getElementById("atDelay"), pr = document.getElementById("atPred"), aOut = document.getElementById("atOut");
+  function simulate(delayMs, predict) {
+    // proportional controller acting on (possibly delayed) position, plus physical damping of the arm
+    const dt = 0.005, T = 2.5, kp = 60, b = 15, d = Math.round(delayMs / 1000 / dt);
+    const xs = [0]; let x = 0, v = 0;
+    for (let i = 1; i * dt <= T; i++) {
+      const seen = predict ? x : xs[Math.max(0, xs.length - 1 - d)];
+      const a = kp * (1 - seen) - b * v;
+      v += a * dt; x += v * dt; xs.push(x);
+    }
+    return { xs, dt, T };
+  }
+  function drawAt() {
+    const W = cv.clientWidth || 600, H = 240; cv.width = W * devicePixelRatio; cv.height = H * devicePixelRatio; cv.style.height = H + "px";
+    const c = cv.getContext("2d"); c.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); c.clearRect(0, 0, W, H);
+    const ink = SG.css("--ink-mute"), acc = SG.css("--accent"), rose = SG.css("--rose"), gold = SG.css("--gold");
+    const sim = simulate(+dl.value, pr.checked);
+    const X = t => 50 + t / sim.T * (W - 70), Y = x => 200 - x * 80;
+    c.strokeStyle = ink; c.fillStyle = ink; c.font = "12px sans-serif"; c.lineWidth = 1;
+    c.beginPath(); c.moveTo(50, 20); c.lineTo(50, 200); c.lineTo(W - 20, 200); c.stroke();
+    c.setLineDash([5, 4]); c.strokeStyle = gold; c.lineWidth = 2; c.beginPath(); c.moveTo(50, Y(1)); c.lineTo(W - 20, Y(1)); c.stroke(); c.setLineDash([]);
+    c.fillText("target", W - 60, Y(1) - 6); c.fillText("start", 12, Y(0) + 4); c.fillText("time →", W - 70, 220);
+    c.strokeStyle = pr.checked ? acc : rose; c.lineWidth = 3; c.beginPath();
+    sim.xs.forEach((x, i) => { const px = X(i * sim.dt), py = Y(Math.max(-0.5, Math.min(2.2, x))); i ? c.lineTo(px, py) : c.moveTo(px, py); });
+    c.stroke();
+    const peak = Math.max(...sim.xs), last = sim.xs.slice(-40), spread = Math.max(...last) - Math.min(...last);
+    aOut.textContent = `overshoot: ${Math.max(0, (peak - 1) * 100).toFixed(0)}% of the reach` + (spread > 0.05 ? " · still oscillating at the end" : "");
+  }
+  [dl, pr].forEach(e => e.addEventListener("input", drawAt)); pr.addEventListener("change", drawAt);
+  document.addEventListener("themechange", drawAt); window.addEventListener("resize", drawAt); drawAt();
+
+  // ---------- basal ganglia ----------
+  const svg = document.getElementById("bgSvg"), out = document.getElementById("bgOut");
+  const DA = document.getElementById("bgDA"), HD = document.getElementById("bgHD"), DBS = document.getElementById("bgDBS"), STNx = document.getElementById("bgSTN");
+  function model() {
+    const da = +DA.value, ind = HD.checked ? 0.3 : 1;
+    const D1 = Math.max(0, 0.5 + 0.5 * da), D2 = Math.max(0, ind * (1.5 - 0.5 * da));
+    const GPe = Math.max(0, 2 - D2), STN = Math.max(0, 2 - GPe) * (STNx.checked ? 0 : 1);
+    let GPi = Math.max(0, 1 + (STN - 1) - (D1 - 1)); if (DBS.checked) GPi *= 0.5;
+    const Th = Math.max(0, 1.5 - 0.5 * GPi);
+    return { SN: da, D1, D2, GPe, STN, GPi, Th, Ctx: Th };
+  }
+  const nodes = {
+    Ctx: [320, 30, "Cortex"], D1: [200, 110, "Striatum (go)"], D2: [440, 110, "Striatum (no-go)"],
+    GPe: [440, 190, "GPe"], STN: [440, 265, "STN"], GPi: [230, 265, "GPi"], Th: [80, 190, "Thalamus"], SN: [320, 190, "Substantia nigra"]
+  };
+  const edges = [["Ctx","D1","+"],["Ctx","D2","+"],["SN","D1","+"],["SN","D2","-"],["D1","GPi","-"],["D2","GPe","-"],["GPe","STN","-"],["STN","GPi","+"],["GPi","Th","-"],["Th","Ctx","+"]];
+  function draw() {
+    const m = model(); svg.innerHTML = "";
+    const defs = SG.el("defs", {}); const mk = SG.el("marker", {id:"bgE", viewBox:"0 0 10 10", refX:9, refY:5, markerWidth:7, markerHeight:7, orient:"auto"}); mk.appendChild(SG.el("path", {d:"M0,0 L10,5 L0,10 z", fill:"var(--accent-3)"})); defs.appendChild(mk);
+    const mi = SG.el("marker", {id:"bgI", viewBox:"0 0 10 10", refX:5, refY:5, markerWidth:8, markerHeight:8, orient:"auto"}); mi.appendChild(SG.el("rect", {x:4, y:0, width:3, height:10, fill:"var(--rose)"})); defs.appendChild(mi); svg.appendChild(defs);
+    edges.forEach(([a, b, s]) => {
+      const [x1, y1] = nodes[a], [x2, y2] = nodes[b];
+      const L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / L, uy = (y2 - y1) / L;
+      let w = Math.max(0.6, 1.2 + 2.2 * (m[a] ?? 1));
+      if (a === "SN") w = Math.max(0.4, 3 * m.SN);
+      svg.appendChild(SG.el("line", {x1:x1 + ux * 48, y1:y1 + uy * 22, x2:x2 - ux * 50, y2:y2 - uy * 24, stroke: s === "+" ? "var(--accent-3)" : "var(--rose)", "stroke-width":w, "marker-end": s === "+" ? "url(#bgE)" : "url(#bgI)", opacity:.85}));
+    });
+    Object.entries(nodes).forEach(([k, [x, y, lab]]) => {
+      const v = m[k], hot = Math.min(1, v / 2);
+      svg.appendChild(SG.el("rect", {x:x - 62, y:y - 20, width:124, height:40, rx:8, fill:"var(--accent)", "fill-opacity":(0.08 + 0.55 * hot).toFixed(2), stroke:"var(--accent)", "stroke-width":1.5}));
+      const t = SG.el("text", {x, y:y - 2, "text-anchor":"middle", fill:"var(--ink)", "font-size":12, "font-weight":600}); t.textContent = lab; svg.appendChild(t);
+      const t2 = SG.el("text", {x, y:y + 14, "text-anchor":"middle", fill:"var(--ink-soft)", "font-size":11}); t2.textContent = v.toFixed(2); svg.appendChild(t2);
+    });
+    // movement meter
+    const mv = m.Th, mx = 30 + Math.min(1, mv / 1.6) * 580;
+    svg.appendChild(SG.el("rect", {x:30, y:318, width:580, height:14, rx:7, fill:"var(--bg-soft)", stroke:"var(--line-2)"}));
+    svg.appendChild(SG.el("rect", {x:30 + 0.85 / 1.6 * 580, y:318, width:0.3 / 1.6 * 580, height:14, fill:"var(--accent-3)", opacity:.35}));
+    svg.appendChild(SG.el("circle", {cx:mx, cy:325, r:9, fill: mv < 0.85 ? "var(--accent-2)" : mv > 1.15 ? "var(--rose)" : "var(--accent-3)", stroke:"var(--ink)"}));
+    [["too little", 60], ["normal", 30 + 1 / 1.6 * 580], ["too much", 580]].forEach(([s, x]) => { const t = SG.el("text", {x, y:352, "text-anchor":"middle", fill:"var(--ink-mute)", "font-size":11}); t.textContent = s; svg.appendChild(t); });
+    const lab = mv < 0.85 ? "<strong>Too little movement</strong> — bradykinesia, rigidity (Parkinsonian)." : mv > 1.15 ? "<strong>Too much movement</strong> — dyskinesia / chorea." : "<strong>Normal movement.</strong>";
+    out.innerHTML = `Thalamic drive to cortex = ${mv.toFixed(2)} → ${lab}`;
+  }
+  [DA, HD, DBS, STNx].forEach(e => { e.addEventListener("input", draw); e.addEventListener("change", draw); });
+  const presets = {healthy:[1,0,0,0], pd:[0.2,0,0,0], ldopa:[1,0,0,0], over:[2,0,0,0], dbs:[0.2,0,1,0], hd:[1,1,0,0]};
+  document.querySelectorAll("[data-pre]").forEach(b => b.onclick = () => {
+    const [d, h, s, n] = presets[b.dataset.pre]; DA.value = d; HD.checked = !!h; DBS.checked = !!s; STNx.checked = !!n;
+    DA.dispatchEvent(new Event("input")); draw();
+  });
+  draw();
+});
+</script>
+</body>
+</html>

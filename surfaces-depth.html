@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surfaces &amp; depth · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="surfaces-depth">
+<main>
+
+  <div class="eyebrow">Part IV · Chapter 11 · Lectures 8 &amp; 9</div>
+  <h1>Surfaces &amp; depth</h1>
+  <p class="subtitle">How the brain turns edges into surfaces — figure–ground, border ownership, amodal and
+  modal completion — and how it rebuilds a 3D world from flat retinal images using pictorial and
+  non-pictorial depth cues.</p>
+
+  <div data-toc></div>
+
+  <h2 id="surfaces-marr">1. Surface perception at Marr's three levels</h2>
+
+  <p>V1 gives you edges. But the world is made of <em>surfaces</em> — the continuous areas of objects that define
+  their shape — and objects overlap, hide each other, and sit under uneven light. The retinal image is a
+  fragmented 2D mess.</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>Level</th><th>Surface perception</th></tr>
+    <tr><td>Computational (why?)</td><td>Recover coherent surfaces and objects from a fragmented 2D image</td></tr>
+    <tr><td>Algorithmic (how?)</td><td>Assign borders to figure or ground; link separated regions by amodal and modal completion; interpret shading and lighting; form contextual predictions</td></tr>
+    <tr><td>Implementation (where?)</td><td><strong>V1</strong> encodes local edges. <strong>V2</strong> integrates borders and represents real <em>and illusory</em> surfaces</td></tr>
+  </table></div>
+
+  <h2 id="figure-ground">2. Figure–ground and border ownership</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Border ownership</strong> — a visual border between two regions is normally perceived to belong to
+  only <em>one</em> of them. Whichever region owns the border becomes the <strong>figure</strong>; the other
+  becomes <strong>ground</strong> and seems to continue behind it.</div>
+
+  <div class="viz">
+    <div class="viz-title">Rubin's vase (1921) — one border, two owners</div>
+    <svg id="rvSvg" viewBox="0 0 640 300" role="img" aria-label="Rubin vase: a vase silhouette or two facing profiles, depending on which side owns the border"></svg>
+    <div class="controls">
+      <button class="btn primary" id="rvVase">Border belongs to the vase</button>
+      <button class="btn" id="rvFaces">Border belongs to the faces</button>
+    </div>
+    <div class="caption" id="rvOut">What to notice: the image never changes — only which side is marked as owning
+    the border. You can't see both at once, because a border can only belong to one region at a time.</div>
+  </div>
+
+  <p>The lecture's other examples: Da Vinci's <em>Last Supper</em> (figure–ground separation in a painting) and a
+  carved-wood puzzle where the borders can belong to the light wooden pieces (light wood in front) or to the dark
+  deer shapes (deer in front, light wood becomes the table behind).</p>
+
+  <h2 id="completion">3. Amodal and modal completion</h2>
+
+  <p>Objects get cut into pieces by whatever's in front of them. The brain has to glue the pieces back into one
+  object — and it does it in two different ways.</p>
+
+  <div class="grid2">
+    <div class="box defn"><span class="label">Amodal completion</span>
+    The brain infers parts of an object hidden (<strong>occluded</strong>) by another object, but does <em>not</em>
+    actually "see" those parts. You know the cat continues behind the fence; you don't see its hidden body.</div>
+    <div class="box defn"><span class="label">Modal completion</span>
+    You perceive an <strong>illusory surface</strong>, suggested by cues like colour or alignment — no occlusion
+    needed, and you really do "see" its edges, even where there's no contrast at all.</div>
+  </div>
+
+  <div class="viz">
+    <div class="viz-title">Kanizsa triangle — both kinds of completion at once</div>
+    <svg id="kzSvg" viewBox="0 0 640 320" role="img" aria-label="Three pac-man discs and three angles arranged to suggest a white triangle"></svg>
+    <div class="controls">
+      <label>Rotate the pac-men (°) <input type="range" id="kzR" min="0" max="180" step="1" value="0" data-out="kzRv" data-fmt="int"><span class="val" id="kzRv"></span></label>
+      <label><input type="checkbox" id="kzShow"> Reveal what's physically there</label>
+    </div>
+    <div class="caption">What to notice: at 0° you see a triangle, a shade brighter (or darker, in dark mode) than the page, with
+    sharp edges — that's <strong>modal</strong> completion (an illusory surface). You also see three whole discs and
+    an outlined triangle lying <em>behind</em> it — that's <strong>amodal</strong> completion (occluded parts
+    inferred, not seen).
+    Rotate the pac-men a few tens of degrees and the white triangle collapses: the illusion depends on the
+    edges being <strong>aligned</strong>.</div>
+  </div>
+
+  <div class="box key"><span class="label">Telling them apart on an exam</span>
+  Ask: <em>is something occluding it?</em> → amodal (the outlined triangle and whole discs behind the illusory one).
+  <em>Is the surface itself illusory?</em> → modal (the illusory triangle on top). Modal completion also lets us read
+  silhouettes and see illusory coloured surfaces (the lecture's cat).</div>
+
+  <h3>When the predictions go wrong — and how knowledge steers them</h3>
+  <p>Your brain is mostly making predictions, and sometimes gets them wrong: amodal completion gone wrong (a head
+  "joined" to the wrong body behind an occluder) and modal completion gone wrong — the whole
+  <em>r/confusingperspective</em> genre. <strong>Knowledge of objects and context refines the
+  predictions</strong>: prime people with "young" or "old" and the same ambiguous drawing becomes a young woman or
+  an old woman.</p>
+
+  <h3>Where it happens: V1 edges → V2 surfaces</h3>
+  <p>Neurophysiology: V1 cells respond to <strong>edges</strong>. V2 cells respond to <strong>real surfaces</strong>
+  and <strong>illusory surfaces</strong> — a V2 cell fires for the edge of a Kanizsa-style illusory figure even
+  though there is no luminance edge in its receptive field. That's why the implementation row reads "V1 edges, V2
+  surfaces".</p>
+
+  <h2 id="depth-marr">4. Depth: rebuilding the third dimension</h2>
+
+  <p>The retina is a 2D sheet. Depth is <em>inferred</em>. At Marr's levels:</p>
+  <div class="scroll-x"><table>
+    <tr><th>Level</th><th>Depth perception</th></tr>
+    <tr><td>Computational</td><td>Reach and grasp objects accurately, navigate safely, judge approaching objects</td></tr>
+    <tr><td>Algorithmic</td><td>Combine <strong>pictorial cues</strong> (occlusion, perspective, texture, shading…) with <strong>non-pictorial cues</strong> (binocular disparity, motion parallax, vergence, accommodation)</td></tr>
+    <tr><td>Implementation</td><td>V1–V5 are all involved in inferring depth</td></tr>
+  </table></div>
+
+  <div class="grid2">
+    <div class="box defn"><span class="label">Pictorial cues</span>2D information in the image itself that can be used
+    to infer 3D depth — what a painter can use.</div>
+    <div class="box defn"><span class="label">Non-pictorial cues</span>Other information from the body and the world —
+    eye muscles, lens, two eyes, your own movement.</div>
+  </div>
+
+  <h2 id="pictorial">5. The seven pictorial cues</h2>
+
+  <div class="viz">
+    <div class="viz-title">Build depth from a flat picture — switch cues on</div>
+    <svg id="pcSvg" viewBox="0 0 640 320" role="img" aria-label="A scene with two figures whose depth relations change as pictorial cues are toggled"></svg>
+    <div class="controls" id="pcCtl"></div>
+    <div class="caption">What to notice: with everything off, the two figures are just shapes on a page. Each cue
+    <em>suggests</em> an interpretation; turn on several and the far figure is unmistakably far. Turn on "height
+    in field" and "known size" <em>without</em> the others and see how much weaker the impression is.</div>
+  </div>
+
+  <div class="scroll-x"><table>
+    <tr><th>#</th><th>Cue</th><th>What it says</th></tr>
+    <tr><td>1</td><td><strong>Occlusion</strong></td><td>If A hides part of B, A is in front (Raphael's <em>School of Athens</em>)</td></tr>
+    <tr><td>2</td><td><strong>Linear perspective</strong></td><td>Parallel lines converge with distance to a vanishing point (trompe-l'œil murals — "deceive the eye")</td></tr>
+    <tr><td>3</td><td><strong>Height in field</strong></td><td>Assuming a flat ground, objects higher in the visual field are farther</td></tr>
+    <tr><td>4</td><td><strong>Known size</strong></td><td>If you know how big it is (a cat), its retinal size tells you its distance</td></tr>
+    <tr><td>5</td><td><strong>Texture gradient</strong></td><td>Assume texture elements are uniform; if they shrink, it's because they're farther</td></tr>
+    <tr><td>6</td><td><strong>Atmospheric perspective</strong></td><td>Distant surfaces are hazier and lower-contrast (the atmosphere imposes a haze)</td></tr>
+    <tr><td>7</td><td><strong>Shadows</strong></td><td>Ground objects to the surface; the gap between object and shadow gives the object's distance from the surface</td></tr>
+  </table></div>
+
+  <div class="box key"><span class="label">How cues work</span>
+  They're not laws that force one interpretation. Each cue <strong>suggests</strong> an interpretation, and the
+  brain picks the interpretation compatible with the <strong>greatest number of cues</strong>. So what happens
+  when cues conflict? → the Ames room.</div>
+
+  <h2 id="size-constancy">6. Size constancy and the Ames room</h2>
+
+  <p>A man far away is small on your retina, but you don't see a small man. You compensate using distance:</p>
+  <p>$$\text{Perceived size} = \text{Size on retina} \times \text{Perceived distance}$$</p>
+  <p>The same equation runs in two directions — this is the part to get straight:</p>
+  <div class="grid2">
+    <div class="box example"><span class="label">Height in field / other distance cues</span>
+    Distance is <strong>known</strong> (from cues) → solve for size. The distant man is perceived as normal-sized.</div>
+    <div class="box example"><span class="label">Known size (the cat)</span>
+    Size is <strong>known</strong> → solve for distance: $\text{Perceived distance} = \text{Known size} / \text{Size on retina}$.</div>
+  </div>
+
+  <div class="viz">
+    <div class="viz-title">The Ames room — when distance is misjudged, size pays the price</div>
+    <svg id="amSvg" viewBox="0 0 640 300" role="img" aria-label="Top view of a trapezoidal room with two equally tall people at different distances, and how they appear"></svg>
+    <div class="controls">
+      <label>Far corner distance (m) <input type="range" id="amD" min="3" max="9" step="0.5" value="6" data-out="amDv" data-dp="1"><span class="val" id="amDv"></span></label>
+      <span class="val" id="amOut"></span>
+    </div>
+    <div class="caption">What to notice: both people are 1.6 m tall. The room is a trapezoid built so that from the
+    peephole it looks like an ordinary rectangle — so you perceive both corners at the <strong>same</strong>
+    distance (3 m). Perceived size = retinal size × perceived distance, so the farther person — smaller on the
+    retina, but not perceived as farther — looks tiny. Numbers are computed from the sliders.</div>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Size constancy by hand</div>
+    <div class="g-body"><p>A 1.8 m person stands 10 m away, then walks back to 30 m. (a) How does their retinal
+    size change? (b) With good distance cues, how big do they look? (c) In an Ames-style room that makes you think
+    they're still at 10 m, how big do they look?</p></div>
+    <details class="step"><summary>Step 1 — Retinal size</summary><div><p>Retinal size ∝ size / distance:
+    1.8/10 = 0.18 → 1.8/30 = 0.06. It shrinks to <strong>one third</strong>.</p></div></details>
+    <details class="step"><summary>Step 2 — With correct distance</summary><div><p>Perceived size = 0.06 × 30 =
+    <strong>1.8 m</strong>. Size constancy: they look the same height.</p></div></details>
+    <details class="step"><summary>Step 3 — With distance misjudged as 10 m</summary><div><p>Perceived size = 0.06 ×
+    10 = <strong>0.6 m</strong> — a third of their real height.</p></div></details>
+    <details class="step"><summary>The takeaway</summary><div><p>Retinal size alone never determines perceived size.
+    The equation's "perceived distance" term is the lever the Ames room pulls: the room's perspective and
+    height-in-field cues are rigged to agree on one wrong distance, and they outvote your knowledge that people
+    don't shrink.</p></div></details>
+  </div>
+
+  <h2 id="non-pictorial">7. Non-pictorial cues</h2>
+
+  <div class="scroll-x"><table>
+    <tr><th>Cue</th><th>How it works</th></tr>
+    <tr><td><strong>Motion parallax</strong></td><td>As you move, near objects sweep past faster than far ones. A praying mantis sways its head side to side to judge distance to prey. (Ch. 12)</td></tr>
+    <tr><td><strong>Accommodation</strong></td><td>The lens changes shape to focus; the visual system senses how strained the lens is and translates that into distance</td></tr>
+    <tr><td><strong>Vergence</strong></td><td>Eyes rotate toward each other (convergence) for near things, apart (divergence) for far — the angle gives distance</td></tr>
+    <tr><td><strong>Binocular disparity</strong></td><td>The two eyes see slightly different images; the difference in separation → depth. Using it is <strong>stereopsis</strong>. Wheatstone's mirror stereoscope (1832) fakes 3D by showing each eye its own image</td></tr>
+  </table></div>
+
+  <div class="viz">
+    <div class="viz-title">Two eyes: vergence and disparity</div>
+    <svg id="veSvg" viewBox="0 0 640 300" role="img" aria-label="Top view of two eyes fixating a point, with a second object nearer or farther"></svg>
+    <div class="controls">
+      <label>Fixation distance (cm) <input type="range" id="veF" min="15" max="300" step="5" value="60" data-out="veFv" data-fmt="int"><span class="val" id="veFv"></span></label>
+      <label>Other object (cm) <input type="range" id="veO" min="15" max="300" step="5" value="120" data-out="veOv" data-fmt="int"><span class="val" id="veOv"></span></label>
+      <label><input type="checkbox" id="veVR"> VR headset (screen focus fixed at 150 cm)</label>
+    </div>
+    <div class="caption" id="veOut"></div>
+  </div>
+
+  <div class="box warn"><span class="label">Vergence–accommodation conflict</span>
+  Normally vergence and accommodation go hand in hand — both report the same distance. In VR, your eyes
+  <strong>converge</strong> on the virtual object's distance, but the lens must <strong>accommodate</strong> to the
+  fixed distance of the screen optics. The mismatch between the two depth cues causes sickness and nausea with
+  prolonged use. Tick "VR headset" above and move the fixation slider to see the gap.</div>
+
+  <p><strong>Where:</strong> binocular disparity is processed across multiple visual areas, from V1 to
+  <strong>V5/MT</strong>.</p>
+
+  <h2 id="check-yourself">8. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">In the Kanizsa figure, seeing a triangle with crisp edges where no edge physically exists is…</div>
+    <button class="opt">Amodal completion</button>
+    <button class="opt">Modal completion</button>
+    <button class="opt">Border ownership reversal</button>
+    <button class="opt">Atmospheric perspective</button>
+    <div class="why"><strong>Why:</strong> You actually <em>see</em> an illusory surface without occlusion → modal.
+    The outlined triangle and whole discs <em>behind</em> it (inferred, not seen) are the amodal part.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Distant mountains look bluish and low-contrast. This depth cue is…</div>
+    <button class="opt">Texture gradient</button>
+    <button class="opt">Linear perspective</button>
+    <button class="opt">Motion parallax</button>
+    <button class="opt">Atmospheric perspective</button>
+    <div class="why"><strong>Why:</strong> Haze from the atmosphere lowers contrast with distance.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">Which is a <em>non-pictorial</em> cue?</div>
+    <button class="opt">Vergence</button>
+    <button class="opt">Shadows</button>
+    <button class="opt">Occlusion</button>
+    <button class="opt">Known size</button>
+    <div class="why"><strong>Why:</strong> Vergence comes from your eye muscles, not the image. A painter can use all
+    the others.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Which area responds to <em>illusory</em> surfaces as well as real ones?</div>
+    <button class="opt">Retinal ganglion cells</button>
+    <button class="opt">V1 simple cells</button>
+    <button class="opt">V2</button>
+    <button class="opt">LGN</button>
+    <div class="why"><strong>Why:</strong> V1 encodes local edges; V2 integrates borders into surfaces, including
+    illusory ones.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">In the Ames room, which term of "perceived size = retinal size × perceived distance" is being fooled?</div>
+    <button class="opt">Retinal size</button>
+    <button class="opt">Perceived distance</button>
+    <button class="opt">Neither — it's modal completion</button>
+    <button class="opt">Both equally</button>
+    <div class="why"><strong>Why:</strong> Retinal size is honest (the far person really is smaller on your
+    retina). The room's shape makes you misjudge distance, so perceived size comes out wrong.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const T = (svg, x, y, s, a = {}) => { const t = SG.el("text", Object.assign({x, y, "text-anchor":"middle", fill:"var(--ink)", "font-size":13}, a)); t.textContent = s; svg.appendChild(t); return t; };
+
+  // ---------- Rubin vase ----------
+  const rv = document.getElementById("rvSvg"), rvOut = document.getElementById("rvOut");
+  const prof = "M0,0 C30,10 38,40 30,60 C45,70 52,80 44,92 C56,100 54,115 40,118 C48,130 45,142 32,146 C20,170 60,200 60,230 L60,300";
+  function drawRv(owner) {
+    rv.innerHTML = "";
+    const vaseSide = owner === "vase";
+    rv.appendChild(SG.el("rect", {x:170, y:0, width:300, height:300, fill: vaseSide ? "var(--bg-soft)" : "var(--ink)"}));
+    const left = `M170,0 L${220},0 ` + prof.replace(/^M0,0/, "").replace(/(-?\d+),(-?\d+)/g, (m, x, y) => `${220 + +x},${+y}`) + " L170,300 Z";
+    const right = `M470,0 L${420},0 ` + prof.replace(/^M0,0/, "").replace(/(-?\d+),(-?\d+)/g, (m, x, y) => `${420 - +x},${+y}`) + " L470,300 Z";
+    [left, right].forEach(d => rv.appendChild(SG.el("path", {d, fill: vaseSide ? "var(--ink)" : "var(--bg-soft)"})));
+    // border-ownership ticks
+    const ticks = [[250, 60], [264, 92], [252, 146], [275, 230]];
+    ticks.forEach(([x, y]) => { const dir = vaseSide ? 1 : -1; rv.appendChild(SG.el("line", {x1:x, y1:y, x2:x + dir * 18, y2:y, stroke:"var(--gold)", "stroke-width":4})); rv.appendChild(SG.el("line", {x1:640 - x, y1:y, x2:640 - x - dir * 18, y2:y, stroke:"var(--gold)", "stroke-width":4})); });
+    T(rv, 200, 200, vaseSide ? "ground" : "face", {fill: vaseSide ? "var(--panel)" : "var(--ink)", "font-size":12}); T(rv, 440, 200, vaseSide ? "ground" : "face", {fill: vaseSide ? "var(--panel)" : "var(--ink)", "font-size":12});
+    T(rv, 320, 290, vaseSide ? "figure: vase" : "ground", {fill: vaseSide ? "var(--ink)" : "var(--panel)"});
+    rvOut.innerHTML = (vaseSide ? "Gold ticks point <strong>into the vase</strong>: it owns the border, so it's the figure and the sides are background." : "Gold ticks point <strong>into the faces</strong>: they own the border, so two profiles face each other across a background gap.") + " What to notice: the outline is identical in both — only ownership changed.";
+    document.getElementById("rvVase").classList.toggle("primary", vaseSide); document.getElementById("rvFaces").classList.toggle("primary", !vaseSide);
+  }
+  drawRv("vase");
+  document.getElementById("rvVase").onclick = () => drawRv("vase");
+  document.getElementById("rvFaces").onclick = () => drawRv("faces");
+
+  // ---------- Kanizsa ----------
+  const kz = document.getElementById("kzSvg"), kzR = document.getElementById("kzR"), kzS = document.getElementById("kzShow");
+  function drawKz() {
+    kz.innerHTML = ""; kz.appendChild(SG.el("rect", {x:0, y:0, width:640, height:320, fill:"var(--panel)"}));
+    const rot = +kzR.value, r = 38;
+    const P = [[320, 50], [190, 270], [450, 270]];      // white triangle (points up)
+    const Q = [[320, 295], [200, 88], [440, 88]];       // outline triangle (points down)
+    // pac-men at P, mouths facing the triangle centroid
+    const cx = 320, cy = 197;
+    P.forEach(([x, y]) => {
+      const a = Math.atan2(cy - y, cx - x) + rot * Math.PI / 180, w = 30 * Math.PI / 180;
+      const x1 = x + r * Math.cos(a - w), y1 = y + r * Math.sin(a - w), x2 = x + r * Math.cos(a + w), y2 = y + r * Math.sin(a + w);
+      kz.appendChild(SG.el("path", {d:`M${x},${y} L${x1},${y1} A${r},${r} 0 1 0 ${x2},${y2} Z`, fill:"var(--ink)"}));
+    });
+    // outline triangle fragments (angles) at Q, broken where the white triangle would occlude
+    const seg = (a, b, t0, t1) => kz.appendChild(SG.el("line", {x1:a[0] + (b[0] - a[0]) * t0, y1:a[1] + (b[1] - a[1]) * t0, x2:a[0] + (b[0] - a[0]) * t1, y2:a[1] + (b[1] - a[1]) * t1, stroke:"var(--ink)", "stroke-width":4}));
+    const edges = [[Q[0], Q[1]], [Q[1], Q[2]], [Q[2], Q[0]]];
+    edges.forEach(([a, b]) => { seg(a, b, 0, 0.22); seg(a, b, 0.78, 1); });
+    if (kzS.checked) {
+      kz.appendChild(SG.el("polygon", {points:P.map(p => p.join(",")).join(" "), fill:"none", stroke:"var(--rose)", "stroke-width":2, "stroke-dasharray":"6 5"}));
+      edges.forEach(([a, b]) => seg(a, b, 0.22, 0.78) && 0);
+      kz.querySelectorAll("line").forEach((l, i) => { if (i >= 6) { l.setAttribute("stroke", "var(--accent-2)"); l.setAttribute("stroke-dasharray", "4 4"); l.setAttribute("stroke-width", 2); } });
+      T(kz, 560, 30, "pink dashes: no edge exists here", {"font-size":12, fill:"var(--rose)"});
+      T(kz, 560, 48, "teal dashes: inferred behind", {"font-size":12, fill:"var(--accent-2)"});
+    }
+  }
+  [kzR, kzS].forEach(e => { e.addEventListener("input", drawKz); e.addEventListener("change", drawKz); }); drawKz();
+
+  // ---------- pictorial cues scene ----------
+  const pc = document.getElementById("pcSvg"), ctl = document.getElementById("pcCtl");
+  const cues = [["occ", "Occlusion"], ["lin", "Linear perspective"], ["hei", "Height in field"], ["siz", "Known size"], ["tex", "Texture gradient"], ["atm", "Atmospheric"], ["sha", "Shadows"]];
+  const on = {};
+  cues.forEach(([k, lab]) => { const l = document.createElement("label"); const c = document.createElement("input"); c.type = "checkbox"; c.id = "pc_" + k; c.addEventListener("change", () => { on[k] = c.checked; drawPc(); }); l.appendChild(c); l.append(" " + lab); ctl.appendChild(l); });
+  const all = document.createElement("button"); all.className = "btn"; all.textContent = "All on"; all.onclick = () => { cues.forEach(([k]) => { on[k] = true; document.getElementById("pc_" + k).checked = true; }); drawPc(); }; ctl.appendChild(all);
+  function person(x, yFeet, h, col, op) {
+    const g = SG.el("g", {opacity:op});
+    g.appendChild(SG.el("circle", {cx:x, cy:yFeet - h + h * 0.1, r:h * 0.1, fill:col}));
+    g.appendChild(SG.el("rect", {x:x - h * 0.12, y:yFeet - h + h * 0.2, width:h * 0.24, height:h * 0.45, rx:h * 0.05, fill:col}));
+    g.appendChild(SG.el("rect", {x:x - h * 0.1, y:yFeet - h * 0.35, width:h * 0.08, height:h * 0.35, fill:col}));
+    g.appendChild(SG.el("rect", {x:x + h * 0.02, y:yFeet - h * 0.35, width:h * 0.08, height:h * 0.35, fill:col}));
+    return g;
+  }
+  function drawPc() {
+    pc.innerHTML = ""; pc.appendChild(SG.el("rect", {x:0, y:0, width:640, height:320, fill:"var(--panel)"}));
+    const hz = 110, vx = 320;
+    if (on.lin) [-400, -200, 0, 200, 400, 600, 800, 1040].forEach(x => pc.appendChild(SG.el("line", {x1:x, y1:320, x2:vx, y2:hz, stroke:"var(--line-2)", "stroke-width":1.5})));
+    if (on.tex) { for (let k = 0; k < 14; k++) { const t = Math.pow(0.8, k), y = hz + (320 - hz) * t; pc.appendChild(SG.el("line", {x1:0, y1:y, x2:640, y2:y, stroke:"var(--line-2)", "stroke-width":1})); } }
+    if (on.lin || on.tex || on.hei) pc.appendChild(SG.el("line", {x1:0, y1:hz, x2:640, y2:hz, stroke:"var(--ink-mute)", "stroke-width":1}));
+    const nearFeet = 290, farFeet = on.hei ? 160 : 290;
+    const nearX = 250, farX = on.occ ? 300 : 470;
+    const farH = on.siz ? 55 : 170, nearH = 170;
+    const farOp = on.atm ? 0.35 : 1;
+    if (on.sha) { pc.appendChild(SG.el("ellipse", {cx:nearX + 20, cy:nearFeet + 4, rx:40, ry:8, fill:"var(--ink)", opacity:.3})); pc.appendChild(SG.el("ellipse", {cx:farX + farH * 0.12, cy:farFeet + 2, rx:farH * 0.24, ry:farH * 0.045, fill:"var(--ink)", opacity:.3 * farOp})); }
+    pc.appendChild(person(farX, farFeet, farH, "var(--rose)", farOp));
+    pc.appendChild(person(nearX, nearFeet, nearH, "var(--accent)", 1));
+  }
+  drawPc();
+
+  // ---------- Ames room ----------
+  const am = document.getElementById("amSvg"), amD = document.getElementById("amD"), amOut = document.getElementById("amOut");
+  function drawAm() {
+    am.innerHTML = ""; const dFar = +amD.value, dNear = 3, H = 1.6;
+    // top view (left half): peephole at (60,150); distances along +x scaled 30px per metre
+    const px = 40, py = 150, s = 30;
+    const near = [px + dNear * s, 90], far = [px + dFar * s, 210];
+    am.appendChild(SG.el("polygon", {points:`${px + 40},60 ${near[0] + 10},${near[1] - 20} ${far[0] + 10},${far[1] + 20} ${px + 40},240`, fill:"none", stroke:"var(--ink-soft)", "stroke-width":2}));
+    am.appendChild(SG.el("line", {x1:px, y1:py, x2:near[0], y2:near[1], stroke:"var(--ink-mute)", "stroke-dasharray":"4 4"}));
+    am.appendChild(SG.el("line", {x1:px, y1:py, x2:far[0], y2:far[1], stroke:"var(--ink-mute)", "stroke-dasharray":"4 4"}));
+    am.appendChild(SG.el("circle", {cx:near[0], cy:near[1], r:8, fill:"var(--accent)"}));
+    am.appendChild(SG.el("circle", {cx:far[0], cy:far[1], r:8, fill:"var(--rose)"}));
+    am.appendChild(SG.el("circle", {cx:px, cy:py, r:5, fill:"var(--ink)"}));
+    T(am, px, py + 22, "peephole", {"font-size":11, fill:"var(--ink-soft)"});
+    T(am, 170, 285, "Top view: the real (trapezoid) room", {"font-size":12, fill:"var(--ink-soft)"});
+    // what you see (right half): both at same perceived distance, sized by retinal size x perceived distance
+    const retN = H / dNear, retF = H / dFar, perceivedD = dNear, pN = retN * perceivedD, pF = retF * perceivedD;
+    const bx = 400, floor = 250, k = 110;
+    am.appendChild(SG.el("rect", {x:bx - 20, y:40, width:240, height:210, fill:"var(--bg-soft)", stroke:"var(--ink-soft)"}));
+    am.appendChild(SG.el("rect", {x:bx + 20, y:floor - pN * k, width:34, height:pN * k, rx:10, fill:"var(--accent)"}));
+    am.appendChild(SG.el("rect", {x:bx + 150, y:floor - pF * k, width:34 * pF / pN, height:pF * k, rx:10 * pF / pN, fill:"var(--rose)"}));
+    T(am, bx + 100, 285, "What you see: looks like a normal room", {"font-size":12, fill:"var(--ink-soft)"});
+    amOut.textContent = `retinal size ratio = ${(retF / retN).toFixed(2)} → far person perceived ${pF.toFixed(2)} m tall (really ${H} m)`;
+  }
+  amD.addEventListener("input", drawAm); drawAm();
+
+  // ---------- vergence & disparity ----------
+  const ve = document.getElementById("veSvg"), veF = document.getElementById("veF"), veO = document.getElementById("veO"), veVR = document.getElementById("veVR"), veOut = document.getElementById("veOut");
+  const IPD = 6.3;
+  function drawVe() {
+    ve.innerHTML = ""; const F = +veF.value, O = +veO.value;
+    const ex = [320 - 40, 320 + 40], ey = 270, s = 250 / 300; // cm -> px vertical
+    const fy = ey - F * s, oy = ey - O * s;
+    ex.forEach(x => ve.appendChild(SG.el("circle", {cx:x, cy:ey, r:14, fill:"var(--panel)", stroke:"var(--ink-soft)", "stroke-width":2})));
+    ex.forEach(x => ve.appendChild(SG.el("line", {x1:x, y1:ey, x2:320, y2:fy, stroke:"var(--accent)", "stroke-width":2})));
+    ex.forEach(x => ve.appendChild(SG.el("line", {x1:x, y1:ey, x2:380, y2:oy, stroke:"var(--rose)", "stroke-width":1.5, "stroke-dasharray":"5 4"})));
+    ve.appendChild(SG.el("circle", {cx:320, cy:fy, r:7, fill:"var(--accent)"})); T(ve, 290, fy + 4, "fixation", {"font-size":11, "text-anchor":"end", fill:"var(--accent)"});
+    ve.appendChild(SG.el("rect", {x:372, y:oy - 7, width:16, height:14, fill:"var(--rose)"})); T(ve, 395, oy + 4, "object", {"font-size":11, "text-anchor":"start", fill:"var(--rose)"});
+    if (veVR.checked) { const sy = ey - 150 * s; ve.appendChild(SG.el("line", {x1:180, y1:sy, x2:460, y2:sy, stroke:"var(--gold)", "stroke-width":3})); T(ve, 470, sy + 4, "lens focus (screen)", {"font-size":11, "text-anchor":"start", fill:"var(--gold)"}); }
+    const verg = d => 2 * Math.atan(IPD / 2 / d) * 180 / Math.PI;
+    const vF = verg(F), vO = verg(O), disp = vO - vF;
+    let msg = `Vergence angle at fixation: ${vF.toFixed(1)}° (IPD 6.3 cm). Object's disparity: ${Math.abs(disp).toFixed(2)}° ` +
+      (Math.abs(disp) < 0.01 ? "— zero: same depth as fixation." : disp > 0 ? "— <strong>crossed</strong> (nearer than fixation)." : "— <strong>uncrossed</strong> (farther than fixation).");
+    msg += " What to notice: vergence changes steeply up close and barely at all beyond a couple of metres — it's a near-range cue.";
+    if (veVR.checked) msg += ` <strong>VR:</strong> eyes converge for ${F} cm but the lens must focus at 150 cm — a mismatch of ${Math.abs(verg(F) - verg(150)).toFixed(1)}° of vergence.`;
+    veOut.innerHTML = msg;
+  }
+  [veF, veO, veVR].forEach(e => { e.addEventListener("input", drawVe); e.addEventListener("change", drawVe); }); drawVe();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marr, Tinbergen &amp; representations · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="frameworks">
+<main>
+
+  <div class="eyebrow">Part I · Chapter 4 · Lectures 3 &amp; 4</div>
+  <h1>Marr, Tinbergen &amp; representations</h1>
+  <p class="subtitle">The two frameworks the course uses to ask any brain question properly — and the
+  demos from Lecture 4 showing that <em>how</em> you represent a problem decides how you solve it.</p>
+
+  <div data-toc></div>
+
+  <h2 id="why-frameworks">1. Why we need frameworks at all</h2>
+
+  <div class="box analogy"><span class="label">Marr's analogy</span>
+  "Trying to understand perception by studying only neurons is like trying to understand bird flight by
+  studying only feathers." — David Marr, <em>Vision</em> (1982)</div>
+
+  <p>Something as complex as the brain can't be understood from a single perspective. You could know every
+  feather on a bird and still not know that flight is about generating lift. You could know aerodynamics
+  and still not know what a feather is made of. Both are true, at different <em>levels</em>. The frameworks
+  in this chapter are checklists that stop you answering at only one level.</p>
+
+  <h2 id="marr">2. Marr's three levels</h2>
+
+  <div class="scroll-x"><table>
+    <tr><th>Level</th><th>Question</th><th>Who asks it</th><th>Bird-flight analogy</th></tr>
+    <tr><td><strong>Computational</strong></td><td><strong>Why?</strong> What problem is being solved, and why?</td><td>—</td><td>Get off the ground</td></tr>
+    <tr><td><strong>Algorithmic</strong></td><td><strong>What rules?</strong> What representations and processes solve it? ("software")</td><td>Cognitive psychologist</td><td>Aerodynamics — lift</td></tr>
+    <tr><td><strong>Implementation</strong></td><td><strong>How physically?</strong> What hardware — or wetware — runs it?</td><td>Neuroscientist</td><td>Feathers, muscles</td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Common mistake — the study guide's shorthand</span>
+  The L3 study guide writes "Computation (why) · Algorithm (what) · Implementation (how)". Careful: "how"
+  there means <em>how physically</em>. On the Lecture 8 surface-perception slides the professor labels
+  Algorithmic as "how?" and Implementation as "where?". Don't memorize the one-word tags — memorize the
+  full question each level asks.</div>
+
+  <h3>The lecture's flight table</h3>
+  <p>The same computational goal can have several algorithms, and the same algorithm several
+  implementations. That's the key insight — the levels are <em>loosely coupled</em>:</p>
+
+  <div class="scroll-x"><table class="tight">
+    <tr><th>Computational</th><th>Algorithm (software)</th><th>Implementation (hardware / wetware)</th></tr>
+    <tr><td rowspan="4">Flight gives access to food and mates, and escape from predators</td><td>Flapping wings</td><td>Bird</td></tr>
+    <tr><td>Thrust</td><td>Rocket engine</td></tr>
+    <tr><td>Rotation to generate lift</td><td>Helicopter blades</td></tr>
+    <tr><td>Temperature differential</td><td>Hot-air balloon</td></tr>
+  </table></div>
+
+  <h3>Worked through: edge detection</h3>
+  <ul>
+    <li><strong>Computational:</strong> Why detect edges? To recognize objects, detect motion, navigate.</li>
+    <li><strong>Algorithmic:</strong> If you were to write an algorithm, how? The <strong>Sobel operator</strong> —
+    an image-processing method that detects where visual intensity changes sharply.</li>
+    <li><strong>Implementation:</strong> Neurons that respond to different <em>areas in space</em>, to different
+    <em>intensities of light</em>, and to the <em>orientation</em> of an edge (receptive fields — Ch. 10).</li>
+  </ul>
+
+  <p>The study guide's version of the algorithm: "higher numbers = more white → edge detected if there's a
+  big difference in numbers." Here's what that means concretely. Paint on the grid; each cell is a pixel's
+  brightness.</p>
+
+  <div class="viz">
+    <div class="viz-title">The Sobel operator — click pixels to paint, then look for edges</div>
+    <svg id="sbSvg" viewBox="0 0 640 300" role="img" aria-label="Left: a grid of pixel intensities. Right: the gradient magnitude, bright where intensity changes sharply"></svg>
+    <div class="controls">
+      <label>Edge threshold <input type="range" id="sbTh" min="0" max="1000" step="10" value="300" data-out="sbThv" data-fmt="int"><span class="val" id="sbThv"></span></label>
+      <button class="btn" id="sbSquare">Square</button>
+      <button class="btn" id="sbRamp">Smooth ramp</button>
+      <button class="btn" id="sbClear">Clear</button>
+    </div>
+    <div class="caption" id="sbCap">What to notice: the interior of a uniform region scores 0 — no change,
+    no edge — however bright it is. Only the <em>boundaries</em> light up. Try "Smooth ramp": brightness still
+    changes, but gently, so raise the threshold and the "edge" disappears. Edges are sharp changes, not
+    brightness.</div>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>One Sobel step by hand</div>
+    <div class="g-body"><p>Three rows of pixels, each row identical: <code>10 10 10 200 200</code>. The
+    horizontal Sobel kernel is</p>
+    <p>$$G_x=\begin{bmatrix}-1&amp;0&amp;1\\-2&amp;0&amp;2\\-1&amp;0&amp;1\end{bmatrix}$$</p>
+    <p>Centre the kernel on the middle row at columns 2, 3 and 4 (counting from 1). Multiply each pixel by the
+    kernel entry on top of it and add. Where is the edge?</p></div>
+    <details class="step"><summary>Step 1 — What's the kernel doing?</summary><div><p>Left column gets
+    negative weights, right column positive: it computes (right side − left side), with the middle row
+    counted twice. It's a "difference detector".</p></div></details>
+    <details class="step"><summary>Step 2 — Column 2 (neighbours: 10, 10, 10)</summary><div><p>Each row
+    contributes $(10 - 10)$ times its weight, so the total is $0$. Uniform region → no edge.</p></div></details>
+    <details class="step"><summary>Step 3 — Column 3 (neighbours: 10 left, 200 right)</summary><div><p>Each row
+    gives $200 - 10 = 190$; weights $1 + 2 + 1 = 4$; total $4 \times 190 = 760$. Column 4 has left = 10 (column 3),
+    right = 200 (column 5), so it's also $760$.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>$0, 760, 760$: the response is
+    large on both sides of the 10→200 boundary and zero inside the flat region. That's the algorithmic
+    level. The implementation level is a neuron whose receptive field has an excitatory side and an
+    inhibitory side — the simple cells of Chapter 10 compute something very like this.</p></div></details>
+  </div>
+
+  <h2 id="tinbergen">3. Tinbergen's four questions</h2>
+
+  <p>Marr's levels are about a system <em>as it is right now</em>. Tinbergen (1963) — an ethologist —
+  added time: how did this behavior come about in the individual, and in the species?</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>Question</th><th>Core question</th><th>Closest Marr level</th><th>Example: <strong>movement</strong></th></tr>
+    <tr><td><strong>Function</strong> (adaptation)</td><td>Why does this behavior exist? What is it good for?</td><td>Computational</td><td>Find food, avoid danger, build shelter, interact with the world</td></tr>
+    <tr><td><strong>Mechanism</strong> (causation)</td><td>What produces the behavior right now?</td><td>Algorithmic + Implementation</td><td>Algorithm: maximize utility — rewards (food) minus costs (effort, error). Implementation: neural circuits represent costs and rewards, select actions, issue motor commands, activate muscles</td></tr>
+    <tr><td><strong>Development</strong> (ontogeny)</td><td>How does it emerge over the lifespan?</td><td>Cuts across all 3</td><td>Reactive → predictive: early movements rely on slow sensory feedback; with experience, control becomes predictive and efficient</td></tr>
+    <tr><td><strong>Evolution</strong> (phylogeny)</td><td>How did it arise across generations / species?</td><td>Cuts across all 3</td><td>Brains may have evolved, in part, for movement — the sea-squirt story</td></tr>
+  </table></div>
+
+  <div class="box example"><span class="label">The sea-squirt story (the lecture names it; here it is)</span>
+  <span class="pill">going deeper</span> A juvenile sea squirt swims around with a simple nervous system
+  looking for a rock. Once it attaches permanently and no longer needs to move, it digests most of its own
+  brain. The moral: a brain is for moving; no movement, no need for a brain.</div>
+
+  <div class="box warn"><span class="label">Common mistake</span>
+  Confusing <strong>ontogeny</strong> (development in <em>one</em> lifetime — "onto" ≈ one) with
+  <strong>phylogeny</strong> (evolution across <em>species</em> — "phylum"). And note the study guide spells
+  it "Ontology"; the right word is <em>ontogeny</em>.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Your own example (the L4 study-guide task)</div>
+    <div class="g-body"><p>Apply Marr's 3 levels <em>and</em> Tinbergen's 4 questions to <strong>face
+    recognition</strong>. (Everything you need is in Chapter 8, but try it cold first.)</p></div>
+    <details class="step"><summary>Marr's three levels</summary><div><p><strong>Computational:</strong>
+    recognize individuals for communication, social interaction and emotion perception.
+    <strong>Algorithmic:</strong> store many orientation-specific face templates; process faces holistically
+    (the inversion effect). <strong>Implementation:</strong> the fusiform face area, responding ~150–170 ms
+    after a face appears.</p></div></details>
+    <details class="step"><summary>Tinbergen's four questions</summary><div><p><strong>Function:</strong>
+    social living. <strong>Mechanism:</strong> the Marr algorithm + implementation answers above.
+    <strong>Development:</strong> face recognition improves with experience — familiar faces are recognized
+    across angles far better (the Dutch-politician demo). <strong>Evolution:</strong> social primates
+    that could tell group members apart would have had an advantage.</p></div></details>
+    <details class="step"><summary>The takeaway</summary><div><p>Function ≈ computational; mechanism ≈
+    algorithmic + implementation; development and evolution are the <em>extra</em> questions Tinbergen adds,
+    and they apply at every Marr level.</p></div></details>
+  </div>
+
+  <h2 id="representations">4. Representations: how you encode it decides how you solve it</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Representation</strong> — how information about the world is encoded in the mind. The same fact can
+  be encoded <strong>symbolically</strong> ($x^2 + y^2 = z^2$) or <strong>visuospatially</strong> (a picture of
+  a right triangle ◣).</div>
+
+  <h3>Problem 1 — fold a sheet of paper 50 times</h3>
+  <p>Estimate the thickness before you look. If you imagine it visually — a stack of paper getting a bit
+  taller — you'll guess a few centimetres or metres. Represent it symbolically — thickness × $2^{50}$ — and
+  the answer is suddenly obvious: it's astronomical.</p>
+
+  <div class="viz">
+    <div class="viz-title">Doubling, represented numerically</div>
+    <svg id="fdSvg" viewBox="0 0 640 170" role="img" aria-label="Log-scale bar of paper thickness after n folds compared with landmarks"></svg>
+    <div class="controls">
+      <label>Folds <input type="range" id="fdN" min="0" max="50" step="1" value="10" data-out="fdNv" data-fmt="int"><span class="val" id="fdNv"></span></label>
+      <span class="val" id="fdOut"></span>
+    </div>
+    <div class="caption">Assumes 0.1 mm paper. What to notice: the bar is on a <em>log</em> scale — each
+    fold moves it the same distance. Around 42 folds you pass the distance to the Moon (~384,400 km); at 50
+    you're at roughly 293 times that. The lecture's answer, "greater than 384,400 km", is a large
+    understatement.</div>
+  </div>
+
+  <h3>Problem 2 — the mountain climber</h3>
+  <p>A climber leaves the base of Mt. Washington at 8 am and reaches the summit at 8 pm. Next morning she
+  leaves the summit at 8 am and reaches the base at 8 pm, same path. Must there be a spot she passes at
+  exactly the same time of day on both trips?</p>
+  <p>Symbolically this is hard. Visually it's trivial: draw both days on the <em>same</em> clock.</p>
+
+  <div class="viz">
+    <div class="viz-title">Superimpose the two days — they must cross</div>
+    <svg id="mtSvg" viewBox="0 0 640 280" role="img" aria-label="Altitude against time of day for the ascent and descent, crossing at one point"></svg>
+    <div class="controls">
+      <label>Ascent pace (early ↔ late) <input type="range" id="mtA" min="0.3" max="3" step="0.1" value="1.6" data-out="mtAv" data-dp="1"><span class="val" id="mtAv"></span></label>
+      <label>Descent pace <input type="range" id="mtD" min="0.3" max="3" step="0.1" value="0.6" data-out="mtDv" data-dp="1"><span class="val" id="mtDv"></span></label>
+      <span class="val" id="mtOut"></span>
+    </div>
+    <div class="caption">What to notice: however you set the paces, one line starts at the bottom and ends at
+    the top, the other does the reverse — so they <em>must</em> cross. Equivalent picture: two climbers on
+    the same day, one going up and one coming down, must meet.</div>
+  </div>
+
+  <h3>The mental imagery debate</h3>
+  <div class="grid2">
+    <div class="box example"><span class="label">Shepard / Kosslyn</span>"We have an inner mental visuospatial
+    image." Evidence: in "same or different?" rotated-object tasks, <strong>reaction time scales with rotation
+    angle</strong> — as if the image is continuously rotated in the mind's eye. Later backed by imaging.</div>
+    <div class="box example"><span class="label">Pylyshyn</span>"We don't have mental images, we only have
+    symbols." The feeling of a picture is an illusion over a symbolic code.</div>
+  </div>
+
+  <div class="viz">
+    <div class="viz-title">Mental rotation: the prediction that decides the debate (schematic)</div>
+    <svg viewBox="0 0 640 230" role="img" aria-label="Reaction time increasing linearly with rotation angle">
+      <line x1="70" y1="190" x2="600" y2="190" stroke="var(--ink-mute)"/><line x1="70" y1="190" x2="70" y2="20" stroke="var(--ink-mute)"/>
+      <text x="335" y="220" text-anchor="middle" fill="var(--ink-soft)" font-size="13">Angle between the two objects (0° → 180°)</text>
+      <text x="30" y="105" fill="var(--ink-soft)" font-size="13" transform="rotate(-90 30 105)" text-anchor="middle">Reaction time</text>
+      <line x1="90" y1="170" x2="580" y2="40" stroke="var(--accent)" stroke-width="3"/>
+      <line x1="90" y1="120" x2="580" y2="120" stroke="var(--ink-mute)" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="585" y="36" fill="var(--accent)" font-size="13" text-anchor="end">images rotated in the mind: RT grows with angle (observed)</text>
+      <text x="585" y="112" fill="var(--ink-mute)" font-size="13" text-anchor="end">pure symbols: no reason for RT to depend on angle</text>
+    </svg>
+    <div class="caption">Schematic of the logic, not the original data. What to notice: the two theories make
+    different <em>behavioral predictions</em> — that's what makes it a science question.</div>
+  </div>
+
+  <h2 id="processes">5. Processes — and how they shape representations</h2>
+
+  <div class="box defn"><span class="label">Definition</span>
+  <strong>Processes</strong> — the maintenance and manipulation of mental representations: how information is
+  transformed in the mind (e.g. mental rotation).</div>
+
+  <p>The influence runs both ways:</p>
+
+  <div class="grid2">
+    <div class="box key"><span class="label">Representation → processing</span>
+    <strong>Chunking.</strong> Hold <code>1 4 9 2 1 7 7 6 2 0 0 1</code> in memory — hard. Now hold
+    <code>1492 · 1776 · 2001</code> — easy. Same digits; the chunked representation leverages long-term memory,
+    so short-term memory has 3 items to maintain instead of 12.</div>
+    <div class="box key"><span class="label">Processing → representation</span>
+    <strong>Priming.</strong> After "river", "bank" means riverbank; after "money", a financial bank. What you
+    just processed changes what gets represented.</div>
+  </div>
+
+  <h3>The "12 and 5" demo</h3>
+  <p>Answer 2+2, 4+4, 8+8, 16+16 quickly, then "pick a number between 12 and 5." Most people say
+  <strong>7</strong>. Two hypotheses from lecture:</p>
+  <ol>
+    <li><strong>Arithmetic priming:</strong> you were primed to do arithmetic — $12 - 5 = 7$ (or $12 + 5 = 17$).</li>
+    <li><strong>Trying to be random:</strong> people disproportionately choose 7, avoiding even numbers
+    (6, 8, 10) and "obvious" ones (9 = 3×3; 11).</li>
+  </ol>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>How would you test these hypotheses? (lecture asks, never answers)</div>
+    <div class="g-body"><p>Design an experiment that tells hypothesis 1 from hypothesis 2.</p></div>
+    <details class="step"><summary>Step 1 — What does each predict differently?</summary><div><p>Priming says
+    the preceding arithmetic <em>causes</em> 7. "Random-seeming" says people pick 7 regardless of what came
+    before.</p></div></details>
+    <details class="step"><summary>Step 2 — Manipulate the thing hypothesis 1 cares about</summary><div><p>Two
+    groups: one does the addition warm-up, one does an unrelated warm-up (e.g. naming colours). Then both pick
+    a number between 12 and 5. Bonus: a third group primed with <em>subtraction</em>, and a range where the
+    difference isn't 7 (e.g. between 13 and 5 → difference 8).</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>If the addition group says 7 much
+    more than the control group, priming matters. If both groups say 7 equally, it's the "random-looking"
+    preference. With 13 and 5: priming predicts 8, randomness-preference still predicts 7. The skill:
+    <strong>turn each hypothesis into a behavioral prediction that the other hypothesis doesn't make.</strong></p></div></details>
+  </div>
+
+  <h3>Count the F's</h3>
+  <p class="center"><code>FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXPERIENCE OF YEARS</code></p>
+  <p>Answer: <strong>6</strong> (FINISHED, FILES, SCIENTIFIC, and three OFs). Many people count 3. Why? We read
+  for meaning, not letter by letter, so function words like "of" are skimmed — and in "of" the F sounds like a
+  V, so a sound-based check misses it too. The process (reading for meaning) determines the representation
+  (the words that "count").</p>
+
+  <h2 id="check-yourself">6. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">"Neurons in V1 respond to edges of a particular orientation" is a statement at which Marr level?</div>
+    <button class="opt">Computational</button>
+    <button class="opt">Implementation</button>
+    <button class="opt">Algorithmic</button>
+    <button class="opt">Tinbergen's evolution</button>
+    <div class="why"><strong>Why:</strong> It's about physical hardware (neurons in a place). "Compute the
+    intensity difference across a boundary" would be algorithmic; "we need edges to recognize objects" would
+    be computational.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">"Infants' reaching starts out slow and feedback-driven and becomes predictive with experience" answers which Tinbergen question?</div>
+    <button class="opt">Function</button>
+    <button class="opt">Mechanism</button>
+    <button class="opt">Development</button>
+    <button class="opt">Evolution</button>
+    <div class="why"><strong>Why:</strong> Change across one individual's lifespan = development (ontogeny).
+    Evolution would be change across species or generations.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">Mental rotation reaction times increase with rotation angle. This supports…</div>
+    <button class="opt">Shepard/Kosslyn — visuospatial mental images</button>
+    <button class="opt">Pylyshyn — symbols only</button>
+    <button class="opt">Neither; it's a floor effect</button>
+    <button class="opt">Chunking</button>
+    <div class="why"><strong>Why:</strong> Rotating a picture farther takes longer; a symbolic code has no
+    natural reason to care about angle.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">A rocket, a helicopter and a bird all fly. In Marr's terms they share the same…</div>
+    <button class="opt">Implementation only</button>
+    <button class="opt">Algorithm and implementation</button>
+    <button class="opt">Algorithm only</button>
+    <button class="opt">Computational goal, but not algorithm or implementation</button>
+    <div class="why"><strong>Why:</strong> Same problem (get airborne), different algorithms (thrust,
+    rotation for lift, flapping), different hardware. The point of the flight table.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const T = (svg, x, y, s, a = {}) => { const t = SG.el("text", Object.assign({x, y, "text-anchor":"middle", fill:"var(--ink)", "font-size":13}, a)); t.textContent = s; svg.appendChild(t); return t; };
+
+  // ---------- Sobel ----------
+  const N = 12, sb = document.getElementById("sbSvg"), th = document.getElementById("sbTh");
+  let img = [];
+  const setSquare = () => { img = []; for (let r = 0; r < N; r++) { img.push([]); for (let c = 0; c < N; c++) img[r].push(r >= 3 && r < 9 && c >= 3 && c < 9 ? 200 : 10); } };
+  const setRamp = () => { img = []; for (let r = 0; r < N; r++) { img.push([]); for (let c = 0; c < N; c++) img[r].push(Math.round(10 + c * 190 / (N - 1))); } };
+  const setClear = () => { img = []; for (let r = 0; r < N; r++) img.push(Array(N).fill(10)); };
+  function sobel() {
+    const G = [];
+    for (let r = 0; r < N; r++) { G.push([]); for (let c = 0; c < N; c++) {
+      const p = (i, j) => img[Math.min(N - 1, Math.max(0, i))][Math.min(N - 1, Math.max(0, j))];
+      const gx = -p(r-1,c-1) - 2*p(r,c-1) - p(r+1,c-1) + p(r-1,c+1) + 2*p(r,c+1) + p(r+1,c+1);
+      const gy = -p(r-1,c-1) - 2*p(r-1,c) - p(r-1,c+1) + p(r+1,c-1) + 2*p(r+1,c) + p(r+1,c+1);
+      G[r].push(Math.hypot(gx, gy));
+    } }
+    return G;
+  }
+  function drawSb() {
+    sb.innerHTML = ""; const s = 20, ox1 = 30, ox2 = 350, oy = 30;
+    T(sb, ox1 + N * s / 2, 20, "Image (click to toggle bright/dark)", {"font-size":12, fill:"var(--ink-soft)"});
+    T(sb, ox2 + N * s / 2, 20, "Edge map: |gradient| above threshold", {"font-size":12, fill:"var(--ink-soft)"});
+    const G = sobel(), thr = +th.value; let nEdge = 0;
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+      const cell = SG.el("rect", {x:ox1 + c * s, y:oy + r * s, width:s - 1, height:s - 1, fill:"var(--ink)", "fill-opacity": (img[r][c] / 255).toFixed(2), stroke:"var(--line)", style:"cursor:pointer"});
+      cell.addEventListener("click", () => { img[r][c] = img[r][c] > 100 ? 10 : 200; drawSb(); });
+      sb.appendChild(cell);
+      const on = G[r][c] > thr; if (on) nEdge++;
+      sb.appendChild(SG.el("rect", {x:ox2 + c * s, y:oy + r * s, width:s - 1, height:s - 1, fill: on ? "var(--accent)" : "var(--bg-soft)", "fill-opacity": on ? Math.min(1, 0.35 + G[r][c] / 1100).toFixed(2) : 1, stroke:"var(--line)"}));
+    }
+    const mx = Math.max(...G.flat());
+    T(sb, 320, 290, `max gradient here = ${Math.round(mx)} · pixels over threshold: ${nEdge}`, {"font-size":12, fill:"var(--ink-mute)"});
+  }
+  setSquare(); drawSb();
+  th.addEventListener("input", drawSb);
+  document.getElementById("sbSquare").onclick = () => { setSquare(); drawSb(); };
+  document.getElementById("sbRamp").onclick = () => { setRamp(); drawSb(); };
+  document.getElementById("sbClear").onclick = () => { setClear(); drawSb(); };
+
+  // ---------- paper folding ----------
+  const fd = document.getElementById("fdSvg"), fN = document.getElementById("fdN"), fOut = document.getElementById("fdOut");
+  const marks = [[1.7, "person"], [828, "Burj Khalifa"], [8849, "Everest"], [4.08e5, "ISS orbit"], [3.844e8, "Moon"], [1.496e11, "Sun"]];
+  const fmt = m => m < 1 ? (m * 1000).toFixed(m < 0.01 ? 1 : 0) + " mm" : m < 1000 ? m.toFixed(1) + " m" : (m / 1000).toLocaleString(undefined, {maximumFractionDigits: 0}) + " km";
+  function drawFd() {
+    fd.innerHTML = ""; const n = +fN.value, t = 1e-4 * Math.pow(2, n);
+    const lo = -4, hi = 12, X = m => 30 + (Math.log10(m) - lo) / (hi - lo) * 580;
+    fd.appendChild(SG.el("line", {x1:30, y1:100, x2:610, y2:100, stroke:"var(--ink-mute)"}));
+    fd.appendChild(SG.el("rect", {x:30, y:80, width:Math.max(2, X(t) - 30), height:20, fill:"var(--accent)", opacity:.8}));
+    marks.forEach(([m, s], i) => { fd.appendChild(SG.el("line", {x1:X(m), y1:70, x2:X(m), y2:110, stroke:"var(--rose)", "stroke-width":2})); T(fd, X(m), i % 2 ? 128 : 62, s, {"font-size":12, fill:"var(--rose)"}); });
+    for (let e = lo; e <= hi; e += 2) T(fd, X(Math.pow(10, e)), 155, "10^" + e + " m", {"font-size":11, fill:"var(--ink-mute)"});
+    fOut.textContent = `${n} folds → ${fmt(t)}` + (t > 3.844e8 ? ` (${(t / 3.844e8).toFixed(1)}× Earth–Moon)` : "");
+  }
+  fN.addEventListener("input", drawFd); drawFd();
+
+  // ---------- mountain climber ----------
+  const mt = document.getElementById("mtSvg"), mA = document.getElementById("mtA"), mD = document.getElementById("mtD"), mOut = document.getElementById("mtOut");
+  function drawMt() {
+    mt.innerHTML = "";
+    const X = u => 70 + u * 520, Y = h => 240 - h * 200;  // u in [0,1] = 8am..8pm; h in [0,1]
+    mt.appendChild(SG.el("line", {x1:70, y1:240, x2:590, y2:240, stroke:"var(--ink-mute)"})); mt.appendChild(SG.el("line", {x1:70, y1:240, x2:70, y2:30, stroke:"var(--ink-mute)"}));
+    T(mt, 70, 262, "8 am", {"font-size":12, fill:"var(--ink-soft)"}); T(mt, 590, 262, "8 pm", {"font-size":12, fill:"var(--ink-soft)"}); T(mt, 330, 262, "time of day", {"font-size":12, fill:"var(--ink-soft)"});
+    T(mt, 45, 44, "summit", {"font-size":12, fill:"var(--ink-soft)"}); T(mt, 45, 238, "base", {"font-size":12, fill:"var(--ink-soft)"});
+    const a = +mA.value, d = +mD.value;
+    const up = u => Math.pow(u, a), down = u => 1 - Math.pow(u, d);
+    const path = f => { let s = ""; for (let i = 0; i <= 100; i++) { const u = i / 100; s += (i ? "L" : "M") + X(u) + "," + Y(f(u)); } return s; };
+    mt.appendChild(SG.el("path", {d:path(up), fill:"none", stroke:"var(--accent)", "stroke-width":3}));
+    mt.appendChild(SG.el("path", {d:path(down), fill:"none", stroke:"var(--rose)", "stroke-width":3}));
+    T(mt, X(0.82), Y(up(0.82)) - 10, "day 1: up", {"font-size":12, fill:"var(--accent)"});
+    T(mt, X(0.2), Y(down(0.2)) - 10, "day 2: down", {"font-size":12, fill:"var(--rose)"});
+    // bisection for crossing
+    let lo = 0, hi = 1; for (let k = 0; k < 50; k++) { const m = (lo + hi) / 2; (up(m) - down(m) < 0) ? lo = m : hi = m; }
+    const u = (lo + hi) / 2, h = up(u);
+    mt.appendChild(SG.el("circle", {cx:X(u), cy:Y(h), r:7, fill:"var(--gold)", stroke:"var(--ink)"}));
+    const mins = Math.round(u * 12 * 60), hh = 8 + Math.floor(mins / 60), mm = mins % 60;
+    const clock = `${((hh - 1) % 12) + 1}:${String(mm).padStart(2, "0")} ${hh < 12 ? "am" : "pm"}`;
+    mOut.textContent = `Same spot at ${clock}, ${Math.round(h * 100)}% of the way up`;
+  }
+  [mA, mD].forEach(e => e.addEventListener("input", drawMt)); drawMt();
+});
+</script>
+</body>
+</html>
