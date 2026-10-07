@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroAI: encoding, decoding &amp; CNNs · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="neuroai">
+<main>
+
+  <div class="eyebrow">Part V · NeuroAI</div>
+  <h1>NeuroAI: encoding, decoding &amp; CNNs</h1>
+  <p class="subtitle">Guest lecture, Dr. Maggie Henderson (CMU Psychology, Neuroscience Institute &amp; Machine
+  Learning Department). Artificial neural networks were built from a sketch of the visual system; now they are
+  used as instruments to study it. Everything here is predicting one of two directions — stimulus to brain, or
+  brain to stimulus — and the whole lecture turns on not confusing them.</p>
+
+  <div data-toc></div>
+
+  <div class="box key"><span class="label">Essentials</span>
+  <ul>
+    <li><strong>Encoding model:</strong> stimulus / task property <strong>→ neural data</strong>. You feed in
+    the image, you predict the brain response. It is an explicit hypothesis of the form "X is related to the
+    brain via function F".</li>
+    <li><strong>Decoding model:</strong> neural data <strong>→ stimulus / task property</strong>. You feed in
+    the brain response, you recover what the person saw, heard, remembered or intended. A decoder can be built
+    by inverting an encoding model, or trained directly as a classifier.</li>
+    <li><strong>NeuroAI:</strong> the intersection of neuroscience, AI and cognitive psychology. Two-way street
+    — the brain inspired the architectures, and the architectures are now tools for investigating the brain.</li>
+    <li><strong>BOLD fMRI:</strong> blood oxygen level dependent signal. A hemodynamic measure, using blood
+    flow as a <em>proxy</em> for neural activity, because oxygenated and deoxygenated haemoglobin have different
+    magnetic properties. Invented at Bell Labs in the 1990s; 3T and 7T scanners are common.</li>
+    <li><strong>Voxel:</strong> a volume pixel — one small cube of tissue (commonly about 2 mm on a side) that
+    gives one number per measurement. It pools hundreds of thousands of neurons, so a predicted voxel response
+    is <em>not</em> a predicted neuron.</li>
+    <li><strong>ANN / DNN / CNN:</strong> units ("neurons") connected by weights ("synapses"), weights learned
+    from data during training; deep = many layers; convolutional = built from spatial filters. Inputs: images,
+    sentences, game states. Outputs: captions, labels, sentences, actions.</li>
+    <li><strong>Spatial convolution:</strong> slide a small 2D filter (a <strong>kernel</strong>) across the
+    image, taking a dotwise product at every position. One set of weights, reused everywhere — so a feature is
+    detected wherever it appears.</li>
+    <li><strong>Ventral stream:</strong> retina → LGN → V1 (orientation, spatial frequency) → V2/V3/V4
+    (texture, contour, shape, colour) → IT (objects, scenes). Along it, feature complexity and receptive field
+    size both increase. Early model layers best predict early visual areas; deeper layers best predict higher
+    ones.</li>
+    <li><strong>Brain alignment and BrainScore:</strong> a benchmark for standardised comparison of how well
+    models predict neural data. Crucial caveat: <strong>high task performance does not guarantee high
+    brain-prediction performance</strong> — which hints that object categorisation is not all vision evolved
+    for.</li>
+    <li><strong>Supervised / self-supervised / language-supervised:</strong> labels, structure in the data
+    itself, paired captions. Language supervision helps most in <em>higher</em> visual areas, nearer semantic
+    cortex.</li>
+    <li><strong>Stimulus optimization:</strong> synthesise the image that maximises a region's predicted
+    response (BrainDiVE, using a diffusion model that generates images by iteratively removing noise) instead
+    of hand-picking photographs. Data-driven, so it can find preferences a predefined category list would miss
+    — e.g. food-selective cortex.</li>
+  </ul></div>
+
+  <h2 id="two-way-street">1. What NeuroAI is, and why it goes both ways</h2>
+
+  <p>Start with the problem. You want to know what features the brain uses to recognise objects and scenes. The
+  classical move — the one the rest of this course has been doing — is to pick a hypothesis, build the stimuli
+  that test it, and compare conditions: faces versus objects, intact versus scrambled, upright versus inverted.
+  That works, and it produced the FFA, the LOC and the PPA. But it has a ceiling. You can only test features
+  you already thought of, and you can only present a few dozen hand-chosen images.</p>
+
+  <p>Meanwhile, computer vision got good. Deep networks now map images to labels well enough to be useful, and
+  they do it with representations nobody designed by hand. So there is a tempting trade: use those learned
+  representations as candidate hypotheses about the brain's features, and let the data say which ones fit.</p>
+
+  <div class="box defn"><span class="label">NeuroAI</span>
+  The rapidly growing field at the intersection of <strong>neuroscience</strong>, <strong>artificial
+  intelligence</strong> and <strong>cognitive psychology</strong>. Dr. Henderson's toolkit is a good picture of
+  it: experimental methods (human fMRI, human behaviour) plus computational methods (encoding and decoding
+  models, neural network simulations).</div>
+
+  <p>The two directions of influence are worth separating, because the study guide asks for both.</p>
+
+  <div class="grid2">
+    <div class="box intuition"><span class="label">Neuroscience → AI</span>
+    Deep convolutional networks were <strong>directly inspired by the architecture of the primate visual
+    system</strong>: a hierarchy of stages, local receptive fields, simple features composed into complex ones.
+    The word "neuron" in a network diagram is a historical debt, not a coincidence. Reinforcement learning's
+    reward signals and recurrent networks' memory have similar lineages.</div>
+    <div class="box intuition"><span class="label">AI → neuroscience</span>
+    Today the traffic runs the other way, and that is the lecture's real subject. A trained network is a
+    <em>measuring instrument</em>: its layers give you quantitative feature spaces to predict brain responses
+    with (encoding), to read mental content out with (decoding), and to synthesise new stimuli with (stimulus
+    optimization).</div>
+  </div>
+
+  <p>This connects to the framing from <a href="frameworks.html">Marr's levels</a>. An encoding model is a
+  claim at the algorithmic level — <em>these</em> are the features and <em>this</em> is the transformation —
+  tested against implementation-level data. It is the same logic as asking whether <a
+  href="v1-receptive-fields.html">V1 simple cells</a> compute oriented edges, scaled up to features too
+  complicated to draw.</p>
+
+  <h2 id="fmri-voxels">2. fMRI, BOLD and what a voxel actually is</h2>
+
+  <p>Everything downstream depends on the measurement, so be precise about it. <a
+  href="methods-faces.html">Chapter 8</a> covers fMRI as one method among many; here is the part the modelling
+  rests on.</p>
+
+  <p>fMRI was invented at Bell Labs in the 1990s. A very strong magnetic field — <strong>3T or 7T</strong> is
+  typical — is used to detect tissue whose magnetic properties differ. The property that matters is the
+  difference between <strong>oxygenated and deoxygenated haemoglobin</strong>. When a patch of cortex becomes
+  active, local blood flow increases and oversupplies it with oxygen-rich blood, changing the ratio and
+  therefore the signal. Hence <strong>BOLD</strong>: blood oxygen level dependent.</p>
+
+  <div class="box key"><span class="label">The one-sentence version</span>
+  BOLD fMRI is a <strong>hemodynamic</strong> measure: it uses <strong>blood flow as a proxy for neural
+  activity</strong>. You are not watching neurons. You are watching the plumbing that feeds them, several
+  seconds late.</div>
+
+  <p>A <strong>voxel</strong> is a "volume pixel": the scan divides the brain into a 3D grid of small cubes,
+  and each cube returns one number per measurement. The BrainDiVE study in this lecture used 2 mm isotropic
+  voxels with a 2 s repetition time, so each number summarises an 8 mm³ cube of cortex averaged over a couple
+  of seconds. A whole-brain scan is tens of thousands of such numbers, which is precisely why these datasets
+  can train models at all — the <strong>Natural Scenes Dataset</strong> (Allen et al., 2022) pairs tens of
+  thousands of image presentations with voxel responses in a handful of people.</p>
+
+  <h2 id="voxel-not-neuron">3. Why predicting a voxel is not predicting a neuron</h2>
+
+  <p>This is asked directly on the study guide and it is the single easiest place to overclaim, so it gets its
+  own section.</p>
+
+  <p>An 8 mm³ cube of cortex contains on the order of <strong>hundreds of thousands of neurons</strong> (at
+  commonly quoted cortical densities of roughly 50,000–100,000 neurons per mm³, that is about 0.4–0.8 million
+  per voxel; treat the figure as an order of magnitude, not a measurement). Every one of them, plus the glia,
+  plus the blood vessels threading through, contributes to one number. Three consequences follow.</p>
+
+  <ul>
+    <li><strong>It is an average, and averages cancel.</strong> If half the neurons in a voxel prefer vertical
+    and half prefer horizontal, the voxel looks untuned for orientation even though every neuron in it is
+    sharply tuned.</li>
+    <li><strong>It is indirect and slow.</strong> The signal is a vascular response that lags the spiking by
+    seconds, so fine temporal structure — spike timing, the order in which two populations respond — is simply
+    gone.</li>
+    <li><strong>A good prediction constrains populations, not cells.</strong> "My model explains 60 percent of
+    the variance in this voxel" means the model's features track what this chunk of cortex does <em>on
+    average</em>. It does not mean any neuron computes that feature, and two very different neural codes can
+    produce the same voxel pattern.</li>
+  </ul>
+
+  <div class="box warn"><span class="label">Common mistake</span>
+  Saying "the encoding model predicts neural activity" and sliding from there to "the model is doing what the
+  neurons do". The honest claim is population-level: the model's feature space is <em>aligned</em> with the
+  information this region's population carries. Single-neuron claims need single-neuron methods —
+  electrophysiology, or the sEEG depth electrodes from Chapter 8.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>The voxel that hides its own tuning</div>
+    <div class="g-body"><p>A voxel in V1 contains two equally sized neural populations. Population A fires at
+    10 spikes per second to a vertical grating and 2 to a horizontal one. Population B is the mirror image: 2
+    to vertical, 10 to horizontal. Assume the BOLD response of the voxel is proportional to the total spiking
+    of all its neurons. What does an experimenter measuring this voxel conclude, and what is actually true?</p></div>
+    <details class="step"><summary>Step 1 — What are we actually being asked?</summary><div><p>Not "what do the
+    neurons prefer" — we know that. We are asked what the <em>measurement</em> shows, and then what inference
+    the measurement licenses. The question is about the gap between a pooled signal and its constituents.</p></div></details>
+    <details class="step"><summary>Step 2 — Do the arithmetic</summary><div><p>Vertical grating: population A
+    contributes 10, population B contributes 2, total 12. Horizontal grating: A gives 2, B gives 10, total 12
+    again. The voxel responds <strong>identically</strong> to the two orientations.</p></div></details>
+    <details class="step"><summary>Step 3 — So what does the experimenter conclude?</summary><div><p>That this
+    voxel is not orientation selective, and that an orientation-based encoding model should fail here. Both
+    neural populations are in fact maximally orientation selective. The selectivity was destroyed by spatial
+    averaging, not absent from the tissue.</p>
+    <p>Note the asymmetry this creates: a model that <em>predicts</em> a voxel well has found something real,
+    but a model that <em>fails</em> on a voxel has not shown the information is missing from the cortex — it may
+    only be invisible at 2 mm.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p><strong>Measured:</strong> no
+    orientation preference. <strong>True:</strong> every neuron is strongly tuned. The problem was built around
+    the inference "voxel-level prediction equals neuron-level prediction". A null result in fMRI is weak
+    evidence for absence, because the measurement averages over the very heterogeneity you care about. (This is
+    also why ocular dominance and orientation columns, which alternate on a sub-millimetre scale, are so hard
+    to see with standard fMRI — see <a href="v1-receptive-fields.html">Chapter 10</a>.)</p></div></details>
+  </div>
+
+  <h2 id="encoding-decoding">4. Encoding versus decoding: the direction is everything</h2>
+
+  <p>Two models, built from the same data, pointing opposite ways. Students lose marks here for one reason
+  only: they remember both words and not which arrow goes with which. So fix the arrow first and the
+  definitions follow.</p>
+
+  <div class="viz">
+    <div class="viz-title">The two directions of prediction</div>
+    <svg id="edSvg" viewBox="0 0 660 330" role="img" aria-label="Diagram of encoding models mapping stimulus properties to neural data and decoding models mapping neural data to stimulus properties"></svg>
+    <div class="controls">
+      <button class="btn primary" id="edEnc">Highlight encoding</button>
+      <button class="btn" id="edDec">Highlight decoding</button>
+      <button class="btn" id="edBoth">Show both</button>
+    </div>
+    <div class="caption" id="edOut">What to notice: the two rows use the same three ingredients and differ only
+    in which end is the input. The orange row (encoding) starts at the stimulus and ends at the brain; the teal
+    row (decoding) starts at the brain and ends at a statement about the stimulus. Click a button to isolate one.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="box defn"><span class="label">Encoding model</span>
+    <strong>Stimulus / task property → neural data.</strong><br>
+    Input: the image, or some property of it. Output: the predicted response of each voxel. It states an
+    explicit hypothesis — "X is related to the brain via function F" — and is scored by how much response
+    variance it explains on <em>held-out</em> stimuli.</div>
+    <div class="box defn"><span class="label">Decoding model</span>
+    <strong>Neural data → stimulus / task property.</strong><br>
+    Input: the measured brain response. Output: which of 60 nouns the person read, which orientation they are
+    holding in mind, what sentence they heard, which letter they intended to write. Either invert an encoding
+    model, or train a generic classifier directly on the brain data.</div>
+  </div>
+
+  <h3>How the encoding model is actually built</h3>
+
+  <p>Mechanically it is a regression. Let $y$ be the measured response of one voxel across many images, and let
+  $X$ be a matrix whose rows are images and whose columns are <strong>features</strong> extracted from each
+  image — the activations of one layer of a CNN, say, or the outputs of a texture model. Fit</p>
+
+  <p>$$y = X\beta + \epsilon$$</p>
+
+  <p>where $\beta$ is the vector of weights (one per feature) telling you how much this voxel cares about each
+  feature, and $\epsilon$ is noise. Because there are usually far more features than images, the fit uses
+  <strong>ridge regression</strong> (L2 regularization), which shrinks the weights in $\beta$ toward zero and
+  stops the model memorising the training set.</p>
+
+  <p>Then the scoring. Run the model on <strong>new images it never saw</strong>, compare predicted to actual,
+  and compute the variance explained:</p>
+
+  <p>$$R^2 = 1 - \frac{SSE}{SST} = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}$$</p>
+
+  <p>Here $y_i$ is the actual response on image $i$, $\hat{y}_i$ (the "hat" means predicted, not a power) is
+  the model's prediction, and $\bar{y}$ is the mean response. The denominator is the variance you would fail to
+  explain by always guessing the mean. Fitting one of these per voxel and painting the resulting $R^2$ values
+  onto the cortical surface is how these papers' main figures are made — Henderson, Tarr &amp; Wehbe (2023) did
+  exactly this with a computational texture model.</p>
+
+  <div class="box warn"><span class="label">Always on held-out data</span>
+  Compute $R^2$ on validation or test images only. A model with enough features can fit the training responses
+  arbitrarily well — including the noise — and a training-set $R^2$ therefore measures nothing about the brain.</div>
+
+  <h3>Linearizing encoding models</h3>
+
+  <p>Why is the final step a plain linear regression, when the whole point was that visual features are
+  complicated? Because the complexity is deliberately placed <em>before</em> the regression. The pipeline is:
+  image → (very nonlinear feature mapping, e.g. a deep network) → features → (very simple linear map) → voxel
+  response. The nonlinear part is the hypothesis; the linear part is just the readout.</p>
+
+  <div class="box analogy"><span class="label">Analogy</span>
+  Think of the feature model as a language and the linear weights as a translation dictionary. Keeping the
+  dictionary word-for-word simple means that if the translation works, the credit belongs to the language, not
+  to clever translating. That is what makes it a hypothesis test: <em>"how well does my nonlinear feature
+  mapping capture the neural encoding process?"</em> (Naselaris et al., 2012). If you allowed a flexible
+  nonlinear readout as well, a good fit would no longer tell you whose features were right.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Encoding or decoding? Four studies</div>
+    <div class="g-body"><p>For each, name the model type and write the arrow with the input on the left.</p>
+    <ol>
+      <li>Mitchell et al. (2008) scan people reading each of 60 nouns, then build a system that takes a new
+      brain image and reports which noun the person was reading.</li>
+      <li>Huth et al. (2016) take word co-occurrence statistics for every word in a story, and use them to
+      predict the response of each voxel while people listen to the story.</li>
+      <li>Willett et al. (2021) record from microelectrode arrays in the precentral gyrus of a paralysed
+      patient and output the letter he is attempting to handwrite.</li>
+      <li>A lab feeds photographs through layer 4 of AlexNet and fits ridge regression from those activations
+      to V4 voxel responses, reporting $R^2$ on held-out photographs.</li>
+    </ol></div>
+    <details class="step"><summary>Step 1 — What are we actually being asked?</summary><div><p>Not "which is
+    better" and not "what technique did they use". Only: <em>what goes in and what comes out</em>. Ignore how
+    fancy the method is — a deep network can appear on either side. Ask what the system is handed at test time.</p></div></details>
+    <details class="step"><summary>Step 2 — Work through them</summary><div><ol>
+      <li><strong>Decoding.</strong> Neural data → which of 60 nouns. The input at test time is a brain image.</li>
+      <li><strong>Encoding.</strong> Stimulus property (word co-occurrence statistics) → neural data. Note it
+      used no language model at all; the features were plain corpus statistics.</li>
+      <li><strong>Decoding.</strong> Neural data → intended letter. This is the BCI case from section 11.</li>
+      <li><strong>Encoding.</strong> Stimulus → neural data, scored with $R^2$. The presence of a deep network
+      is irrelevant to the direction.</li>
+    </ol></div></details>
+    <details class="step"><summary>Step 3 — The trap in number 2</summary><div><p>Huth et al. is the one people
+    mislabel, because the <em>result</em> is usually described as a map of "what each bit of cortex means" —
+    which sounds like reading out from the brain. But the model was fit stimulus → brain. The semantic map is
+    the pattern of fitted weights across voxels, with colours showing voxels with similar word tuning; it showed
+    that semantic information is <strong>topographically organised rather than random</strong>. Output of
+    analysis is not the same thing as output of the model.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>Decoding, encoding, decoding,
+    encoding. The problem was built around two confusions: that the sophisticated method tells you the
+    direction (it does not), and that what the paper's figure shows tells you the direction (it does not
+    either). Only the test-time input does. And remember the link between them: <strong>decoding can be done
+    using an encoding model</strong> — invert it by asking which stimulus would have produced the observed
+    response — or done generically with a classifier that never models the stimulus at all.</p></div></details>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">A model takes the orientation of a grating and predicts the BOLD response of every voxel in
+    V1. This is…</div>
+    <button class="opt">A decoding model, because it relates orientation to the brain</button>
+    <button class="opt">An encoding model, because the stimulus property is the input and neural data the output</button>
+    <button class="opt">Neither — it is just a regression</button>
+    <button class="opt">Both, since the mapping can be inverted</button>
+    <div class="why"><strong>Why:</strong> Direction is defined by what you feed in at test time: stimulus
+    property → neural data is encoding. Option A is the classic reversal. Option C is tempting because the
+    machinery <em>is</em> a regression — but "encoding model" names the direction, not the algorithm. Option D
+    confuses what you <em>could</em> build later with what this model is: an encoding model can be inverted to
+    make a decoder, but until you invert it, it only predicts brain data.</div>
+  </div>
+
+  <h2 id="cnn-visual-system">5. CNNs and the visual system: what they share</h2>
+
+  <p>An <strong>artificial neural network (ANN)</strong> is a class of machine learning system inspired by the
+  brain. Two pieces of vocabulary, and the brain word each one borrows:</p>
+
+  <div class="scroll-x"><table class="tight center">
+    <tr><th>In the network</th><th>Brain word it borrows</th><th>What it does</th></tr>
+    <tr><td><strong>Units</strong> / nodes</td><td>"neurons"</td><td>Each holds one activation value, computed from the units feeding into it</td></tr>
+    <tr><td><strong>Weights</strong> / edges</td><td>"synapses"</td><td>Scale the signal passing between units. The weights <strong>encode the information</strong>, and they are <strong>learned from data during training</strong> — not designed</td></tr>
+    <tr><td><strong>Layers</strong></td><td>cortical stages</td><td>A <strong>deep</strong> neural network (DNN) is simply an ANN with many layers</td></tr>
+  </table></div>
+
+  <p>The same skeleton accepts very different jobs, which is worth knowing because the exam may ask for
+  examples of either side:</p>
+
+  <div class="grid2">
+    <div class="box example"><span class="label">Example inputs</span>
+    Images · sentences · game states</div>
+    <div class="box example"><span class="label">Example outputs</span>
+    Captions · labels · sentences · actions</div>
+  </div>
+
+  <p>So which principles are genuinely shared with the visual system? Four, and they are the answer to the
+  study guide's question:</p>
+
+  <ol>
+    <li><strong>Hierarchy.</strong> Many stages in sequence, each taking the previous stage's output as input —
+    matching retina → LGN → V1 → V2/V3/V4 → IT.</li>
+    <li><strong>Local receptive fields.</strong> A unit early in the network sees only a small patch of the
+    image, exactly as a V1 cell sees only a small patch of the visual field.</li>
+    <li><strong>Growing complexity and growing receptive fields.</strong> Composing simple detectors into
+    complex ones, with each stage pooling over a larger region.</li>
+    <li><strong>Learned connection strengths.</strong> Information lives in the weights, which are shaped by
+    experience, rather than in hand-coded rules.</li>
+  </ol>
+
+  <div class="box warn"><span class="label">Where the analogy leaks</span>
+  A unit is not a neuron: it has no spikes, no refractory period, no neurotransmitters, and typically no
+  recurrence or feedback, whereas real visual cortex is massively recurrent and has top-down projections at
+  every level. Training by backpropagation over millions of labelled images is not how a child learns to see.
+  And the sharpest warning sign comes from the data itself: <strong>vision transformers, which were not
+  brain-inspired at all, also predict brain responses well</strong> (Conwell et al., 2024). Architectural
+  resemblance is clearly not necessary for good prediction — so a model predicting the brain well cannot be
+  taken as proof that the brain works that way.</div>
+
+  <h2 id="convolution">6. Spatial convolution, on an actual pixel grid</h2>
+
+  <p>A digital image is a <strong>matrix of numbers</strong> (pixels). A <strong>filter</strong> — also called
+  a <strong>kernel</strong> — is a smaller matrix of numbers. <strong>Spatial convolution</strong> takes the
+  2D filter and multiplies it, elementwise, against each part of the image, summing the products: a dotwise
+  product at every position. You "slide" the filter across the whole image, and the resulting grid of sums is
+  the <strong>feature map</strong>.</p>
+
+  <p>What is the sum measuring? <em>Agreement.</em> It is large and positive where the image pattern under the
+  window matches the filter pattern, large and negative where it matches the opposite pattern, and near zero
+  where there is nothing the filter is looking for. Convolution is a search for places where the image pattern
+  matches the filter pattern.</p>
+
+  <div class="viz">
+    <div class="viz-title">Slide the kernel; watch the feature map fill in</div>
+    <svg id="cvSvg" viewBox="0 0 660 300" role="img" aria-label="A 7 by 7 pixel grid with a 3 by 3 kernel window, and the resulting 5 by 5 feature map"></svg>
+    <div class="controls">
+      <label>Kernel position
+        <input type="range" id="cvPos" min="0" max="24" step="1" value="0" data-out="cvPosV" data-fmt="int">
+        <span class="val" id="cvPosV"></span></label>
+      <button class="btn primary" id="cvFilt">Filter: vertical edge</button>
+      <button class="btn" id="cvAll">Fill whole map</button>
+    </div>
+    <div class="caption" id="cvMath"></div>
+    <div class="caption">What to notice: the image holds two one-pixel-wide vertical bars, one in the top left
+    and one lower right. With the vertical-edge kernel, <strong>the same nine weights</strong> produce the same
+    signature at both bars — plus 27 where the bar enters the window on the right, minus 27 where it leaves —
+    even though the bars are four columns and four rows apart. Switch to the horizontal-edge kernel and those
+    strong responses vanish: the largest magnitude anywhere drops to 9, and only at the tips where the bars
+    start and stop. That is one filter, one feature, detected anywhere, and ignored when it is not there.</div>
+  </div>
+
+  <div class="box key"><span class="label">Weight sharing is the whole trick</span>
+  The filter's nine numbers do not change as it slides. So a feature learned once is detected
+  <strong>everywhere in the image</strong> — the network does not need a separate vertical-edge detector for
+  every location. This gives two things at once: far fewer parameters to learn, and <strong>translation
+  invariance</strong>, meaning a shifted object produces a shifted feature map rather than an unrecognisable
+  one. It is also where the resemblance to visual cortex is strongest: a V1-like filter repeated across a
+  retinotopic map is the biological version of the same idea.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>One convolution by hand</div>
+    <div class="g-body"><p>Here is the top-left 3 by 3 patch of the image in the figure above (rows 0–2,
+    columns 0–2), and two kernels. Compute the output for this one window with each kernel.</p>
+    <div class="scroll-x"><table class="tight center">
+      <tr><th>Image patch</th><th>Vertical-edge kernel</th><th>Horizontal-edge kernel</th></tr>
+      <tr><td>0&nbsp; 0&nbsp; 9<br>0&nbsp; 0&nbsp; 9<br>0&nbsp; 0&nbsp; 9</td>
+          <td>−1&nbsp; 0&nbsp; +1<br>−1&nbsp; 0&nbsp; +1<br>−1&nbsp; 0&nbsp; +1</td>
+          <td>−1&nbsp; −1&nbsp; −1<br>&nbsp;0&nbsp;&nbsp; 0&nbsp;&nbsp; 0<br>+1&nbsp; +1&nbsp; +1</td></tr>
+    </table></div></div>
+    <details class="step"><summary>Step 1 — What are we actually being asked?</summary><div><p>For one fixed
+    window position, multiply each of the nine image numbers by the kernel number in the same position, then add
+    all nine products. One number out per kernel. No sliding yet, and no averaging — convolution is a sum of
+    products, not a mean.</p></div></details>
+    <details class="step"><summary>Step 2 — Vertical-edge kernel</summary><div><p>Row by row, each row of the
+    patch is (0, 0, 9) against (−1, 0, +1): <code>0·(−1) + 0·0 + 9·(+1) = 9</code>. Three identical rows, so
+    the total is <code>9 + 9 + 9 = <strong>27</strong></code>.</p>
+    <p>Why large? The patch is dark on the left, bright on the right, and so is the kernel — maximum agreement.</p></div></details>
+    <details class="step"><summary>Step 3 — Horizontal-edge kernel</summary><div><p>Top row contributes
+    <code>0·(−1) + 0·(−1) + 9·(−1) = −9</code>. Middle row is multiplied by zeros, contributing
+    <code>0</code>. Bottom row contributes <code>0·(+1) + 0·(+1) + 9·(+1) = +9</code>. Total:
+    <code>−9 + 0 + 9 = <strong>0</strong></code>.</p>
+    <p>Why zero? The patch has no top-to-bottom change at all — every row is identical — so a filter asking
+    "is the bottom brighter than the top?" gets exactly nothing. The bright pixels on the right cancel between
+    the +1 and −1 rows.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p><strong>27 and 0.</strong> Same
+    pixels, same arithmetic, completely different answers — the filter, not the image, decides what counts as a
+    feature. And because those nine weights are reused at every position, the <em>same</em> 27 shows up at the
+    second bar further down the image, which you can confirm with the slider. The problem was built around two
+    mistakes: thinking convolution averages the patch (it does not; it is a weighted sum that can be negative),
+    and thinking a different location needs a different detector (it does not; that is weight sharing).</p></div></details>
+  </div>
+
+  <h2 id="hierarchy">7. Along the ventral stream, and into the layers</h2>
+
+  <p>The flow of information, which you already have from <a href="eye-retina.html">Chapter 9</a>: eye
+  (retina) → thalamus (LGN) → primary visual cortex (V1) → intermediate visual areas (V2, V3, V4) → higher
+  visual cortex (IT, inferotemporal). What changes as you travel along it is the <em>kind</em> of thing
+  represented:</p>
+
+  <div class="scroll-x"><table class="tight center">
+    <tr><th>Stage</th><th>Selective for</th><th>Receptive field</th></tr>
+    <tr><td><strong>V1</strong></td><td>Orientation, spatial frequency</td><td>Small</td></tr>
+    <tr><td><strong>V4</strong></td><td>Texture, contour, shape, colour</td><td>Medium</td></tr>
+    <tr><td><strong>IT cortex</strong></td><td>Objects, scenes</td><td>Large</td></tr>
+  </table></div>
+
+  <p>Two things increase together along the hierarchy: the <strong>complexity of the features</strong> and the
+  <strong>size of the receptive fields</strong>. Those two trends are not independent — you can only represent
+  a whole object if you are looking at a region big enough to contain one. The payoff is a representation that
+  is increasingly <em>tolerant</em>: an IT-level "this is a cat" survives a shift, a rescaling or a change in
+  lighting that would completely change the V1 response.</p>
+
+  <p>Now the result that ties the two systems together. If CNNs really are a reasonable model of this pathway,
+  then the network's depth ought to correspond to the brain's depth. Fit a separate encoding model from every
+  layer to every visual area and see which layer wins where (Güçlü &amp; van Gerven, 2015, using AlexNet):</p>
+
+  <div class="viz">
+    <div class="viz-title">Layer-to-area correspondence — click a model layer</div>
+    <svg id="hierSvg" viewBox="0 0 660 320" role="img" aria-label="CNN layers in a row above visual areas V1 to IT, with lines linking early layers to early areas and deep layers to higher areas"></svg>
+    <div class="caption" id="hierOut">What to notice: the linking lines do not cross. Click any layer to see the
+    area it best predicts and what it is computing. The gradient is the claim: <strong>early model layers better
+    predict early visual areas, deeper model layers better predict higher visual areas</strong>. This is a
+    schematic of the correspondence, not plotted data — the original figure reports the best-predicting layer
+    per area. <span class="pill">reconstruction</span></div>
+  </div>
+
+  <div class="box key"><span class="label">Why this result matters so much</span>
+  Any single good prediction could be a coincidence of rich features. But an <em>ordered</em> correspondence —
+  layer 1 for V1, layer 5 for IT, nothing crossing over — is a much harder pattern to get by accident. It
+  helps <strong>validate the correspondence between CNNs and brain structure</strong>, and it is the reason
+  people treat network depth as a candidate model of cortical depth rather than just a source of useful
+  features.</div>
+
+  <h2 id="benchmarking">8. Benchmarking: BrainScore, and the caveat that matters</h2>
+
+  <p>There are now an enormous number of DNNs available, differing in architecture, training data and
+  objective. Which best predict brain responses — which are most <strong>brain-aligned</strong>? Comparing
+  across papers is hopeless when everyone uses their own stimuli, voxels and metrics, so the field built
+  benchmarks for <strong>standardised comparison</strong>.</p>
+
+  <div class="grid2">
+    <div class="box example"><span class="label">BrainScore</span>
+    The benchmark named in this lecture (brain-score.org). Fixed neural and behavioural datasets, fixed
+    scoring, so any model can be submitted and placed on the same leaderboard.</div>
+    <div class="box example"><span class="label">Algonauts Project</span>
+    Public prediction challenges. The 2025 challenge was predicting fMRI responses while participants watched
+    episodes of <em>Friends</em>; the 2027 challenge is predicting responses while participants play video
+    games in the scanner.</div>
+  </div>
+
+  <p>In 2014, Yamins et al. ran the result that launched this whole enterprise: CNNs optimized for
+  <strong>object categorisation</strong> were used to predict the brain, and the finding was a straight line —
+  <strong>higher performance on the task went with higher prediction performance in the brain</strong>. The
+  interpretation was seductive. Perhaps the brain's visual system is itself optimized for object
+  categorisation, and any system that gets good at that task converges on the brain's solution.</p>
+
+  <p>Then the field kept making models better at ImageNet, and the line stopped holding.</p>
+
+  <div class="box key"><span class="label">State it plainly — this is exam-worthy</span>
+  <strong>High task performance does not guarantee high brain-prediction performance.</strong> As accuracy on
+  ImageNet improved, models did not necessarily predict the brain better; by some measures DNNs have been
+  getting <em>less</em> brain-like over time (Linsley et al., 2023). The inference to draw is about the
+  objective: if being better at object categorisation stops making a model more brain-like, then
+  <strong>object categorisation may not be all that vision evolved for</strong>. Vision also supports
+  navigation, reaching and grasping, social inference, reading the lighting of a scene — the whole
+  <a href="methods-faces.html">catalogue of things</a> this course keeps finding specialised machinery for.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Your new model is better and worse at the same time</div>
+    <div class="g-body"><p>You train two networks on the same images. Model A reaches 60 percent top-1 accuracy
+    on object classification; Model B reaches 85 percent. You fit encoding models from each to the same V4 and
+    IT voxels in the same participants, with the same ridge regression and the same held-out images. Model A
+    explains more variance than Model B in both areas. A labmate concludes that the encoding analysis must be
+    broken, since Model B is obviously the better vision system. What do you tell them?</p></div>
+    <details class="step"><summary>Step 1 — What are we actually being asked?</summary><div><p>Whether a
+    dissociation between task performance and brain prediction is a <em>bug</em> or a <em>finding</em>. Note
+    what is held constant: same stimuli, same voxels, same regression, same held-out split. The only thing
+    varying is the model, so the comparison is a fair one.</p></div></details>
+    <details class="step"><summary>Step 2 — Is there a reason to expect the two to track each other?</summary><div><p>Only
+    if object categorisation is the objective the brain is optimized for. That was the 2014 hypothesis, and the
+    correlation Yamins et al. found was evidence for it. But it was always an empirical claim, not a
+    definition — nothing guarantees that the features which squeeze out the last few points of ImageNet
+    accuracy are features cortex uses. Models can win accuracy through tricks the brain has no use for: huge
+    training sets, aggressive data augmentation, texture shortcuts, scale.</p></div></details>
+    <details class="step"><summary>Step 3 — So what is the conclusion?</summary><div><p>This is the Linsley et
+    al. (2023) pattern, and it is a result rather than a failure. It tells you something about the
+    <strong>objective function</strong> the brain is optimizing: whatever it is, it is not simply
+    "categorise objects as accurately as possible". Follow it up by varying the objective deliberately rather
+    than by chasing accuracy — which is exactly section 9.</p>
+    <p>One honest caveat before you publish: also check the noise ceiling, since no model can explain more
+    variance than the data reliably contain, and confirm the result holds across participants.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div><p>Tell them the analysis is fine
+    and that they have found the interesting thing. The problem was built around the assumption that "better at
+    the task" means "more brain-like" — the single most common over-reading of the 2014 result. Benchmarks like
+    BrainScore exist precisely so that brain prediction is scored <em>separately</em> from task accuracy,
+    because the two come apart.</p></div></details>
+  </div>
+
+  <h2 id="objectives">9. Varying architecture, data and objective</h2>
+
+  <p>Once encoding models are your measuring instrument, every design choice in a network becomes a testable
+  hypothesis about the brain. Richards et al. (2019) framed this as the deep learning framework for
+  neuroscience: a model is specified by three things, and you can vary them one at a time.</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>What you vary</th><th>Examples from the lecture</th><th>What a difference in brain prediction would suggest</th></tr>
+    <tr><td><strong>Architecture</strong></td><td>CNNs versus vision transformers (ViT)</td><td>Whether the brain's computations depend on convolution and local receptive fields, or whether other wiring reaches the same representations</td></tr>
+    <tr><td><strong>Training dataset</strong></td><td>ImageNet versus LAION</td><td>Which <em>statistics of the environment</em> shape the representation — the data a system grows up on is the closest model analogue of visual experience</td></tr>
+    <tr><td><strong>Objective function</strong></td><td>Supervised, self-supervised, multimodal / language-supervised</td><td>What the system is being <em>pressured</em> to represent; the closest analogue of what vision is for</td></tr>
+  </table></div>
+
+  <p>The architecture result is the humbling one. <strong>Vision transformers predict the brain well too</strong>
+  (Conwell et al., 2024), even though they are not brain-inspired and have no convolution. Keep that in view
+  whenever a good fit tempts you into a mechanistic claim.</p>
+
+  <h3>Supervised, self-supervised, language-supervised</h3>
+
+  <div class="grid3">
+    <div class="box defn"><span class="label">Supervised</span>
+    Every training image carries a human-provided <strong>label</strong>; the objective is to output the right
+    one. Powerful, but needs millions of annotations and nothing like it exists for a developing infant.</div>
+    <div class="box defn"><span class="label">Self-supervised</span>
+    No labels. The supervision comes from <strong>structure in the data itself</strong> — for contrastive
+    methods like <strong>SimCLR</strong>, two distorted crops of the same photo must map to nearby
+    representations while crops of different photos are pushed apart. The system learns what makes an image
+    <em>that</em> image without being told what is in it.</div>
+    <div class="box defn"><span class="label">Language-supervised</span>
+    The paired signal is <strong>text</strong> — a caption — rather than a category. <strong>SLIP</strong>
+    combines self-supervised learning with this multimodal caption objective. The pressure is to represent
+    whatever a sentence would mention.</div>
+  </div>
+
+  <p>Does language supervision improve brain alignment? Work by Aria Wang and colleagues at CMU (Wang et al.,
+  2023) says yes, but <strong>not uniformly</strong>: <strong>language helps most in higher visual areas</strong>,
+  which sit closer to semantic processing regions, and much less in early visual areas.</p>
+
+  <div class="box intuition"><span class="label">Why that pattern is the one to expect</span>
+  Early visual cortex is representing contrast, orientation and spatial frequency — things no caption mentions,
+  and things any reasonable visual objective will produce. Higher visual cortex is representing what the scene
+  <em>is</em>, which is exactly what a caption describes. So a training signal made of sentences should buy you
+  little in V1 and a lot in IT. The gradient of the benefit is the evidence, and this is why the question is
+  usually phrased as "early versus higher visual areas": a model's objective can be right about one end of the
+  hierarchy and wrong about the other.</div>
+
+  <div class="box example"><span class="label">Visual development <span class="pill">going deeper</span></span>
+  The midterm guide asks for an example of NeuroAI investigating visual development — this goes past the guest
+  deck, so check it against the lecture recording. Human infants start with poor acuity and low contrast
+  sensitivity: early visual input is effectively <strong>blurry</strong>, and sharpens over the first months.
+  Researchers model this by training a network on blurred images first and sharpening them over training.
+  Networks raised this way end up relying more on <strong>global shape</strong> and less on <strong>fine
+  texture</strong>, and look more human in their recognition behaviour and in their robustness to changes in
+  texture. The intuition is a developmental curriculum: fine texture is unavailable at the start, so the only
+  features that work are large-scale configural ones, and those get built first and anchor everything after.
+  Blurry vision looks like a bug in the hardware; as a training schedule it may be a feature.</div>
+
+  <h2 id="stimulus-optimization">10. Stimulus optimization: letting the brain pick the image</h2>
+
+  <p>Here is the problem it solves. How do we know what a neural population cares about? Traditionally you
+  hand-select stimuli — the localizer images from Stigliani et al. (2015) are a standard set — present a
+  limited number of them, and compare categories to build a tuning function. Three limits follow immediately:
+  you can only <strong>sample a small number of images</strong>, the approach is
+  <strong>hypothesis-driven</strong>, and that <strong>introduces bias</strong>. You will never discover
+  selectivity for something that was not on your list of categories.</p>
+
+  <div class="box defn"><span class="label">Stimulus optimization</span>
+  An <strong>unbiased, data-driven</strong> alternative: rather than choosing images and asking which the
+  region prefers, <strong>synthesise</strong> the image that maximises a target region's response — its "most
+  exciting image". Because the search runs over everything the generator can draw, not over a predefined
+  category list, it can discover properties of cortical organisation nobody proposed.</div>
+
+  <p>This needs a generator capable of making arbitrary realistic images, which is where
+  <strong>diffusion models</strong> enter. A diffusion model generates images by <strong>iteratively removing
+  noise</strong>: start from pure noise and repeatedly predict and subtract a little of it, and a coherent image
+  emerges over many steps. A <strong>latent diffusion model</strong> runs this denoising in the compressed
+  latent space of an autoencoder rather than on raw pixels, which is far less computationally expensive and can
+  be <strong>conditioned on text</strong> (Rombach et al., 2022; Stable Diffusion is trained on about 2 billion
+  images).</p>
+
+  <div class="box example"><span class="label">BrainDiVE</span>
+  Luo, Henderson, Wehbe &amp; Tarr (2023). Couple a diffusion model to an encoding model of a target set of
+  voxels, and steer the generation at each denoising step toward images the encoding model says those voxels
+  will like. The encoding model is the fitness function; the diffusion model is the search. Out come synthetic
+  images optimized for place-, face-, word-, body- and food-selective voxels. Henderson et al. (2026) then
+  scanned 12 new participants on those images: model-generated images produced <em>higher</em> on-target
+  responses in face-, body- and word-selective regions than the top-activating natural photographs did —
+  "supra-activating" stimuli — and lower off-target responses in place-selective regions.</div>
+
+  <p>Two findings show why synthesis beats selection.</p>
+
+  <ul>
+    <li><strong>Food selectivity.</strong> Classical category-selective areas were found by picking categories
+    — faces, places, words, bodies. Food was not on the list for decades. Recent work reports evidence for
+    <strong>food-selective</strong> regions in higher visual cortex (Jain et al., 2023), and BrainDiVE images
+    optimized for those voxels come out looking like food, which is independent support for the ROI. A
+    predefined category list could not have found this; a generator searching over all images did.</li>
+    <li><strong>Splitting apart two face areas.</strong> Images optimized for the <strong>occipital face area
+    (OFA)</strong> contain more face <em>parts</em>; images optimized for the <strong>fusiform face area
+    (FFA)</strong> contain more <em>whole faces</em>. Both regions are "face-selective" and a face-versus-object
+    contrast cannot tell them apart, but the synthesised images make the difference visible, consistent with
+    earlier versus later stages of face processing.</li>
+  </ul>
+
+  <div class="box key"><span class="label">Stimulus optimization versus neural decoding</span>
+  They both pair generative models with brain data, and they are easy to confuse. <strong>Stimulus
+  optimization</strong> synthesises an image to maximise the response of a target area: one brain area, across
+  many trials, and the output is a <em>preference</em>. <strong>Neural decoding</strong> reconstructs the image
+  that was shown on a given trial: many brain areas combined, one trial, and the output is a <em>percept</em>.
+  Preference versus percept, many trials versus one.</div>
+
+  <h2 id="decoding-applications">11. What decoders are for: BCI, memory and imagery</h2>
+
+  <p>Decoding started modestly. Mitchell et al. (2008) at CMU turned an encoding model into a decoder and could
+  identify which of <strong>60 nouns</strong> a person had read or viewed — above chance, from fMRI alone.
+  Fifteen years later, Tang et al. (2023) used a language model (GPT-1) inside a Bayesian decoding framework to
+  reconstruct the <em>gist</em> of continuous speech that people heard: not verbatim words, but sentences whose
+  meaning often matched. The common structure is worth naming — propose candidate stimuli, score each by how
+  well an encoding model says it predicts the observed brain response, keep the best.</p>
+
+  <h3>Brain–computer interfaces</h3>
+
+  <div class="box defn"><span class="label">Brain–computer interface (BCI)</span>
+  Using a <strong>neural decoder's output to control a prosthetic or other device</strong>. The decoder stops
+  being an analysis and becomes a control signal.</div>
+
+  <p>The lecture's example is Willett et al. (2021): a patient with microelectrode arrays implanted in the
+  <strong>precentral gyrus</strong> (motor cortex) attempts to handwrite letters; a recurrent neural network
+  decodes the intended letter from the recorded activity and types it. Note what makes this work where fMRI
+  decoding could not — invasive electrodes give spiking activity at millisecond resolution, which a device you
+  control in real time needs. The same approach decodes <strong>planned speech</strong> and
+  <strong>planned hand movements</strong>, which is the basis of restoring communication to people who cannot
+  speak or move.</p>
+
+  <h3>Decoding memory and imagery</h3>
+
+  <p>If visual cortex only responded to light arriving at the eye, there would be nothing to decode when the
+  screen is blank. The <strong>sensory recruitment model</strong> of working memory says otherwise:
+  <strong>the same visual areas are engaged when you see an item and when you remember it</strong>. Remembering
+  is partly re-running the perceptual machinery.</p>
+
+  <p>That makes a prediction you can test with a decoder, and it holds (Harrison &amp; Tong, 2009; Serences,
+  Ester, Vogel &amp; Awh, 2009):</p>
+
+  <ul>
+    <li>In visual regions, you can decode <strong>what a participant imagines or remembers</strong>.</li>
+    <li>It works during the <strong>delay period</strong>, when <strong>no physical stimulus is present</strong>
+    — so the decoded signal cannot be driven by the retinal image.</li>
+    <li>You can <strong>cross-decode</strong>: train the decoder on perception and test it on memory, and it
+    still works. That is the strong evidence, because a classifier trained on seeing can only generalise to
+    remembering if the two states share a representational format — a <strong>shared mechanism</strong>.</li>
+  </ul>
+
+  <div class="box warn"><span class="label">Say "decoding", not "mind-reading"</span>
+  The popular label oversells it badly. These decoders report which of a small set of orientations or
+  categories is being held in mind, in a cooperative participant, using a model trained on hours of that
+  specific person's data. "Mind-reading" implies arbitrary thoughts, from anyone, without consent. Keeping the
+  distinction straight is what makes the ethics discussion below tractable rather than hysterical.</div>
+
+  <h2 id="challenges-ethics">12. Challenges and ethics of brain decoding</h2>
+
+  <p>The study guide asks for both, separately. Keep them apart: the first is about what does not work yet, the
+  second about what happens if it does.</p>
+
+  <h3>Challenges before reliable reconstruction of perceptual or cognitive content</h3>
+
+  <ul>
+    <li><strong>The measurement is coarse and slow.</strong> Non-invasive decoding mostly uses fMRI, where each
+    sample is a voxel-sized average of hundreds of thousands of neurons, delayed by seconds (section 3).
+    Fast, fine-grained content is not in the data to be recovered.</li>
+    <li><strong>It takes many hours per person.</strong> Models are fit per participant, often per voxel, on
+    large bespoke datasets. Generalising across people is hard because cortical organisation differs
+    anatomically and functionally — including small, variable tertiary sulci — and a decoder trained on one
+    brain transfers poorly to another.</li>
+    <li><strong>Reconstructions give gist, not detail.</strong> Decoded speech matches meaning more often than
+    wording; decoded images match category, layout and texture better than identity. Every published example
+    was also produced from a constrained stimulus set.</li>
+    <li><strong>Generative priors can fill in what was never there.</strong> When a diffusion model or language
+    model supplies most of the detail, a reconstruction can look convincing while the brain contributed only a
+    weak constraint. Compelling pictures are a hazard in this field, not a result.</li>
+    <li><strong>Prediction is not mechanism.</strong> Vision transformers predict well without being
+    brain-like, and one voxel pattern is compatible with many neural codes — so brain alignment alone does not
+    identify how the brain works.</li>
+    <li><strong>Benchmarks are narrow.</strong> Scores depend on the stimulus set, the brain regions chosen and
+    the noise ceiling of the data. Models can be tuned to a leaderboard rather than to the brain, and most
+    datasets use static photographs in a scanner — not vision in the world, which is why the Algonauts
+    challenges moved to films and games.</li>
+  </ul>
+
+  <h3>Ethical issues</h3>
+
+  <ul>
+    <li><strong>Mental privacy.</strong> Thought has always been the one place no instrument could reach.
+    Content decoded from imagery and memory is private in a way behaviour is not — and consider the obvious
+    misuses: interrogation, insurance, employment screening, border control.</li>
+    <li><strong>Consent, including the ability to withhold it.</strong> Today's decoders need the participant's
+    cooperation during training, and a resistant participant can defeat them by thinking of something else. That
+    is a real protection, and it is a property of current methods rather than a law of nature, so it should not
+    be relied on permanently. Consent also has to cover <em>what the data may later be used for</em>: a dataset
+    collected to study vision can be re-analysed with a decoder that did not exist when it was collected.</li>
+    <li><strong>Accuracy cuts both ways.</strong> A decoder that works raises privacy problems; a decoder that
+    half-works raises worse ones, if its output is treated as fact. Gist-level reconstructions presented as
+    transcripts in a courtroom or a clinic would be the harm — overclaimed accuracy is an ethical issue, not
+    merely a scientific one.</li>
+    <li><strong>Clinical benefit is real, and asymmetric.</strong> BCIs restore communication to people who
+    cannot speak and movement to people who are paralysed. A blanket restriction on decoding research carries a
+    cost paid by exactly those patients, which is why the sensible proposals regulate use and data governance
+    rather than banning the science.</li>
+    <li><strong>Agency and identity in BCI.</strong> If a decoder completes your sentence or a device acts on a
+    decoded intention you had not settled on, who authored the act? This matters most where a decoder has an
+    error rate and the user cannot easily check its output.</li>
+    <li><strong>Who holds the data.</strong> Neural recordings are identifiable, unchangeable and increasingly
+    collected by consumer devices outside medical oversight. You cannot reissue a brain the way you reissue a
+    password.</li>
+  </ul>
+
+  <div class="box key"><span class="label">Takeaways</span>
+  Early AI models were inspired by the brain; today AI tools are used to understand the brain. Encoding models
+  predict brain responses, decoding methods read information out, and stimulus optimization interprets the
+  neural code by generating the input. NeuroAI now spans vision, semantic processing, brain–computer
+  interfaces, recurrent networks and reinforcement learning — and is moving fast. (CMU offers
+  <em>Cognition in the Age of AI</em>, 85-414, in spring.)</div>
+
+  <h2 id="check-yourself">13. Check yourself</h2>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Why is predicting a voxel's response not the same as predicting a single neuron's activity?</div>
+    <button class="opt">Voxels measure electrical activity, neurons measure blood flow</button>
+    <button class="opt">Voxels are smaller than neurons, so they contain only part of one</button>
+    <button class="opt">A voxel pools hundreds of thousands of neurons into one slow, averaged signal, and opposing tunings can cancel</button>
+    <button class="opt">Voxels have no spatial location in the brain</button>
+    <div class="why"><strong>Why:</strong> A 2 mm voxel is a cube of tissue containing on the order of several
+    hundred thousand neurons, read out indirectly through blood flow and averaged over seconds. Option B
+    reverses the scale — a voxel is enormously larger than a neuron, which is the whole problem. Option A
+    inverts what BOLD measures: it is the hemodynamic signal that is recorded, and spiking that is inferred.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">A network reaches state-of-the-art ImageNet accuracy but predicts IT responses worse than
+    older, weaker models. The best interpretation is…</div>
+    <button class="opt">Object categorisation may not be the only objective human vision is optimized for</button>
+    <button class="opt">The encoding analysis must contain a bug</button>
+    <button class="opt">IT cortex does not represent objects</button>
+    <button class="opt">Brain prediction is simply unrelated to what a model computes</button>
+    <button class="opt">The model needs more training data</button>
+    <div class="why"><strong>Why:</strong> This is the Linsley et al. (2023) result: task performance and brain
+    prediction come apart, which is informative about the brain's objective rather than a methodological
+    failure. Option C overshoots — IT clearly represents objects and scenes; what is in doubt is whether
+    categorisation accuracy is the right pressure. Option D is too strong in the other direction: alignment
+    does vary systematically with architecture, dataset and objective, which is exactly why those comparisons
+    are worth running.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">Which pairing of training objective and brain prediction matches the lecture's finding?</div>
+    <button class="opt">Language supervision mainly improves prediction of V1</button>
+    <button class="opt">Language supervision mainly improves prediction of higher visual areas</button>
+    <button class="opt">Self-supervised models cannot predict any visual area</button>
+    <button class="opt">The objective makes no difference once architecture is fixed</button>
+    <div class="why"><strong>Why:</strong> Wang et al. (2023) compared SimCLR (self-supervised) with SLIP
+    (self-supervised plus captions): language helps most in higher visual areas, closer to semantic processing
+    regions. Option A is the inverted version and is implausible on reflection — captions do not describe
+    contrast and orientation. Option C is wrong; self-supervised models are strong predictors, which is
+    precisely why they are an interesting comparison.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">What does stimulus optimization give you that choosing good photographs does not?</div>
+    <button class="opt">Higher spatial resolution in the scanner</button>
+    <button class="opt">A causal test that the region is necessary for perception</button>
+    <button class="opt">A way to decode what someone saw on a single trial</button>
+    <button class="opt">A data-driven search over all possible images, so it can reveal preferences no predefined category list contains</button>
+    <div class="why"><strong>Why:</strong> Hand-picked stimuli are hypothesis-driven, few in number and biased
+    toward categories you already thought of — which is how food selectivity was missed for decades. Option C is
+    the decoding/stimulus-optimization confusion: decoding reconstructs one trial by combining many areas, while
+    optimization finds one area's preference across many trials. Option B is a different method entirely —
+    synthesising a stimulus still only measures responses, so causality needs perturbation.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Decoding orientation from visual cortex during a blank delay period, with a classifier
+    trained on perception, supports which claim?</div>
+    <button class="opt">fMRI can resolve single neurons after all</button>
+    <button class="opt">Working memory is stored in prefrontal cortex only</button>
+    <button class="opt">The sensory recruitment model — remembering engages the same visual areas, in a shared format</button>
+    <button class="opt">Imagery and perception are completely separate processes</button>
+    <div class="why"><strong>Why:</strong> Cross-decoding from perception to memory is the key design: a
+    classifier trained on seeing can only transfer to remembering if the two share a representational format.
+    Option D is what the result rules out. Option A is tempting because decoding feels fine-grained, but
+    decoding works on distributed <em>patterns</em> of voxels, which is a different thing from single-neuron
+    resolution.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+
+  /* ---------- shared drawing helpers ---------- */
+  function box(g, x, y, w, h, label, color, dim, sub) {
+    g.appendChild(SG.el("rect", {x, y, width:w, height:h, rx:8, fill:color,
+      "fill-opacity": dim ? .07 : .2, stroke:color, "stroke-width": dim ? 1 : 2,
+      "stroke-opacity": dim ? .4 : 1}));
+    const lines = label.split("|");
+    lines.forEach((ln, i) => {
+      const t = SG.el("text", {x:x + w / 2, y:y + h / 2 + 5 - (lines.length - 1) * 8 + i * 16,
+        "text-anchor":"middle", fill:"var(--ink)", "font-size":13,
+        "font-weight":600, "fill-opacity": dim ? .45 : 1});
+      t.textContent = ln; g.appendChild(t);
+    });
+    if (sub) {
+      const s = SG.el("text", {x:x + w / 2, y:y + h + 16, "text-anchor":"middle",
+        fill:"var(--ink-mute)", "font-size":11, "fill-opacity": dim ? .4 : 1});
+      s.textContent = sub; g.appendChild(s);
+    }
+  }
+  function arrow(g, x1, y, x2, color, dim, label) {
+    const dir = x2 > x1 ? 1 : -1, tip = x2 - dir * 2;
+    g.appendChild(SG.el("line", {x1, y1:y, x2: tip - dir * 9, y2:y, stroke:color,
+      "stroke-width": dim ? 1.5 : 3.5, "stroke-opacity": dim ? .35 : 1}));
+    g.appendChild(SG.el("polygon", {points:`${tip},${y} ${tip - dir * 12},${y - 7} ${tip - dir * 12},${y + 7}`,
+      fill:color, "fill-opacity": dim ? .35 : 1}));
+    if (label) {
+      const t = SG.el("text", {x:(x1 + x2) / 2, y:y - 12, "text-anchor":"middle", fill:color,
+        "font-size":11.5, "font-weight":600, "fill-opacity": dim ? .35 : 1});
+      t.textContent = label; g.appendChild(t);
+    }
+  }
+  function title(g, x, y, text, color, dim) {
+    const t = SG.el("text", {x, y, fill:color, "font-size":14, "font-weight":700,
+      "fill-opacity": dim ? .4 : 1});
+    t.textContent = text; g.appendChild(t);
+  }
+
+  /* =======================================================================
+     FIGURE 1 — encoding vs decoding direction
+     ======================================================================= */
+  const ed = document.getElementById("edSvg"), edOut = document.getElementById("edOut");
+  const EDTEXT = {
+    both: "What to notice: the two rows use the same three ingredients and differ only in which end is the " +
+          "input. The orange row (encoding) starts at the stimulus and ends at the brain; the teal row " +
+          "(decoding) starts at the brain and ends at a statement about the stimulus. Click a button to isolate one.",
+    enc:  "<strong>Encoding</strong> (orange): stimulus or task property <strong>in</strong>, neural data " +
+          "<strong>out</strong>. The image passes through a nonlinear feature model, then a simple linear map " +
+          "with weights &beta;, giving a predicted response for each voxel. Scored as variance explained on " +
+          "held-out images. The hypothesis lives in the feature model.",
+    dec:  "<strong>Decoding</strong> (teal): neural data <strong>in</strong>, stimulus or task property " +
+          "<strong>out</strong>. Measured voxel responses go into either an inverted encoding model (which " +
+          "stimulus would have produced this?) or a generic classifier, and out comes a label, a word, an " +
+          "orientation, an intended movement, or a reconstructed image."
+  };
+  function drawEd(mode) {
+    ed.innerHTML = "";
+    const g = SG.el("g", {});
+    const OR = "var(--accent)", TE = "var(--accent-2)", VI = "var(--accent-3)";
+    const dimE = mode === "dec", dimD = mode === "enc";
+
+    title(g, 20, 26, "ENCODING   stimulus / task property  →  neural data", OR, dimE);
+    box(g, 20, 44, 150, 62, "Stimulus|(the image)", OR, dimE, "what was shown");
+    box(g, 245, 44, 150, 62, "Feature model|(CNN layer, texture)", VI, dimE, "nonlinear — the hypothesis");
+    box(g, 470, 44, 170, 62, "Voxel responses|predicted", TE, dimE, "one number per voxel");
+    arrow(g, 170, 75, 245, OR, dimE, "features");
+    arrow(g, 395, 75, 470, OR, dimE, "linear map β");
+
+    g.appendChild(SG.el("line", {x1:20, y1:160, x2:640, y2:160, stroke:"var(--line-2)",
+      "stroke-dasharray":"4 5"}));
+
+    title(g, 20, 206, "DECODING   neural data  →  stimulus / task property", TE, dimD);
+    box(g, 20, 224, 170, 62, "Voxel responses|measured", TE, dimD, "what the scanner gave");
+    box(g, 265, 224, 150, 62, "Inverted encoder|or classifier", VI, dimD, "the read-out");
+    box(g, 490, 224, 150, 62, "Stimulus / task|property", OR, dimD, "label, word, intention");
+    arrow(g, 190, 255, 265, TE, dimD, "brain pattern");
+    arrow(g, 415, 255, 490, TE, dimD, "best guess");
+
+    const n1 = SG.el("text", {x:330, y:146, "text-anchor":"middle", fill:"var(--ink-mute)",
+      "font-size":11.5});
+    n1.textContent = "same ingredients — opposite direction of prediction";
+    g.appendChild(n1);
+    ed.appendChild(g);
+    edOut.innerHTML = EDTEXT[mode] || EDTEXT.both;
+    [["edEnc", "enc"], ["edDec", "dec"], ["edBoth", "both"]].forEach(([id, m]) => {
+      document.getElementById(id).className = "btn" + (m === mode ? " primary" : "");
+    });
+  }
+  drawEd("both");
+  document.getElementById("edEnc").onclick = () => drawEd("enc");
+  document.getElementById("edDec").onclick = () => drawEd("dec");
+  document.getElementById("edBoth").onclick = () => drawEd("both");
+
+  /* =======================================================================
+     FIGURE 2 — convolution on a pixel grid
+     ======================================================================= */
+  const cv = document.getElementById("cvSvg"), cvMath = document.getElementById("cvMath");
+  const cvPos = document.getElementById("cvPos"), cvFilt = document.getElementById("cvFilt");
+  // 7x7 image: two one-pixel-wide vertical bars, top-left and lower-right
+  const IMG = Array.from({length:7}, () => Array(7).fill(0));
+  for (let r = 0; r < 3; r++) IMG[r][2] = 9;
+  for (let r = 4; r < 7; r++) IMG[r][4] = 9;
+  const KERNELS = [
+    {name:"vertical edge", k:[[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]]},
+    {name:"horizontal edge", k:[[-1, -1, -1], [0, 0, 0], [1, 1, 1]]}
+  ];
+  let kIdx = 0, showAll = false;
+  function conv(k, ci, cj) {           // ci, cj = centre of window, each 1..5
+    let s = 0;
+    for (let di = -1; di <= 1; di++)
+      for (let dj = -1; dj <= 1; dj++) s += IMG[ci + di][cj + dj] * k[di + 1][dj + 1];
+    return s;
+  }
+  function drawCv() {
+    const k = KERNELS[kIdx].k;
+    const p = +cvPos.value, oi = Math.floor(p / 5), oj = p % 5;   // output cell
+    const ci = oi + 1, cj = oj + 1;                                // window centre
+    cv.innerHTML = "";
+    const g = SG.el("g", {});
+    const C = 26;
+
+    // --- image grid ---
+    title(g, 14, 22, "Image (7 × 7 pixels)", "var(--ink-soft)", false);
+    const ix = 14, iy = 34;
+    for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++) {
+      const v = IMG[r][c];
+      g.appendChild(SG.el("rect", {x:ix + c * C, y:iy + r * C, width:C, height:C,
+        fill:"var(--gold)", "fill-opacity": v / 9 * .55, stroke:"var(--line-2)"}));
+      const t = SG.el("text", {x:ix + c * C + C / 2, y:iy + r * C + C / 2 + 4,
+        "text-anchor":"middle", fill:"var(--ink-soft)", "font-size":11});
+      t.textContent = v; g.appendChild(t);
+    }
+    g.appendChild(SG.el("rect", {x:ix + (cj - 1) * C, y:iy + (ci - 1) * C, width:3 * C,
+      height:3 * C, fill:"none", stroke:"var(--accent)", "stroke-width":3.5, rx:3}));
+
+    // --- kernel ---
+    const kx = 250, ky = 60;
+    title(g, kx, 22, "Kernel (3 × 3)", "var(--ink-soft)", false);
+    const kn = SG.el("text", {x:kx, y:40, fill:"var(--accent)", "font-size":11.5,
+      "font-weight":600});
+    kn.textContent = KERNELS[kIdx].name; g.appendChild(kn);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+      const v = k[r][c];
+      g.appendChild(SG.el("rect", {x:kx + c * C, y:ky + r * C, width:C, height:C,
+        fill: v > 0 ? "var(--accent-2)" : (v < 0 ? "var(--rose)" : "var(--bg-soft)"),
+        "fill-opacity": v === 0 ? 1 : .35, stroke:"var(--line-2)"}));
+      const t = SG.el("text", {x:kx + c * C + C / 2, y:ky + r * C + C / 2 + 4,
+        "text-anchor":"middle", fill:"var(--ink)", "font-size":11});
+      t.textContent = v > 0 ? "+" + v : v; g.appendChild(t);
+    }
+    const lg = SG.el("text", {x:kx, y:ky + 3 * C + 22, fill:"var(--ink-mute)", "font-size":10.5});
+    lg.textContent = "teal = +1, pink = −1"; g.appendChild(lg);
+
+    // --- feature map ---
+    const fx = 410, fy = 60;
+    title(g, fx, 22, "Feature map (5 × 5)", "var(--ink-soft)", false);
+    let maxAbs = 1;
+    for (let r = 1; r <= 5; r++) for (let c = 1; c <= 5; c++)
+      maxAbs = Math.max(maxAbs, Math.abs(conv(k, r, c)));
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) {
+      const filled = showAll || r < oi || (r === oi && c <= oj);
+      const v = conv(k, r + 1, c + 1);
+      g.appendChild(SG.el("rect", {x:fx + c * C, y:fy + r * C, width:C, height:C,
+        fill: !filled ? "var(--bg-soft)" : (v > 0 ? "var(--accent-2)" : (v < 0 ? "var(--rose)" : "var(--bg-soft)")),
+        "fill-opacity": filled && v !== 0 ? Math.abs(v) / maxAbs * .6 : 1,
+        stroke:"var(--line-2)"}));
+      if (filled) {
+        const t = SG.el("text", {x:fx + c * C + C / 2, y:fy + r * C + C / 2 + 4,
+          "text-anchor":"middle", fill:"var(--ink)", "font-size":10.5});
+        t.textContent = v; g.appendChild(t);
+      }
+    }
+    g.appendChild(SG.el("rect", {x:fx + oj * C, y:fy + oi * C, width:C, height:C, fill:"none",
+      stroke:"var(--accent)", "stroke-width":3.5, rx:2}));
+
+    // --- arrows between panels ---
+    arrow(g, 206, 110, 244, "var(--ink-mute)", false, null);
+    arrow(g, 366, 110, 404, "var(--ink-mute)", false, null);
+    const eq = SG.el("text", {x:385, y:134, "text-anchor":"middle", fill:"var(--ink-mute)",
+      "font-size":10.5});
+    eq.textContent = "sum"; g.appendChild(eq);
+
+    cv.appendChild(g);
+
+    // --- the arithmetic, read off the figure ---
+    const terms = [];
+    for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) {
+      const kv = k[di + 1][dj + 1];
+      terms.push(IMG[ci + di][cj + dj] + "·" + (kv > 0 ? "+" + kv : kv));
+    }
+    const out = conv(k, ci, cj);
+    cvMath.innerHTML = "Window centred on row " + ci + ", column " + cj +
+      " (image rows and columns are numbered from 0). Dotwise product: " +
+      "<code>" + terms.join(" + ") + " = <strong>" + out + "</strong></code>" +
+      " &rarr; feature-map cell (" + oi + ", " + oj + ").";
+  }
+  drawCv();
+  cvPos.addEventListener("input", () => { showAll = false; drawCv(); });
+  cvFilt.onclick = () => {
+    kIdx = (kIdx + 1) % KERNELS.length;
+    cvFilt.textContent = "Filter: " + KERNELS[kIdx].name;
+    drawCv();
+  };
+  document.getElementById("cvAll").onclick = () => { showAll = true; drawCv(); };
+
+  /* =======================================================================
+     FIGURE 3 — CNN layers mapped onto the ventral stream
+     ======================================================================= */
+  const hs = document.getElementById("hierSvg"), hsOut = document.getElementById("hierOut");
+  const HBASE = "What to notice: the linking lines do not cross. Click any layer to see the area it best " +
+    "predicts and what it is computing. The gradient is the claim: <strong>early model layers better predict " +
+    "early visual areas, deeper model layers better predict higher visual areas</strong>. This is a schematic " +
+    "of the correspondence, not plotted data — the original figure reports the best-predicting layer per " +
+    "area. <span class=\"pill\">reconstruction</span>";
+  const PAIRS = [
+    {L:"conv1", A:"V1", info:"<strong>conv1 ↔ V1.</strong> First-layer filters learn oriented edges and " +
+      "colour blobs, with small receptive fields — the same description as a V1 simple cell tuned to " +
+      "orientation and spatial frequency. This correspondence is the one you can literally look at: trained " +
+      "conv1 filters resemble the Gabor-like receptive fields of Chapter 10."},
+    {L:"conv2", A:"V2 / V3", info:"<strong>conv2 ↔ V2 / V3.</strong> Combinations of edges: corners, " +
+      "junctions, simple contours, and the border and surface processing that V2 contributes."},
+    {L:"conv3", A:"V4", info:"<strong>conv3 ↔ V4.</strong> Textures, curvature and shape fragments over " +
+      "larger regions, matching V4's selectivity for texture, contour, shape and colour."},
+    {L:"conv4", A:"posterior IT", info:"<strong>conv4 ↔ posterior IT.</strong> Object parts — big " +
+      "enough receptive fields to span a face or a limb, not yet a whole-object identity."},
+    {L:"conv5 / fc", A:"anterior IT", info:"<strong>conv5 and fully-connected layers ↔ anterior IT.</strong> " +
+      "Whole objects and scenes, tolerant to position, size and lighting. These are the layers whose features " +
+      "best predict the category-selective regions — FFA, PPA, LOC, VWFA."}
+  ];
+  function drawHier(sel) {
+    hs.innerHTML = "";
+    const g = SG.el("g", {});
+    const W = 112, X0 = 22, GAP = 16;
+    title(g, X0, 24, "CNN layers (input → output)", "var(--accent-3)", false);
+    title(g, X0, 300, "Ventral visual stream (retina → IT)", "var(--accent-2)", false);
+
+    PAIRS.forEach((p, i) => {
+      const x = X0 + i * (W + GAP), on = sel === i, dim = sel != null && !on;
+      box(g, x, 40, W, 54, p.L, "var(--accent-3)", dim);
+      box(g, x, 218, W, 54, p.A, "var(--accent-2)", dim);
+      const line = SG.el("line", {x1:x + W / 2, y1:94, x2:x + W / 2, y2:218,
+        stroke: on ? "var(--accent)" : "var(--line-2)", "stroke-width": on ? 3 : 1.5,
+        "stroke-dasharray": on ? "" : "5 4", "stroke-opacity": dim ? .3 : 1});
+      g.appendChild(line);
+      const hit = SG.el("rect", {x, y:40, width:W, height:232, fill:"transparent",
+        style:"cursor:pointer"});
+      hit.addEventListener("click", () => drawHier(on ? null : i));
+      g.appendChild(hit);
+    });
+
+    // trend arrows
+    const yA = 158, xEnd = X0 + 5 * (W + GAP) - GAP;
+    arrow(g, X0 + 10, yA, xEnd - 10, "var(--ink-mute)", false, null);
+    const t1 = SG.el("text", {x:(X0 + xEnd) / 2, y:yA - 14, "text-anchor":"middle",
+      fill:"var(--ink-soft)", "font-size":12, "font-weight":600});
+    t1.textContent = "feature complexity ↑    receptive field size ↑";
+    g.appendChild(t1);
+    const t2 = SG.el("text", {x:(X0 + xEnd) / 2, y:yA + 24, "text-anchor":"middle",
+      fill:"var(--ink-mute)", "font-size":11});
+    t2.textContent = "edges → contours → textures → parts → whole objects & scenes";
+    g.appendChild(t2);
+
+    hs.appendChild(g);
+    hsOut.innerHTML = sel == null ? HBASE : PAIRS[sel].info +
+      " <span class=\"muted\">Click again to show all five.</span>";
+  }
+  drawHier(null);
+});
+</script>
+</body>
+</html>

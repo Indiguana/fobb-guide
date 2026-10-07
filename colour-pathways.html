@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colour, V4 &amp; the two pathways · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="colour-pathways">
+<main>
+
+  <div class="eyebrow">Part IV · Vision</div>
+  <h1>Colour, V4 &amp; the two pathways</h1>
+  <p class="subtitle">Why colour is an inference the brain has to un-multiply, how three cones and two opponent
+  channels deliver it, what cortical damage takes away that retinal damage doesn't — and the double dissociation
+  that splits vision into "what" and "where".</p>
+
+  <div data-toc></div>
+
+  <div class="box key"><span class="label">Essentials</span>
+  <ul>
+    <li><strong>Colour at Marr's three levels.</strong> <em>Computational</em>: finding food, finding mates,
+    recognising objects. <em>Algorithmic</em>: perceived colour = illumination × surface reflectance, so the brain
+    must factor a product. <em>Implementation</em>: cones → centre-surround retinal ganglion cells → <strong>V4</strong>.</li>
+    <li><strong>Illumination</strong> = the light source. <strong>Surface reflectance</strong> = which wavelengths a
+    surface returns under white light — the property of the object itself. <strong>Perceived colour</strong> = the
+    light that actually reaches the eye, which depends on both.</li>
+    <li><strong>Colour constancy</strong>: a surface looks roughly the same colour under changing light, because the
+    brain estimates the illumination and divides it out. It must <em>guess</em> the illumination — one retinal
+    signal, two unknowns. <strong>Adelson's checkerboard</strong> and <strong>the dress</strong> are the two
+    canonical cases where the guess is exposed.</li>
+    <li><strong>Trichromacy</strong>: three cone types — <strong>S</strong> (short, ~420 nm, blue),
+    <strong>M</strong> (medium, ~530 nm, green), <strong>L</strong> (long, ~560 nm, red). Perceived hue follows the
+    <em>ratio</em> of their responses, so three numbers code the whole visible spectrum (400–700 nm).</li>
+    <li><strong>Colour blindness</strong> (colour-vision deficiency): loss or alteration of a cone type in the
+    <em>retina</em>. Hues that differed only in the missing cone's contribution collapse together.</li>
+    <li><strong>Colour opponency</strong>: retinal ganglion cells are excited by one colour in the centre and
+    inhibited by its opposite in the surround (red-vs-green, blue-vs-yellow channels). This codes colour
+    <em>contrast</em>, not absolute wavelength. <strong>Colour adaptation</strong> — stare at purple, grey looks
+    green — is the behavioural evidence.</li>
+    <li><strong>Cerebral achromatopsia</strong>: loss of colour vision from <em>brain</em> damage, commonly
+    <strong>V4</strong> (patient Mr. I, the colourblind painter). Cones are intact; the dissociation from retinal
+    colour blindness is the exam point.</li>
+    <li><strong>Dorsal stream</strong> ("where", occipital → parietal): position of visual stimuli, visually guided
+    action. <strong>Ventral stream</strong> ("what", occipital → temporal/IT): meaning and recognition. Full route:
+    eye → LGN → V1 → V2 → V4 → IT.</li>
+    <li><strong>Double dissociation</strong>: patient <strong>DF</strong> (ventral/LOC lesion) → <strong>object
+    agnosia</strong>, cannot recognise shape but posts a card through a slot accurately. <strong>Optic ataxia</strong>
+    (dorsal lesion) → recognises objects but grasps inaccurately. Two patients with opposite profiles rule out
+    "one task is just harder".</li>
+    <li><strong>Ventral specialisations</strong>: LOC = object shape (lesion → object agnosia), FFA = faces/fine
+    discrimination, PPA = places (lesion → topographical agnosia), VWFA = written words. Dorsal lesions also give
+    <strong>simultanagnosia</strong> — seeing only one object at a time.</li>
+  </ul></div>
+
+  <h2 id="colour-marr">1. Colour at Marr's three levels</h2>
+
+  <p>Start with the thing that makes colour worth having. A ripe berry and an unripe one are the same shape and
+  size; a peacock's tail carries no information at all in greyscale. Colour is how a visual system separates
+  objects that geometry cannot separate — and the two uses the lecture names are the two that pay in evolutionary
+  currency: <strong>finding food</strong> and <strong>finding mates</strong>.</p>
+
+  <p>Newton's notebook (1661) supplies the physics: white light decomposes into wavelengths, and the band we see
+  runs from about 400 to 700 nm. But wavelength is not colour. Colour is what the brain builds, and the reason
+  it's hard is the next line.</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>Level</th><th>Colour perception</th></tr>
+    <tr><td><strong>Computational</strong> (why?)</td><td>Finding food, finding mates, recognising objects — separating
+    surfaces that differ in material but not in shape</td></tr>
+    <tr><td><strong>Algorithmic</strong> (how?)</td><td>A light source illuminates a surface; the surface reflects some
+    wavelengths. The light reaching the eye is the <strong>product</strong> of the two: perceived colour =
+    illumination × reflectance. To recover the <em>object's</em> colour the brain must divide the illumination back out
+    — <strong>colour constancy</strong></td></tr>
+    <tr><td><strong>Implementation</strong> (where?)</td><td><strong>Cones</strong> (S, M, L) in the retina →
+    <strong>centre-surround retinal ganglion cells</strong> with colour opponency → <strong>V4</strong>. The visual
+    hierarchy now reads V1 edges, V2 surfaces, V1–V5 depth, V5/MT motion, <strong>V4 colour</strong></td></tr>
+  </table></div>
+
+  <div class="box warn"><span class="label">Slide typo worth noticing</span>
+  The L10 slide that lays out these three levels is titled "<em>Depth perception</em> across Marr's three levels" —
+  a leftover heading from Lecture 8. The content underneath is colour. If the exam asks for colour at Marr's three
+  levels, the rows above are what it wants.</div>
+
+  <h2 id="illumination-reflectance">2. One equation, two unknowns</h2>
+
+  <div class="box defn"><span class="label">The three quantities</span>
+  <strong>Illumination</strong> — the light source (noon sun, overcast sky, tungsten bulb, sodium streetlamp).
+  <strong>Surface reflectance</strong> — the fraction of each wavelength a surface sends back when lit by white
+  light; this is the property that belongs to the object. <strong>Perceived colour</strong> — the light that hits
+  your eye, which depends on <em>both</em>.</div>
+
+  <p>The retina measures only the product. Write it as a single number per channel and the problem becomes obvious:
+  the eye receives \(r = i \times \rho\), where \(i\) is illumination and \(\rho\) is reflectance. The brain wants
+  \(\rho\) — a berry's redness shouldn't change at dusk. It has one measurement and two unknowns. Every colour
+  illusion on this page is that arithmetic refusing to have a unique answer.</p>
+
+  <div class="box analogy"><span class="label">Analogy</span>
+  You are told a rectangle's <em>area</em> is 27 and asked for its height. You can't answer — unless you assume a
+  width. Assume 30 and the height is 0.9; assume 90 and it's 0.3. The retina hands the brain the area; the brain
+  supplies a width from context and then reports the height as if it had measured it. Where the analogy stops: the
+  assumed width isn't arbitrary — shadows, nearby surfaces and the overall light in the scene drive it.</div>
+
+  <div class="viz">
+    <div class="viz-title">The same retinal signal, two different worlds</div>
+    <svg id="irSvg" viewBox="0 0 640 300" role="img" aria-label="A surface under variable illumination, with the inferred reflectance computed"></svg>
+    <div class="controls">
+      <label>Illumination the brain assumes
+        <input type="range" id="irI" min="0.3" max="1" step="0.03" value="0.6" data-out="irIv" data-dp="2">
+        <span class="val" id="irIv"></span></label>
+      <span class="val" id="irOut"></span>
+    </div>
+    <div class="caption">What to notice: the light arriving at the eye is held fixed at <strong>0.27</strong> — the
+    left patch never changes. Drag the slider and only the <em>interpretation</em> moves: assume dim light (0.30)
+    and the surface must be reflecting 0.90, a white card in shadow; assume bright light (0.90) and the same signal
+    means reflectance 0.30, a dark grey card in sun. Both are exactly consistent with the measurement, because
+    0.9 × 0.3 and 0.3 × 0.9 are both 0.27. The right-hand panel redraws the inferred surface; grey levels are drawn
+    by layering <code>--ink</code> at varying opacity, so they track the theme.</div>
+  </div>
+
+  <h2 id="constancy">3. Colour constancy, and the two canonical illusions</h2>
+
+  <div class="box defn"><span class="label">Colour constancy</span>
+  Taking the light that hits the eye as input, the brain corrects it using its <em>prediction about the
+  illumination</em>, so that a surface keeps roughly the same apparent colour as the lighting changes. Without it, a
+  red apple would look brown indoors and you'd have to relearn every object's colour every time a cloud moved.</div>
+
+  <p>Constancy is a feature, and the illusions are the feature being caught in the act. Both canonical examples work
+  the same way: the retinal signal is fixed, the <em>assumed illumination</em> differs across two regions, so the
+  inferred reflectance differs — and inferred reflectance is what you consciously see.</p>
+
+  <h3>Adelson's checkerboard</h3>
+
+  <p>A checkerboard sits under a cylinder that casts a shadow. Square A is on the lit part of the board; square B is
+  inside the shadow. <strong>A and B send identical light to your eye</strong> — identical pixel values. They look
+  nothing alike: B looks clearly lighter.</p>
+
+  <p>The brain's reasoning, written out: <em>the light from B equals the light from A; but B is in shadow, so B is
+  being illuminated less; to return the same amount of light under less illumination, B's surface must be a lighter
+  colour.</em> That inference is correct physics applied to a trick photograph. Divide a fixed numerator by a
+  smaller denominator and the quotient goes up.</p>
+
+  <div class="viz">
+    <div class="viz-title">Adelson's checkerboard — reconstruction</div>
+    <canvas id="adCanvas" height="300" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <button class="btn primary" id="adBridge">Connect A and B</button>
+      <label><input type="checkbox" id="adShadow" checked> Shadow present</label>
+    </div>
+    <div class="caption">What to notice: A and B are painted with the <em>same</em> value (0.46) in both conditions —
+    A is a dark square in the light, B a light square (0.78) dimmed by the shadow to 0.78 × 0.59 = 0.46. Press
+    "Connect A and B" to draw a bar of that value between them: it is continuous, which is the proof they match.
+    Untick the shadow and nothing about A or B changes in the drawing — only the illumination story does, and with no
+    illumination difference to explain away there is nothing to divide out. A <strong>reconstruction</strong>, not
+    Adelson's photograph, so expect a weaker effect than the slides.</div>
+  </div>
+
+  <h3>The dress</h3>
+
+  <p>The 2015 photograph that split the internet. Some people see white and gold, others blue and black, from the
+  same pixels. The photograph is badly exposed and gives almost no reliable cue to the light source — so the
+  illumination term is genuinely ambiguous, and different viewers plug in different values.</p>
+
+  <ul>
+    <li>Assume the dress is in <strong>bluish shade / indoor light</strong> → the brain subtracts blue from the
+    image → what's left reads <strong>white and gold</strong>.</li>
+    <li>Assume it is <strong>brightly lit, lots of yellow light</strong> → the brain subtracts yellow → what's left
+    reads <strong>blue and black</strong>.</li>
+  </ul>
+
+  <p>Nobody is seeing it wrong. Two observers running the same correct algorithm on the same data with different
+  priors about the lighting <em>must</em> reach different answers — that is what "illumination is ambiguous" means,
+  and it's the sentence to write on the exam.</p>
+
+  <div class="box warn"><span class="label">Where the slide mislabels a term</span>
+  The checkerboard slide reads "A and B are the same pixel values (reflectance: color hitting your eye)". That
+  parenthesis swaps two terms. The light hitting your eye is <strong>perceived colour</strong> — the product
+  illumination × reflectance. <strong>Reflectance</strong> is the surface property, which is precisely the thing A
+  and B do <em>not</em> share in your percept. Getting these two the right way round is most of the credit on a
+  short-answer version of this question.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Same signal, opposite conclusions</div>
+    <div class="g-body">
+      <p>Two matte cards, photographed in one scene. Both send the same amount of light to the camera: a value of
+      <strong>0.27</strong> on a scale where 1.0 is the brightest possible. Card A sits in a shadow where the
+      illumination is <strong>0.30</strong>. Card B sits in open light where the illumination is
+      <strong>0.90</strong>.</p>
+      <p>(a) What reflectance does each card have? (b) Which card is physically the lighter-coloured card? (c) An
+      observer shown the photograph with the shadow cropped out reports that the two cards look the same. Are they
+      wrong?</p>
+    </div>
+    <details class="step"><summary>Step 1 — What are we actually being asked?</summary><div>
+      <p>Not "which is brighter in the image" — that's given and identical. We're asked to invert
+      perceived colour = illumination × reflectance for the surface property. Three quantities, and the question
+      moves between them: the retinal signal (0.27, shared), the illumination (differs), the reflectance (to
+      find).</p></div></details>
+    <details class="step"><summary>Step 2 — Do the division</summary><div>
+      <p>Reflectance = signal ÷ illumination. A: 0.27 ÷ 0.30 = <strong>0.90</strong>. B: 0.27 ÷ 0.90 =
+      <strong>0.30</strong>. Multiply back: 0.90 × 0.30 = 0.27 and 0.30 × 0.90 = 0.27. Both reproduce the
+      measurement, which is the whole difficulty.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div>
+      <p>(a) A is 0.90, B is 0.30. (b) A — reflectance 0.90 is a near-white card, B at 0.30 is dark grey. (c) The
+      observer isn't wrong about the <em>image</em>; the patches really are identical there. Cropping removed the cue
+      they needed to estimate illumination, so they can't run the division and fall back on reporting the raw signal.
+      Constancy didn't fail — its input was removed.</p>
+      <p>The confusion this is built around: treating "the colour hitting your eye" and "the colour of the surface"
+      as one quantity. They're a product and a factor, and the checkerboard, the dress and achromatopsia's spared
+      cones all turn on keeping them apart.</p></div></details>
+  </div>
+
+  <h2 id="trichromacy">4. Trichromacy: three numbers for a whole spectrum</h2>
+
+  <p>In the 1850s Helmholtz asked people to match colours using adjustable lights. With two lights they could not
+  match everything; with three they could match everything; four added nothing but difficulty. That is a behavioural
+  measurement of a biological fact — the retina has three cone types — made decades before anyone could see them.</p>
+
+  <div class="box defn"><span class="label">The three cones</span>
+  <strong>S cones</strong> — short wavelengths, peak ~420 nm, "blue". <strong>M cones</strong> — medium, peak
+  ~530 nm, "green". <strong>L cones</strong> — long, peak ~560 nm, "red". Each is <em>broadly</em> tuned: a single
+  cone's firing rate is ambiguous between wavelength and intensity, which is why one cone type can never signal
+  colour on its own. <strong>Trichromatic theory</strong>: perceived colour varies with the ratio of responses
+  across the three.</div>
+
+  <div class="viz">
+    <div class="viz-title">Cone response curves — drag a wavelength through them</div>
+    <svg id="coneSvg" viewBox="0 0 640 320" role="img" aria-label="Three overlapping cone sensitivity curves with a movable wavelength probe"></svg>
+    <div class="controls">
+      <label>Wavelength (nm)
+        <input type="range" id="coneL" min="400" max="700" step="1" value="560" data-out="coneLv" data-fmt="int">
+        <span class="val" id="coneLv"></span></label>
+      <label><input type="checkbox" id="coneNoL"> Remove L cones (protanopia)</label>
+      <span class="val" id="coneOut"></span>
+    </div>
+    <div class="caption">What to notice: the curves overlap heavily, and M and L almost completely — their peaks are
+    only about 30 nm apart. The readout computes the three activations and the L:M ratio live: 0.88 at 530 nm (M
+    ahead), 2.31 at 620 nm (L well ahead). That ratio <em>is</em> the hue signal, and 550 vs 560 nm differ by barely
+    0.1 in it — which is why fine red–green judgements go first when a cone is missing. Tick "Remove L cones" and the
+    ratio becomes unavailable: 530 and 620 nm are now the same measurement. The curves are a
+    <strong>schematic reconstruction</strong> (Gaussians at 420/530/560 nm), not digitised physiology — peaks and
+    M–L overlap accurate, exact shapes not.</div>
+  </div>
+
+  <p><strong>Colour addition</strong> follows directly. If hue is a ratio across three channels, then any ratio can
+  be produced by mixing three suitably chosen lights — which is exactly what the screen you are reading this on
+  does. A television has no yellow pixels; it drives your L and M cones in the ratio that 580 nm light would
+  produce, and you see yellow. You are not seeing the wavelength. You are seeing the ratio.</p>
+
+  <h3>Colour blindness</h3>
+
+  <p><strong>Colour blindness</strong> — more precisely a colour-vision deficiency — comes from losing or altering a
+  cone type. Drop the L cones and every pair of wavelengths that differed only in how much more they excited L than
+  M becomes indistinguishable: red and green collapse. The affected person is not seeing grey everywhere; they are
+  seeing a world with one fewer dimension, and hues that were far apart for you land on the same point for them.</p>
+
+  <div class="box warn"><span class="label">Where the deck and the study guide disagree</span>
+  The deck's trichromacy slide says perceived colour varies with the <strong>ratio</strong> of the three cone
+  responses. The L10 study guide says "<strong>sum up</strong> all the activity in the cones to perceive certain
+  colours". Ratio is the defensible version, and the figure above shows why: the <em>sum</em> of cone activity rises
+  when a light gets brighter without its wavelength changing at all, so a sum confounds colour with intensity.
+  Safest exam answer: colour is coded by the <em>relative</em> activity across S, M and L — summing or comparing
+  across the three cone types, not reading any one of them alone.</div>
+
+  <div class="box example"><span class="label">Why a sodium streetlamp ruins colour</span>
+  A sodium lamp emits essentially one narrow band of yellow light. Reflectance only matters for wavelengths that are
+  present: a surface cannot send back light it was never given. Under illumination with one wavelength, two cars
+  with very different reflectance spectra return light that differs only in <em>amount</em>, not in composition — so
+  the cone ratios are near identical and the colours become hard to tell apart. This is the illumination ×
+  reflectance equation again: make the illumination zero across most of the spectrum and most of the reflectance
+  information is multiplied away before the eye ever sees it.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Which cone is missing?</div>
+    <div class="g-body">
+      <p>A participant is shown pairs of single-wavelength lights and asked whether they look the same or different.
+      Their results:</p>
+      <ul>
+        <li>530 nm vs 620 nm — "the same"</li>
+        <li>440 nm vs 530 nm — "different"</li>
+        <li>440 nm vs 620 nm — "different"</li>
+      </ul>
+      <p>(a) Which cone class is most likely absent? (b) Is this deficit retinal or cortical, and what single extra
+      test would tell you? (c) Why does the participant still see a difference in the other two pairs?</p>
+    </div>
+    <details class="step"><summary>Step 1 — What are we actually being asked?</summary><div>
+      <p>To reason from a pattern of confusions back to a missing channel. The useful move is to ask, for each pair,
+      <em>which cone comparison</em> normally distinguishes those two wavelengths — then find the comparison that
+      the "same" judgement has knocked out. Part (b) is a different question entirely: not which channel, but at
+      which <em>stage</em> of the pathway.</p></div></details>
+    <details class="step"><summary>Step 2 — Work out which comparison is dead</summary><div>
+      <p>530 nm and 620 nm are both long enough that S cones barely respond to either (0.007 and essentially 0 in
+      the figure above). What normally separates them is the L:M ratio — 0.88 versus 2.31. If those two look
+      identical, the L-versus-M comparison has been lost, so either L or M is missing. The pairs involving 440 nm
+      are still discriminable, which tells us S is intact and is doing that work.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div>
+      <p>(a) L or M — the red–green channel (losing L is protanopia, losing M deuteranopia); the data as given don't
+      distinguish which. (b) <strong>Retinal.</strong> The signature is that the confusions are selective and
+      probably lifelong: specific pairs collapse, everything else is normal. The one extra test: ask whether colour
+      was lost <em>suddenly</em> and whether <em>all</em> hue is gone, including in memory and imagery — acquired,
+      total loss with intact cones means cortex (next section). (c) S cones are intact, so any short-versus-long
+      comparison still works and 440 nm still differs from both.</p>
+      <p>The transferable point: a missing cone removes a <em>dimension</em> of colour space, not colour itself, and
+      which pairs collapse tells you which dimension went.</p></div></details>
+  </div>
+
+  <h2 id="opponency">5. Colour opponency in retinal ganglion cells</h2>
+
+  <p>Cones hand on to retinal ganglion cells, and those cells do not simply relay cone activity. They are
+  <strong>centre-surround</strong> — the same architecture that gives luminance contrast in Chapter 10 — but wired
+  across cone types. A cell might be excited by red in its centre and inhibited by green in its surround. Its
+  output no longer says "there is red light here"; it says "there is <em>more</em> red here <em>than</em> around
+  here".</p>
+
+  <div class="box defn"><span class="label">Colour opponency</span>
+  The visual system encodes colour using <em>opposing</em> neural channels, built by subtracting cone signals
+  from one another: roughly red-versus-green and blue-versus-yellow. Excitation by one member of a pair is
+  inhibition by the other, so a single channel's output is a signed comparison, not an absolute level.</div>
+
+  <div class="box intuition"><span class="label">Why subtract?</span>
+  Two reasons. <strong>Colour contrast</strong>: comparing a region with its surround is what makes the boundary
+  between two surfaces visible, and boundaries carve a scene into objects. And it helps <strong>constancy</strong>:
+  the illumination term multiplies a whole neighbourhood roughly equally, so a centre-versus-surround comparison
+  partially cancels it. The division problem gets easier if the front end already computes ratios, not levels.</div>
+
+  <div class="box warn"><span class="label">A sloppy phrase in the deck</span>
+  The slide defines opponency as "red vs. green <em>cones</em>, blue vs. yellow <em>cones</em>". There is no yellow
+  cone — there are only S, M and L. The yellow signal is constructed by adding L and M, and the blue-yellow channel
+  is then S versus (L + M). Say "opponent <em>channels</em> built from cone comparisons", not "yellow cones", and
+  the point survives scrutiny.</div>
+
+  <h3>The lecture's exit ticket, answered</h3>
+
+  <p>The deck asks: <em>why might a grey background appear green after you stare at a pink or purple image?</em>
+  Try it, then read the mechanism.</p>
+
+  <div class="viz">
+    <div class="viz-title">Colour adaptation — stare at the centre for 15 seconds</div>
+    <canvas id="caCanvas" height="300" style="width:100%;display:block"></canvas>
+    <div class="controls">
+      <button class="btn primary" id="caGo">Start 15-second adaptation</button>
+      <span class="val" id="caOut"></span>
+    </div>
+    <div class="caption">What to notice: keep your eyes on the small marker. When the violet patch is replaced by a
+    neutral <code>--bg-soft</code> grey, the grey takes on a faint greenish cast for a few seconds — the
+    complement of what you adapted to. The bars on the right are the mechanism: two opponent populations whose
+    <em>balance</em> sets the percept. The adapting patch drives the violet side hard, that side fatigues, and when
+    neutral grey arrives — which should drive both sides equally — the unfatigued side wins. The effect is
+    deliberately subtle here because the page uses only its own palette (<code>--accent-3</code> violet,
+    <code>--accent-2</code> teal) rather than saturated primaries; the slides' purple-and-green demo is the stronger
+    version of the same thing.</div>
+  </div>
+
+  <div class="box key"><span class="label">The answer</span>
+  Perceived colour depends on the <strong>balance</strong> between opponent channels, and a neutral grey is neutral
+  precisely because it leaves that balance even. Staring at purple keeps one side firing hard, and sustained firing
+  <strong>fatigues</strong> it. Now put up a grey that <em>should</em> produce a tie: the fatigued side responds
+  below normal while its opposite responds normally, the balance tips, and the brain reports the opposite colour.
+  Same logic as the motion aftereffect (Ch. 12) and tilt adaptation (Ch. 10). That the aftereffect is always the
+  <em>complement</em> is the evidence that these channels are genuinely opponent rather than independent.</div>
+
+  <h2 id="achromatopsia">6. Cerebral achromatopsia</h2>
+
+  <div class="box defn"><span class="label">Cerebral achromatopsia</span>
+  Loss of colour vision caused by damage to the <strong>brain</strong>, commonly <strong>V4</strong>. The eyes and
+  cones are intact; the deficit is cortical. The lecture's case is <strong>Mr. I</strong>, the colourblind painter:
+  after a head injury his world became, in his description, grey and leaden — flesh looked rat-coloured, food
+  looked repellent. Within two months his drawing skill was undiminished; what had gone was colour.</div>
+
+  <p>Set the two disorders side by side, because the contrast is the question:</p>
+
+  <div class="scroll-x"><table>
+    <tr><th></th><th>Retinal colour blindness</th><th>Cerebral achromatopsia</th></tr>
+    <tr><td>Damage</td><td>Cone photoreceptors, in the retina</td><td>Cortex, commonly V4</td></tr>
+    <tr><td>Onset</td><td>Usually congenital, lifelong</td><td>Acquired — a stroke or injury, with a before and after</td></tr>
+    <tr><td>What is lost</td><td>One <em>dimension</em>: specific hue pairs collapse (e.g. red–green)</td><td>Colour as a whole — the scene goes grey</td></tr>
+    <tr><td>Cones</td><td>Missing or altered</td><td>Intact and responding normally</td></tr>
+    <tr><td>Colour in memory, dreams, imagery</td><td>Was never there to lose</td><td>Can also be lost — Mr. I could not even imagine colour</td></tr>
+  </table></div>
+
+  <p>Why this matters beyond terminology: Mr. I's cones are fine, so trichromatic machinery alone is not sufficient
+  for colour <em>experience</em> — something downstream must be intact too, and the lesion site says where. That is
+  Chapter 5's logic, a selective loss localising a function, and it is the lecture's strongest evidence that V4 does
+  the job.</p>
+
+  <h2 id="pathways">7. Dorsal and ventral: "where" and "what"</h2>
+
+  <p>Past V4 the hierarchy stops being a single ladder and splits. The same V1 output feeds two streams that ask
+  different questions about the same image.</p>
+
+  <div class="viz">
+    <div class="viz-title">The two streams on a brain schematic (left hemisphere, lateral view)</div>
+    <svg viewBox="0 0 640 340" role="img" aria-label="Schematic left hemisphere with dorsal stream arrow to parietal cortex and ventral stream arrow to temporal cortex">
+      <path d="M70 212 C 58 148, 96 92, 158 70 C 226 44, 330 40, 420 54 C 500 66, 560 100, 578 146 C 594 188, 582 224, 552 244 C 520 266, 470 272, 430 268 C 400 264, 376 272, 352 282 C 318 296, 266 300, 214 292 C 150 282, 92 258, 70 212 Z"
+        fill="var(--bg-soft)" stroke="var(--line-2)" stroke-width="2"/>
+      <path d="M86 206 C 150 196, 210 206, 262 196" fill="none" stroke="var(--line-2)" stroke-width="1.6" stroke-dasharray="5 5"/>
+      <path d="M300 60 C 304 112, 330 140, 366 152" fill="none" stroke="var(--line-2)" stroke-width="1.6" stroke-dasharray="5 5"/>
+      <circle cx="556" cy="188" r="26" fill="none" stroke="var(--ink-mute)" stroke-width="2"/>
+      <text x="556" y="193" text-anchor="middle" font-size="14" fill="var(--ink-soft)">V1</text>
+      <text x="556" y="232" text-anchor="middle" font-size="11" fill="var(--ink-mute)">occipital</text>
+      <path d="M534 166 C 470 112, 380 86, 300 92" fill="none" stroke="var(--accent-2)" stroke-width="7" stroke-linecap="round" marker-end="url(#arrD)"/>
+      <path d="M534 210 C 470 254, 400 272, 330 272" fill="none" stroke="var(--accent-3)" stroke-width="7" stroke-linecap="round" marker-end="url(#arrV)"/>
+      <defs>
+        <marker id="arrD" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+          <path d="M0 0 L7 3.5 L0 7 Z" fill="var(--accent-2)"/></marker>
+        <marker id="arrV" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+          <path d="M0 0 L7 3.5 L0 7 Z" fill="var(--accent-3)"/></marker>
+      </defs>
+      <text x="268" y="84" text-anchor="end" font-size="15" font-weight="700" fill="var(--accent-2)">DORSAL — "where"</text>
+      <text x="268" y="104" text-anchor="end" font-size="12.5" fill="var(--ink-soft)">parietal · position, visually guided action</text>
+      <text x="268" y="122" text-anchor="end" font-size="12" fill="var(--ink-mute)">lesion → optic ataxia, simultanagnosia</text>
+      <text x="312" y="262" font-size="15" font-weight="700" fill="var(--accent-3)">VENTRAL — "what"</text>
+      <text x="312" y="282" font-size="12.5" fill="var(--ink-soft)">temporal / IT · meaning, recognition</text>
+      <text x="312" y="300" font-size="12" fill="var(--ink-mute)">lesion → object agnosia (DF)</text>
+      <text x="96" y="178" font-size="12" fill="var(--ink-mute)">frontal</text>
+      <text x="300" y="36" font-size="12" fill="var(--ink-mute)">↑ dorsal (toward the top of the head)</text>
+      <text x="300" y="324" font-size="12" fill="var(--ink-mute)">↓ ventral (toward the base of the brain)</text>
+    </svg>
+    <div class="caption">What to notice: the two streams leave the <em>same</em> occipital source and are named for
+    nothing more than their direction — dorsal (teal) runs up and forward to parietal cortex, ventral (violet) runs
+    down and forward through temporal cortex. The outline is a schematic, not a traced anatomical image. Full
+    feedforward route: eye → LGN → V1 → V2 → V4 → IT.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><strong>Dorsal — the "where" pathway</strong>
+    <p class="tiny">Occipital → parietal. Codes the <em>position</em> of visual stimuli and the spatial properties an
+    action needs: where a thing is, how it is oriented, how to reach it. Vision for <strong>action</strong>.</p></div>
+    <div class="card"><strong>Ventral — the "what" pathway</strong>
+    <p class="tiny">Occipital → temporal (inferior temporal cortex, IT). Codes the <em>meaning</em> of visual
+    stimuli: identity, category, recognition. Vision for <strong>perception</strong>.</p></div>
+  </div>
+
+  <p>The first evidence was <strong>monkey lesion studies</strong>: parietal lesions impaired tasks requiring the
+  spatial location of a stimulus, while temporal lesions impaired tasks requiring which object it was. Human patient
+  work made it sharper — next section.</p>
+
+  <h3>What the ventral stream is made of</h3>
+
+  <p>IT is a hierarchy of feature detectors with category-selective regions sitting at the top. These recur across
+  the course, so learn them as a set with their lesion syndromes:</p>
+
+  <div class="scroll-x"><table>
+    <tr><th>Region</th><th>Prefers</th><th>Lesion gives</th></tr>
+    <tr><td><strong>LOC</strong> — lateral occipital complex</td><td>Object <em>shape</em>; responds more to intact
+    than scrambled objects, whereas early visual cortex responds about equally</td><td>Object agnosia</td></tr>
+    <tr><td><strong>FFA</strong> — fusiform face area</td><td>Faces — or, on Tarr's account, fine-grained
+    discrimination among similar-looking things, which is why it also responds in car, bird and greeble
+    experts</td><td>Impaired face recognition</td></tr>
+    <tr><td><strong>PPA</strong> — parahippocampal place area</td><td>Scenes and the geometry of surrounding
+    space</td><td>Topographical agnosia — cannot recognise familiar places and landmarks</td></tr>
+    <tr><td><strong>VWFA</strong> — visual word form area</td><td>Written words in the reader's own
+    script</td><td>Impaired word reading</td></tr>
+  </table></div>
+
+  <p>VWFA carries an extra idea worth having ready. Writing is a few thousand years old — far too recent for a
+  dedicated cortical area to have evolved for it. <strong>Neuronal recycling</strong>: circuits that evolved for one
+  function get recruited for a newer cultural skill. The deck's other example is arithmetic, where ECoG electrodes
+  over parietal cortex — the <em>dorsal</em> "where" stream — show strong activity during number processing.
+  Spatial circuitry, repurposed for maths.</p>
+
+  <p>Dorsal lesions have a second syndrome besides optic ataxia: <strong>simultanagnosia</strong>, the inability to
+  see more than one object at a time. Note how it differs from agnosia — each object is recognised fine; what fails
+  is holding several in a spatial layout at once, which is a "where" problem, not a "what" problem.</p>
+
+  <h2 id="double-dissociation">8. The double dissociation, done properly</h2>
+
+  <p>This is the reasoning pattern the course keeps returning to, and this is the cleanest instance of it. The
+  general machinery is in <a href="dissociations.html">the dissociations chapter</a>; here is the vision version.</p>
+
+  <h3>Patient DF — the ventral half</h3>
+
+  <p>DF has a lesion in the ventral visual pathway (LOC). Her profile:</p>
+
+  <ul>
+    <li>Cannot identify line drawings, and cannot copy them.</li>
+    <li><em>Can</em> draw objects from memory — so the knowledge of what objects look like is intact.</li>
+    <li>Cannot recognise the object she herself drew moments later.</li>
+  </ul>
+
+  <p>That is <strong>object agnosia</strong>: an inability to recognise the shape of objects, with vision, memory and
+  intelligence otherwise working. Drawing from memory but failing to recognise her own drawing rules out a loss of
+  object knowledge and localises the failure to getting from image to identity.</p>
+
+  <p>Now the part that makes DF famous. Ask her to judge the orientation of a slot — a perceptual report — and she is
+  at chance. Hand her a card and ask her to <strong>post it through</strong> the slot, and her hand rotates to the
+  correct orientation on the way. Same slot, same visual information, two uses: <strong>visually guided action</strong>
+  intact, perceptual judgement not. The lecture's clarinet patient shows the same split — he can't recognise it, but
+  he picks it up and handles it correctly.</p>
+
+  <div class="box warn"><span class="label">The deck's unanswered question: "3 limitations"</span>
+  The slide asks what's wrong with stopping here and answers only "it is a single dissociation: 3 limitations". The
+  three, spelled out:
+  <ul>
+    <li><strong>Task difficulty.</strong> Maybe the perceptual judgement is simply <em>harder</em> than the posting
+    action. Any brain injury hurts hard tasks first, so one patient failing the harder of two tasks tells you
+    nothing about which systems exist.</li>
+    <li><strong>Ceiling and floor effects.</strong> If the posting task is easy enough that everyone succeeds, DF's
+    "intact" performance may be the task's ceiling hiding a real impairment. The measure has to have room to show a
+    deficit.</li>
+    <li><strong>General effects of brain injury.</strong> DF's lesion is not a scalpel. Fatigue, attention, slowed
+    processing and the specific extent of her damage all offer alternative explanations for one failing task that
+    have nothing to do with a "what" pathway.</li>
+  </ul>
+  All three share a structure: they are explanations in terms of a <em>single</em> graded resource rather than two
+  separable systems.</div>
+
+  <h3>Optic ataxia — the dorsal half</h3>
+
+  <div class="box defn"><span class="label">Optic ataxia</span>
+  Difficulty grasping objects because of impaired spatial localisation, following a <strong>dorsal</strong> stream
+  lesion. These patients have <em>intact object recognition</em> — they can tell you exactly what the object is —
+  but their reach-and-grasp is inaccurate, and their hand does not preshape to the object's orientation.</div>
+
+  <p>Put the two patients in a table and the argument completes itself:</p>
+
+  <div class="scroll-x"><table class="tight center">
+    <tr><th>Patient</th><th>Lesion</th><th>Recognise the object ("what")</th><th>Grasp / post it ("where")</th></tr>
+    <tr><td>DF</td><td>Ventral (LOC)</td><td><strong>Impaired</strong></td><td>Intact</td></tr>
+    <tr><td>Optic ataxia</td><td>Dorsal (parietal)</td><td>Intact</td><td><strong>Impaired</strong></td></tr>
+  </table></div>
+
+  <div class="box key"><span class="label">Why two patients, and what it licenses</span>
+  One patient gives a <strong>single dissociation</strong>: task A impaired, task B spared. Every single
+  dissociation has the same escape route — that A is just harder, or more vulnerable to general injury, than B. A
+  <strong>double dissociation</strong> closes it. If a second patient shows the <em>opposite</em> profile — B
+  impaired, A spared — then "A is harder than B" cannot be true, because it would have to predict A impaired in
+  both. No ordering of the two tasks by difficulty can produce a crossed pattern. The conclusion you are then
+  licensed to draw: recognition and visually guided action depend on at least partly <strong>separable</strong>
+  systems. What you are <em>not</em> licensed to draw: that the two streams never interact, or that each region does
+  only this one thing. A double dissociation establishes separability, not isolation or anatomical purity.</div>
+
+  <div class="box example"><span class="label">One more control worth naming</span>
+  With an object agnosia patient, also test <strong>tactile</strong> recognition and knowledge of the object's
+  <strong>function</strong>. If DF can identify by touch an object she cannot identify by sight, the deficit is
+  specifically <em>visual</em> — not a loss of object concepts, and not a naming problem.</div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Build the double dissociation from scratch</div>
+    <div class="g-body">
+      <p>You have two patient groups — Group V with ventral occipitotemporal lesions, Group D with dorsal parietal
+      lesions — plus matched controls. You want to establish that visual <em>recognition</em> and visually guided
+      <em>action</em> are separable.</p>
+      <p>(a) Name two tasks that use identical visual input but differ in which process they demand. (b) State the
+      exact pattern of results that would support a double dissociation. (c) Both groups turn out to be impaired on
+      both tasks. What explanations remain, and how would you change the experiment?</p>
+    </div>
+    <details class="step"><summary>Step 1 — What are we actually being asked?</summary><div>
+      <p>Not "what do the streams do" — that's the hypothesis. We're asked to design a <em>test</em> of it, which
+      means the stimulus must be held constant while the demanded process varies. If the two tasks use different
+      stimuli, any difference between them could be a stimulus effect and the design is dead before data
+      collection.</p></div></details>
+    <details class="step"><summary>Step 2 — Pick the two tasks, and the pattern you need</summary><div>
+      <p>The slot-and-card pair is the model. Task 1 (recognition): report the slot's orientation, verbally or by
+      rotating a handheld card to match without reaching. Task 2 (action): post the card through it, scored by hand
+      orientation at insertion. Identical slot, lighting and viewing time; orientation varied trial to trial so
+      neither task is solvable from memory.</p>
+      <p>The supporting pattern is <strong>crossed</strong>. Group V: impaired on the report, at control level on
+      posting. Group D: at control level on the report, impaired on posting. Controls off both floor and ceiling on
+      both tasks, so the measure has room to show impairment either way. A double dissociation is a
+      <em>crossover</em> — not just a group difference, but each group failing the task the other handles.</p></div></details>
+    <details class="step"><summary>Answer &amp; the takeaway</summary><div>
+      <p>(c) If both groups fail both tasks you have no dissociation, and three alternatives stay live: both tasks
+      too hard (a floor effect), lesions large enough to hit both streams, or general injury effects swamping any
+      selective deficit. Fixes: make both tasks easier until controls are comfortably off the floor; check lesion
+      extent on imaging and exclude participants whose damage crosses both streams; add a task neither stream should
+      affect as a general-impairment control; titrate both tasks to the same control accuracy before comparing.</p>
+      <p>The step students skip: a double dissociation is not "two patients" and not "two tasks" — it is the
+      <em>crossing</em>, because no single difficulty dimension can produce a crossing. Carry that test to the
+      aphasias, to rhythm versus melody, and to anything else in this course claiming two separable
+      processes.</p></div></details>
+  </div>
+
+  <h2 id="check-yourself">9. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">A patch of a photograph reflects light to your eye with a value of 0.27. You see it as a white
+    surface. What has the brain assumed?</div>
+    <button class="opt">That the surface reflectance is low</button>
+    <button class="opt">That the illumination is low</button>
+    <button class="opt">That the illumination is high</button>
+    <button class="opt">Nothing — 0.27 specifies the colour directly</button>
+    <div class="why"><strong>Why:</strong> Reflectance = signal ÷ illumination. To get a <em>high</em> reflectance
+    (white) out of a fixed signal, the assumed illumination must be <em>low</em> — a white card in shadow. Option A
+    inverts the conclusion with the assumption; option C gives you a dark surface instead; option D is the error
+    the whole chapter exists to correct, since 0.27 is a product of two unknowns.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">A painter reports after a stroke that his world has become grey and leaden, that food looks
+    repellent, and that he can no longer even imagine colour. Ophthalmic examination finds normal cones. The most
+    likely diagnosis is…</div>
+    <button class="opt">Deuteranopia (loss of M cones)</button>
+    <button class="opt">Optic ataxia</button>
+    <button class="opt">Cerebral achromatopsia, likely V4</button>
+    <button class="opt">Object agnosia from an LOC lesion</button>
+    <div class="why"><strong>Why:</strong> Normal cones plus <em>acquired</em>, total loss of colour including
+    imagery means the damage is cortical, not retinal — the dissociation that defines cerebral achromatopsia. A cone
+    deficiency would be congenital and would collapse specific hue pairs rather than removing colour wholesale, and
+    it could never affect imagined colour. The two dorsal/ventral syndromes are distractors from the wrong half of
+    the lecture.</div>
+  </div>
+
+  <div class="quiz" data-answer="3">
+    <div class="q">Patient DF cannot report the orientation of a slot but posts a card through it accurately. On its
+    own, what does this establish?</div>
+    <button class="opt">That recognition and visually guided action are separable systems</button>
+    <button class="opt">That the dorsal stream handles recognition</button>
+    <button class="opt">That her lesion must be in parietal cortex</button>
+    <button class="opt">Only a single dissociation — the perceptual task might simply be harder</button>
+    <div class="why"><strong>Why:</strong> This is one patient with one spared and one impaired task, so the
+    difficulty explanation is still open; you need the optic ataxia patient with the crossed profile before option A
+    is earned. Option B reverses the streams, and option C contradicts the ventral lesion that produced her
+    agnosia.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">Which statement about trichromacy and opponency is correct?</div>
+    <button class="opt">They are competing theories; opponency replaced trichromacy</button>
+    <button class="opt">They describe different stages — trichromacy at the cones, opponency at retinal ganglion cells and beyond</button>
+    <button class="opt">Both describe cone function; opponency just adds a yellow cone</button>
+    <button class="opt">Trichromacy applies to V4, opponency to the retina</button>
+    <div class="why"><strong>Why:</strong> They are complementary, not rival: three cone types capture the spectrum,
+    then ganglion cells <em>subtract</em> those signals into opponent channels to code contrast. Option C invents a
+    fourth cone — the error the deck's wording invites. Option D gets the anatomy backwards: trichromacy is the
+    receptor-level account.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+document.addEventListener("shellready", () => {
+  const setup = (cv, H) => {
+    const W = cv.clientWidth || 600;
+    if (cv.width !== Math.round(W * devicePixelRatio)) {
+      cv.width = W * devicePixelRatio; cv.height = H * devicePixelRatio; cv.style.height = H + "px";
+    }
+    const c = cv.getContext("2d");
+    c.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    c.clearRect(0, 0, W, H);
+    return [c, W];
+  };
+  const visible = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; };
+  // grey level 0..1 (1 = white surface) drawn as --ink at (1 - v) opacity over --bg
+  const greyRect = (c, x, y, w, h, v) => {
+    c.fillStyle = SG.css("--bg"); c.fillRect(x, y, w, h);
+    c.save(); c.globalAlpha = SG.clamp(1 - v, 0, 1); c.fillStyle = SG.css("--ink");
+    c.fillRect(x, y, w, h); c.restore();
+  };
+
+  // ---------- 1. illumination x reflectance (inline SVG) ----------
+  const irSvg = document.getElementById("irSvg"), irI = document.getElementById("irI"), irOut = document.getElementById("irOut");
+  const SIGNAL = 0.27;
+  function irDraw() {
+    const i = +irI.value, rho = SG.clamp(SIGNAL / i, 0, 1);
+    while (irSvg.firstChild) irSvg.removeChild(irSvg.firstChild);
+    const add = (tag, a, t) => { const e = SG.el(tag, a, t); irSvg.appendChild(e); return e; };
+    const greySq = (x, y, w, h, v, label) => {
+      add("rect", {x, y, width: w, height: h, fill: "var(--bg)", stroke: "var(--line-2)", "stroke-width": 1.5});
+      add("rect", {x, y, width: w, height: h, fill: "var(--ink)", opacity: (1 - v).toFixed(3)});
+      if (label) add("text", {x: x + w / 2, y: y + h + 20, "text-anchor": "middle", "font-size": 12.5, fill: "var(--ink-soft)"}, label);
+    };
+    add("text", {x: 150, y: 28, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: "var(--ink)"}, "What the eye measures");
+    add("text", {x: 150, y: 48, "text-anchor": "middle", "font-size": 12, fill: "var(--ink-mute)"}, "fixed at 0.27 — never changes");
+    greySq(80, 62, 140, 140, SIGNAL, "light reaching the eye = 0.27");
+
+    add("text", {x: 470, y: 28, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: "var(--ink)"}, "What the brain concludes");
+    add("text", {x: 470, y: 48, "text-anchor": "middle", "font-size": 12, fill: "var(--ink-mute)"}, "reflectance = 0.27 ÷ illumination");
+    greySq(400, 62, 140, 140, rho, "inferred surface colour");
+
+    // the arrow and the equation
+    add("path", {d: "M250 132 L370 132", stroke: "var(--accent)", "stroke-width": 5, "stroke-linecap": "round"});
+    add("path", {d: "M362 124 L376 132 L362 140 Z", fill: "var(--accent)"});
+    add("text", {x: 310, y: 118, "text-anchor": "middle", "font-size": 12, fill: "var(--accent)"}, "÷ illumination");
+
+    add("text", {x: 320, y: 254, "text-anchor": "middle", "font-size": 15, fill: "var(--ink)"},
+      `illumination ${i.toFixed(2)}  ×  reflectance ${rho.toFixed(2)}  =  0.27`);
+    const verdict = rho > 0.72 ? "a white card in deep shadow" : rho > 0.52 ? "a light grey card in dim light"
+      : rho > 0.36 ? "a mid-grey card in moderate light" : "a dark grey card in bright light";
+    add("text", {x: 320, y: 280, "text-anchor": "middle", "font-size": 13.5, fill: "var(--accent-3)"}, "you would see: " + verdict);
+    irOut.textContent = `reflectance ${rho.toFixed(2)}`;
+  }
+  irI.addEventListener("input", irDraw);
+  document.addEventListener("themechange", irDraw);
+  irDraw();
+
+  // ---------- 2. Adelson checkerboard (canvas reconstruction) ----------
+  const ad = document.getElementById("adCanvas"), adShadow = document.getElementById("adShadow");
+  let bridge = false;
+  // A: on the lit top face. B: inside the shadow. Same painted value.
+  const SAME = 0.46;
+  function adDraw() {
+    const [c, W] = setup(ad, 300), H = 300;
+    c.fillStyle = SG.css("--bg-soft"); c.fillRect(0, 0, W, H);
+    const left = Math.max(20, (W - 440) / 2), cols = 8, cw = Math.min(55, (W - 2 * left) / cols), top = 60, rows = 4, ch = 42;
+    const shadowOn = adShadow.checked;
+    // checker: alternating light / dark reflectance, dimmed on the right half when the shadow is on
+    for (let r = 0; r < rows; r++) for (let k = 0; k < cols; k++) {
+      const base = (r + k) % 2 === 0 ? 0.78 : SAME;          // reflectance of the square
+      const inShadow = shadowOn && k >= 4;
+      const v = inShadow ? base * 0.59 : base;               // light reaching the eye
+      greyRect(c, left + k * cw, top + r * ch, cw, ch, v);
+    }
+    // A is a dark square in the light; B is a light square in the shadow -> same emitted value
+    const ax = left + 1 * cw, ay = top + 1 * ch;               // dark square, lit
+    const bx = left + 5 * cw, by = top + 2 * ch;               // light square, shadowed: 0.78*0.59 = 0.46
+    greyRect(c, ax, ay, cw, ch, SAME);
+    greyRect(c, bx, by, cw, ch, SAME);
+    if (bridge) greyRect(c, ax + cw / 2, ay + ch / 2 - 9, (bx + cw / 2) - (ax + cw / 2), 18, SAME);
+    // the shadow-casting cylinder
+    if (shadowOn) {
+      c.save(); c.globalAlpha = 0.35; c.fillStyle = SG.css("--ink");
+      c.beginPath(); c.moveTo(left + 4 * cw, top); c.lineTo(left + cols * cw, top);
+      c.lineTo(left + cols * cw, top + rows * ch); c.lineTo(left + 4.6 * cw, top + rows * ch); c.closePath();
+      c.restore();
+      c.fillStyle = SG.css("--ink-mute"); c.font = "12px sans-serif"; c.textAlign = "left";
+      c.fillText("shadow →", left + 4 * cw + 6, top - 10);
+    }
+    c.fillStyle = SG.css("--accent"); c.font = "bold 16px sans-serif"; c.textAlign = "center";
+    c.fillText("A", ax + cw / 2, ay - 6); c.fillText("B", bx + cw / 2, by - 6);
+    c.fillStyle = SG.css("--ink-soft"); c.font = "13px sans-serif";
+    c.fillText(shadowOn ? "A and B are painted with the same value (0.46) — B is a lighter surface, dimmed."
+                        : "Shadow off: A and B are still the same value, but now there is no illumination to divide out.",
+               Math.min(W / 2, left + cols * cw / 2), top + rows * ch + 34);
+    c.fillStyle = SG.css("--ink-mute"); c.font = "12px sans-serif";
+    c.fillText("reconstruction, not the original photograph", Math.min(W / 2, left + cols * cw / 2), top + rows * ch + 56);
+  }
+  document.getElementById("adBridge").onclick = e => {
+    bridge = !bridge; e.target.textContent = bridge ? "Hide the bridge" : "Connect A and B"; adDraw();
+  };
+  adShadow.addEventListener("change", adDraw);
+  document.addEventListener("themechange", adDraw);
+  adDraw();
+  addEventListener("resize", adDraw);
+
+  // ---------- 3. cone response curves (inline SVG) ----------
+  const coneSvg = document.getElementById("coneSvg"), coneL = document.getElementById("coneL"),
+        coneNoL = document.getElementById("coneNoL"), coneOut = document.getElementById("coneOut");
+  const CONES = [
+    {name: "S", peak: 420, sig: 35, col: "--accent-3", word: "violet"},
+    {name: "M", peak: 530, sig: 55, col: "--accent-2", word: "teal"},
+    {name: "L", peak: 560, sig: 60, col: "--accent",   word: "orange"},
+  ];
+  const resp = (lam, c) => Math.exp(-0.5 * Math.pow((lam - c.peak) / c.sig, 2));
+  const X = lam => 70 + (lam - 400) / 300 * 500, Y = v => 250 - v * 190;
+  function coneDraw() {
+    while (coneSvg.firstChild) coneSvg.removeChild(coneSvg.firstChild);
+    const add = (tag, a, t) => { const e = SG.el(tag, a, t); coneSvg.appendChild(e); return e; };
+    // axes
+    add("path", {d: `M70 250 L570 250`, stroke: "var(--line-2)", "stroke-width": 1.5});
+    add("path", {d: `M70 250 L70 56`, stroke: "var(--line-2)", "stroke-width": 1.5});
+    for (let lam = 400; lam <= 700; lam += 50) {
+      add("path", {d: `M${X(lam)} 250 L${X(lam)} 256`, stroke: "var(--line-2)", "stroke-width": 1.5});
+      add("text", {x: X(lam), y: 272, "text-anchor": "middle", "font-size": 11.5, fill: "var(--ink-mute)"}, String(lam));
+    }
+    add("text", {x: 320, y: 296, "text-anchor": "middle", "font-size": 12.5, fill: "var(--ink-soft)"}, "wavelength (nm)");
+    add("text", {x: 20, y: 150, "font-size": 12.5, fill: "var(--ink-soft)", transform: "rotate(-90 24 150)"}, "relative response");
+
+    const lam0 = +coneL.value, hideL = coneNoL.checked;
+    const vals = CONES.map(c => (c.name === "L" && hideL) ? 0 : resp(lam0, c));
+
+    CONES.forEach((c, i) => {
+      if (c.name === "L" && hideL) return;
+      let d = "";
+      for (let lam = 400; lam <= 700; lam += 2) d += (d ? " L" : "M") + X(lam) + " " + Y(resp(lam, c));
+      add("path", {d, fill: "none", stroke: `var(${c.col})`, "stroke-width": 3, "stroke-linecap": "round"});
+      add("text", {x: X(c.peak), y: Y(1) - 10, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: `var(${c.col})`},
+        `${c.name} (${c.peak} nm)`);
+    });
+    if (hideL) add("text", {x: X(560), y: Y(1) - 10, "text-anchor": "middle", "font-size": 13, fill: "var(--ink-mute)"}, "L removed");
+
+    // probe line and markers
+    add("path", {d: `M${X(lam0)} 250 L${X(lam0)} 56`, stroke: "var(--rose)", "stroke-width": 2, "stroke-dasharray": "4 4"});
+    CONES.forEach((c, i) => {
+      if (c.name === "L" && hideL) return;
+      add("circle", {cx: X(lam0), cy: Y(vals[i]), r: 5.5, fill: `var(${c.col})`, stroke: "var(--bg)", "stroke-width": 2});
+    });
+    // readout bars
+    CONES.forEach((c, i) => {
+      const bx = 430 + i * 48;
+      add("rect", {x: bx, y: 70, width: 30, height: 60, fill: "var(--bg-soft)", stroke: "var(--line-2)", "stroke-width": 1});
+      add("rect", {x: bx, y: 130 - vals[i] * 60, width: 30, height: vals[i] * 60, fill: `var(${c.col})`});
+      add("text", {x: bx + 15, y: 146, "text-anchor": "middle", "font-size": 11.5, fill: "var(--ink-soft)"}, c.name);
+      add("text", {x: bx + 15, y: 62, "text-anchor": "middle", "font-size": 11, fill: "var(--ink-mute)"}, vals[i].toFixed(2));
+    });
+    const ratio = vals[1] > 0.0005 && !hideL ? (vals[2] / vals[1]) : null;
+    coneOut.textContent = `S ${vals[0].toFixed(2)} · M ${vals[1].toFixed(2)} · L ${vals[2].toFixed(2)}` +
+      (ratio == null ? " — L:M unavailable, the red–green comparison is gone" : ` — L:M = ${ratio.toFixed(2)}`);
+  }
+  [coneL, coneNoL].forEach(e => e.addEventListener("input", coneDraw));
+  coneNoL.addEventListener("change", coneDraw);
+  document.addEventListener("themechange", coneDraw);
+  coneDraw();
+
+  // ---------- 4. colour adaptation ----------
+  const ca = document.getElementById("caCanvas"), caOut = document.getElementById("caOut");
+  let caStart = 0, caRun = false, fatigue = 0, lastT = 0;
+  const ADAPT_S = 15;
+  function caDraw(now) {
+    const [c, W] = setup(ca, 300), H = 300;
+    const dt = lastT ? Math.min(0.1, (now - lastT) / 1000) : 0; lastT = now;
+    const t = (now - caStart) / 1000;
+    const adapting = caRun && t < ADAPT_S;
+    if (adapting) { fatigue = Math.min(1, fatigue + dt / 9); caOut.textContent = `adapting… ${Math.ceil(ADAPT_S - t)} s — hold your gaze on the marker`; }
+    else { fatigue = Math.max(0, fatigue - dt / 4); if (caRun) caOut.textContent = fatigue > 0.05 ? "Now look for a faint green cast in the grey." : "Aftereffect faded — run it again."; }
+    if (caRun && t >= ADAPT_S && fatigue <= 0.001) caRun = false;
+
+    c.fillStyle = SG.css("--bg-soft"); c.fillRect(0, 0, W, H);
+    const pw = Math.min(260, W * 0.44), px = 30, py = 50;
+    c.fillStyle = adapting ? SG.css("--accent-3") : SG.css("--bg-soft");
+    c.fillRect(px, py, pw, 180);
+    c.strokeStyle = SG.css("--line-2"); c.lineWidth = 1.5; c.strokeRect(px, py, pw, 180);
+    // fixation marker
+    c.strokeStyle = adapting ? SG.css("--bg") : SG.css("--ink-mute"); c.lineWidth = 2;
+    const fx = px + pw / 2, fy = py + 90;
+    c.beginPath(); c.moveTo(fx - 7, fy); c.lineTo(fx + 7, fy); c.moveTo(fx, fy - 7); c.lineTo(fx, fy + 7); c.stroke();
+    c.fillStyle = SG.css("--ink-soft"); c.font = "13px sans-serif"; c.textAlign = "center";
+    c.fillText(adapting ? "violet adapting patch" : "neutral grey test patch", fx, py + 200);
+
+    // opponent balance bars
+    const bx = Math.max(px + pw + 40, W - 190), base = 230;
+    const vio = adapting ? 1 : 0.5 * (1 - 0.7 * fatigue);
+    const grn = adapting ? 0.12 : 0.5;
+    [[vio, "violet side", "--accent-3"], [grn, "green side", "--accent-2"]].forEach(([v, lab, col], i) => {
+      c.fillStyle = SG.css(col); c.fillRect(bx + i * 78, base - v * 150, 48, v * 150);
+      c.fillStyle = SG.css("--ink-soft"); c.font = "12px sans-serif"; c.textAlign = "center";
+      c.fillText(lab, bx + 24 + i * 78, base + 18);
+    });
+    const net = grn - vio;
+    c.fillStyle = SG.css("--ink"); c.font = "12.5px sans-serif";
+    c.fillText(Math.abs(net) < 0.03 ? "balanced → looks neutral" : net > 0 ? "green side wins → grey looks green" : "violet side wins → looks violet",
+               bx + 63, 36);
+    requestAnimationFrame(caDraw);
+  }
+  requestAnimationFrame(caDraw);
+  document.getElementById("caGo").onclick = () => { caRun = true; caStart = performance.now(); fatigue = 0; };
+});
+</script>
+</body>
+</html>

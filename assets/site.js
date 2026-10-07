@@ -33,6 +33,14 @@ const CHAPTERS = [
   { slug: "surfaces-depth",      n: "11",  title: "Surfaces & depth" },
   { slug: "motion",              n: "12",  title: "Motion" },
 
+  { slug: "colour-pathways",     n: "13",  title: "Colour, V4 & the two pathways" },
+
+  { group: "Part V — NeuroAI" },
+  { slug: "neuroai",             n: "14",  title: "Encoding, decoding & CNNs" },
+
+  { group: "Part VI — Hearing" },
+  { slug: "hearing-sound",       n: "15",  title: "Hearing & sound" },
+
   { group: "Reference" },
   { slug: "practice",            n: "",    title: "Midterm practice" },
   { slug: "cheatsheet",          n: "",    title: "One-page cheat sheet" },

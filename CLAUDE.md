@@ -22,8 +22,19 @@ When adding or revising a chapter from new lecture material, use the
 - Mark reconstructed figures as reconstructions; flag where the slides and the
   study guides disagree.
 
-Lectures 10–12 (NeuroAI, Hearing, Speech/Music/Language) are still to be added
-before the 10/7 midterm.
+Lecture numbering: the midterm study guide numbers the hearing lecture 12, while
+its slide deck is titled "Lecture 13". The guide follows the study guide, since
+that is what the exam is written against. Actual mapping:
+
+| Lecture | Topic | Chapter |
+| :-- | :-- | :-- |
+| 10 | Vision IV — colour, V4, dorsal/ventral | `colour-pathways.html` |
+| 11 | NeuroAI (guest: Dr. Maggie Henderson) | `neuroai.html` |
+| 12 | Hearing & sound | `hearing-sound.html` |
+
+Speech, music and language are after the midterm and are covered only lightly.
+`85-170_ Study Guide Midterm.pdf` is a per-lecture question bank — treat its
+questions as the specification for any chapter covering that lecture.
 
 Before finishing, run the skill's validator over this directory:
 

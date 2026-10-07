@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearing &amp; sound · FoBB Field Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="hearing-sound">
+<main>
+
+  <div class="eyebrow">Part VI · Hearing</div>
+  <h1>Hearing &amp; sound</h1>
+  <p class="subtitle">The same inference problem as vision, in a different sense: the sound reaching
+  your ear is the source multiplied by the room, and your brain has to undo the multiplication.</p>
+
+  <div data-toc></div>
+
+  <div class="box key">
+    <span class="label">Essentials</span>
+    <p>Hearing at Marr's three levels, and six definitions you will be asked for.</p>
+    <ul>
+      <li><strong>Sound vs hearing</strong> — <em>sound</em> is the physical stimulus (air vibrations);
+        <em>hearing</em> is the perceptual process. The falling tree makes sound with nobody there; it
+        produces no hearing.</li>
+      <li><strong>Computational level</strong> — identify objects, scenes and people, localise the
+        speaker, enjoy music.</li>
+      <li><strong>Algorithmic level</strong> — perceived sound = sound source &times; environment. One
+        equation, two unknowns, exactly as in colour.</li>
+      <li><strong>Implementation level</strong> — cochlea &rarr; auditory nerve &rarr; brainstem &rarr;
+        thalamus &rarr; primary auditory cortex (A1). Each ear projects to <em>both</em> hemispheres.</li>
+      <li><strong>Tonotopy</strong> — the spatial arrangement by which different frequencies are
+        processed at different places in an auditory structure. A <em>place code</em> for frequency,
+        the auditory counterpart of retinotopy. A1 runs high&ndash;low&ndash;high.</li>
+      <li><strong>Transduction</strong> — mechanical vibration converted to electrical signal by hair
+        cells in the cochlea; different hair cells answer to different frequencies.</li>
+      <li><strong>Fundamental frequency</strong> — the lowest frequency a source produces; usually what
+        you perceive as pitch. <strong>Harmonics</strong> — higher frequencies at whole-number multiples
+        of the fundamental; their pattern is why a violin and a flute differ on the same note.</li>
+      <li><strong>Vowels</strong> — produced without significant constriction of the vocal tract; carry
+        characteristic <strong>formants</strong>, the frequency bands that give each vowel its identity.
+        <strong>Consonants</strong> — involve constriction that obstructs airflow.
+        <strong>Phonemes</strong> — the basic building blocks of speech; either vowels or consonants.</li>
+      <li><strong>Spectrogram</strong> — frequency (vertical) against time (horizontal), with brightness
+        showing how much energy sits at that frequency.</li>
+      <li><strong>Sound constancy</strong> — recognising the same sound across rooms and speakers,
+        because the brain has learned each one's statistical regularities and corrects for them.</li>
+    </ul>
+    <p class="tiny muted">Everything below is the explanation and the practice. Short on time: read this
+    box, then go to the problems.</p>
+  </div>
+
+  <div class="box warn">
+    <span class="label">Two numbering systems — don't be thrown</span>
+    <p style="margin-bottom:0">The slide deck for this material is titled <em>Lecture 13 — Hearing,
+    Speech, Music, Language</em>. The midterm study guide calls the same material <em>Lecture 12:
+    Hearing and Sound</em>. They are the same lecture. This guide follows the study guide's numbering,
+    because that is the document the exam is written against. The study guide also marks the
+    speech-selective and music-selective regions as <em>"featured in a later lecture"</em> — so
+    §<a href="#beyond">6</a> covers them only lightly, and language is not on this midterm at all.</p>
+  </div>
+
+  <h2 id="marr">1. Hearing at Marr's three levels</h2>
+
+  <p>The lecture is organised around <a href="frameworks.html">Marr's three levels</a>, and the exam
+  asks you to apply them. Hearing is a clean case because the three levels come apart neatly.</p>
+
+  <div class="scroll-x">
+  <table>
+    <thead><tr><th>Level</th><th>Question</th><th>For hearing</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Computational</strong></td><td>What problem, and why?</td>
+        <td>Identify objects and their properties, identify scenes, identify people, locate the speaker, enjoy music</td></tr>
+      <tr><td><strong>Algorithmic</strong></td><td>What representations and processes?</td>
+        <td>The sound you perceive depends on the source <em>and</em> the environment — so the system must separate them</td></tr>
+      <tr><td><strong>Implementation</strong></td><td>How is it realised in the brain?</td>
+        <td>Ear anatomy, the auditory pathway, primary auditory cortex (A1)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>The five computational goals</h3>
+  <ol>
+    <li><strong>Identify objects and their properties</strong> — a dropped coin versus a dropped book.</li>
+    <li><strong>Identify scenes</strong> — a café, a stairwell, outdoors.</li>
+    <li><strong>Identify people</strong> — recognising a voice before any word is understood.</li>
+    <li><strong>Locate the speaker.</strong> The main cue is the <strong>interaural time difference</strong>:
+      a sound off to one side arrives at the near ear slightly before the far ear. The difference is
+      around <strong>0.3 ms</strong> at the extremes — tiny, and the system resolves it reliably.</li>
+    <li><strong>Enjoy music.</strong> The lecture's framing is worth remembering because it connects to
+      §<a href="#prediction">4</a>: good music <em>violates predictions</em> with novel and unexpected
+      elements. Pleasure in music is bound up with a prediction machine being surprised.</li>
+  </ol>
+
+  <div class="box defn">
+    <span class="label">Definition — sound vs hearing</span>
+    <p style="margin-bottom:0">If a tree falls in a forest and nobody is around, does it make a sound?
+    The lecture's answer is a definitional one. <strong>Sound</strong> is the external physical stimulus,
+    air vibrations. <strong>Hearing</strong> is the perceptual process that lets us experience sound. So
+    the tree makes sound and produces no hearing. <strong>Pitch</strong> belongs on the perceptual side
+    too: it is the attribute that lets us judge a sound as high or low — perceived frequency, not
+    frequency itself.</p>
+  </div>
+
+  <h2 id="spectrogram">2. Reading a spectrogram</h2>
+
+  <p>A <strong>spectrogram</strong> shows how the frequencies in a sound vary over time: time along the
+  horizontal axis, frequency up the vertical, and brightness for how much energy sits at that frequency
+  at that moment. A waveform shows you a single squiggle; the spectrogram decomposes it.</p>
+
+  <div class="viz">
+    <div class="viz-title">Figure 1 · A schematic vowel, labelled</div>
+    <svg viewBox="0 0 660 320" role="img" aria-label="Schematic spectrogram showing a fundamental frequency, its harmonics, and two formant bands">
+      <!-- axes -->
+      <line x1="70" y1="20" x2="70" y2="270" stroke="var(--ink-mute)" stroke-width="1.5"/>
+      <line x1="70" y1="270" x2="620" y2="270" stroke="var(--ink-mute)" stroke-width="1.5"/>
+      <text x="345" y="298" text-anchor="middle" font-size="12" fill="var(--ink-soft)">time →</text>
+      <text x="22" y="145" font-size="12" fill="var(--ink-soft)" transform="rotate(-90 22 145)" text-anchor="middle">frequency →</text>
+
+      <!-- harmonic stack: fundamental at bottom, multiples above -->
+      <g>
+        <rect x="120" y="246" width="420" height="7" fill="var(--accent)" opacity=".95"/>
+        <rect x="120" y="212" width="420" height="6" fill="var(--accent)" opacity=".55"/>
+        <rect x="120" y="178" width="420" height="6" fill="var(--accent)" opacity=".45"/>
+        <rect x="120" y="144" width="420" height="6" fill="var(--accent)" opacity=".4"/>
+        <rect x="120" y="110" width="420" height="6" fill="var(--accent)" opacity=".35"/>
+        <rect x="120" y="76"  width="420" height="6" fill="var(--accent)" opacity=".3"/>
+        <rect x="120" y="42"  width="420" height="6" fill="var(--accent)" opacity=".25"/>
+      </g>
+      <!-- formant bands: broad regions of extra energy -->
+      <rect x="120" y="198" width="420" height="34" fill="var(--accent-2)" opacity=".30"/>
+      <rect x="120" y="96"  width="420" height="34" fill="var(--accent-2)" opacity=".30"/>
+
+      <!-- labels -->
+      <line x1="548" y1="249" x2="590" y2="249" stroke="var(--ink-mute)" stroke-width="1"/>
+      <text x="596" y="253" font-size="11.5" fill="var(--ink)">f₀</text>
+      <line x1="548" y1="215" x2="590" y2="215" stroke="var(--ink-mute)" stroke-width="1"/>
+      <text x="596" y="219" font-size="11.5" fill="var(--ink)">2f₀</text>
+      <line x1="548" y1="181" x2="590" y2="181" stroke="var(--ink-mute)" stroke-width="1"/>
+      <text x="596" y="185" font-size="11.5" fill="var(--ink)">3f₀</text>
+      <text x="596" y="117" font-size="11.5" fill="var(--ink)">…</text>
+
+      <text x="130" y="192" font-size="11.5" fill="var(--accent-2)" font-weight="700">formant 1</text>
+      <text x="130" y="90"  font-size="11.5" fill="var(--accent-2)" font-weight="700">formant 2</text>
+      <text x="130" y="265" font-size="11.5" fill="var(--accent)" font-weight="700">fundamental</text>
+    </svg>
+    <div class="caption">Schematic, not measured data. The orange horizontal bars are the
+    <strong>fundamental</strong> f₀ and its <strong>harmonics</strong> at 2f₀, 3f₀ and so on — evenly
+    spaced because they are whole-number multiples. The two teal bands are <strong>formants</strong>:
+    broad frequency regions carrying extra energy, set by the shape of the vocal tract. What to notice:
+    the harmonics tell you the <em>pitch</em>; the formants tell you <em>which vowel</em>. Change the
+    fundamental and you sing the same vowel higher; change the formants and you have said a different
+    vowel at the same pitch.</div>
+  </div>
+
+  <div class="box defn">
+    <span class="label">The six definitions, precisely</span>
+    <ul style="margin-bottom:0">
+      <li><strong>Fundamental frequency</strong> — the lowest frequency produced by a source; often what
+        we perceive as pitch.</li>
+      <li><strong>Harmonics</strong> — higher frequencies that are multiples of the fundamental.
+        Instruments sound different partly because they differ in which harmonics they emphasise.</li>
+      <li><strong>Vowels</strong> — speech sounds produced without significant constriction or closure of
+        the vocal tract.</li>
+      <li><strong>Formants</strong> — the characteristic frequency bands that give a vowel its unique
+        sound.</li>
+      <li><strong>Consonants</strong> — speech sounds involving constriction of the vocal tract,
+        obstructing airflow in various ways.</li>
+      <li><strong>Phonemes</strong> — the basic building blocks of speech; they can be either vowels or
+        consonants, and are often distinguished by subtle differences in mouth and tongue placement
+        (<em>sh</em> vs <em>s</em>).</li>
+    </ul>
+  </div>
+
+  <p>Two points the lecture makes about phonemes are easy exam fodder. First, <strong>consonant-to-vowel
+  transitions</strong> matter: the same vowel preceded by different consonants produces different
+  sounds, so speech is not a string of independent units. Second, <strong>phoneme inventories differ by
+  language</strong> — English distinguishes <em>r</em> from <em>l</em> and Japanese does not; Hindi
+  distinguishes dental from retroflex <em>d</em> and English does not. Which contrasts you can hear is
+  shaped by the language you learned.</p>
+
+  <h2 id="algorithm">3. The algorithm: source &times; environment</h2>
+
+  <div class="box key">
+    <span class="label">The central equation</span>
+    <p style="margin-bottom:0">Perceived sound = <strong>sound source &times; environment</strong>. Sound
+    reaches your ears directly from the source, <em>and</em> indirectly via reflections off surfaces —
+    <strong>reverberation</strong>. Your ear receives the product. To recognise the source you must
+    discount the room.</p>
+  </div>
+
+  <div class="box analogy">
+    <span class="label">You have met this problem already</span>
+    <p style="margin-bottom:0">In <a href="colour-pathways.html">colour</a> the equation was
+    <em>perceived colour = illumination &times; surface reflectance</em>, and the brain had to factor out
+    the illuminant — which is why the dress and Adelson's checkerboard are ambiguous. Hearing poses the
+    identical problem with <em>environment</em> in place of <em>illumination</em>. This is the most
+    reusable idea in the course: <strong>the input underdetermines its cause, so perception is
+    inference.</strong> If a question asks why audition needs prior experience at all, this is the
+    answer.</p>
+  </div>
+
+  <p>How seriously should you take reverberation? In 1936 Stevens and Newman erected a swivel chair on
+  top of a ventilator nine feet above the roof of Harvard's Biological Laboratories, because that
+  appeared to be the only practicable way to avoid reflections contaminating their measurements. The
+  room is not a nuisance you can ignore; it is multiplied into everything you hear.</p>
+
+  <h3 id="constancy">Three versions of the same correction</h3>
+
+  <p>The lecture works through three nuisance variables, and the solution has the same shape each time:
+  <em>the brain learns the statistical regularities and corrects for them.</em></p>
+
+  <div class="grid2">
+    <div class="box example">
+      <span class="label">Different rooms</span>
+      <p style="margin-bottom:0"><strong>Sound constancy.</strong> Your brain learns the reverberation
+      characteristics — the impulse response — of different environments and corrects for them, so a
+      voice is recognisably the same voice in a bathroom and a lecture hall.</p>
+    </div>
+    <div class="box example">
+      <span class="label">Different speakers</span>
+      <p style="margin-bottom:0">Plot each English vowel as an ellipse of many talkers' productions and
+      the ellipses <strong>overlap</strong>: the same vowel varies widely across talkers, and one
+      acoustic sound can correspond to several different vowels. The brain learns each speaker's
+      regularities. Hence the <strong>familiar voice advantage</strong> — speech from a familiar voice is
+      perceived more accurately.</p>
+    </div>
+  </div>
+
+  <div class="box example">
+    <span class="label">Competing sound</span>
+    <p style="margin-bottom:0">The <strong>cocktail party effect</strong>: the ability to focus on one
+    sound while ignoring competing ones. Again, the brain has learned the statistics of the speaker and
+    of the background and corrects. The lecture's conclusion is the thing to carry into the exam — your
+    brain is <em>not passively listening; it is actively generating predictions</em>.</p>
+  </div>
+
+  <h2 id="prediction">4. Prediction, and the Yanny/Laurel case</h2>
+
+  <p>Rewrite the equation to make the inference explicit:</p>
+
+  <p class="center"><strong>Perceived sound = sound source (ambiguous) &times; environment
+  (inferred)</strong></p>
+
+  <p>When the source is genuinely ambiguous, the brain predicts an environment, subtracts its presumed
+  effect, and interprets what is left. Because the prediction can go either way, two listeners can hear
+  the same recording differently — and the same listener can flip.</p>
+
+  <div class="box intuition">
+    <span class="label">Why one clip yields two words</span>
+    <ul style="margin-bottom:0">
+      <li>If the inferred environment is <strong>low frequency</strong>, the brain removes low
+        frequencies, leaving the higher ones audible &rarr; <strong>"Yanny"</strong>.</li>
+      <li>If the inferred environment is <strong>high frequency</strong>, the brain removes high
+        frequencies, leaving the lower ones &rarr; <strong>"Laurel"</strong>.</li>
+    </ul>
+  </div>
+
+  <p>Note the logic: the percept is not a readout of the stimulus, it is the stimulus <em>divided by a
+  guess</em>. Change the guess and the percept changes with no change in the input. That is the same
+  move that makes the dress white-and-gold for some people and blue-and-black for others.</p>
+
+  <h2 id="implementation">5. Implementation: cochlea to cortex</h2>
+
+  <h3>Transduction and tonotopy</h3>
+
+  <p>The <strong>cochlea</strong> converts sound vibrations into neural signals.
+  <strong>Transduction</strong> is that conversion — mechanical vibration to electrical signal by
+  sensory hair cells — and it is the auditory counterpart of what opsins do for
+  <a href="eye-retina.html">vision</a>.</p>
+
+  <p>The key architectural fact: <strong>different hair cells are sensitive to different
+  frequencies</strong>, arranged in order along the cochlea. That ordering is
+  <strong>tonotopy</strong> — the spatial arrangement of where different frequencies are processed in an
+  auditory structure. It is a <em>place</em> code: which neurons fire tells you which frequency arrived.
+  Compare retinotopy, where position on the retina maps to position in cortex; here, frequency maps to
+  position.</p>
+
+  <div class="viz">
+    <div class="viz-title">Figure 2 · The cochlea unrolled, and its frequency map</div>
+    <svg viewBox="0 0 660 230" role="img" aria-label="The cochlea drawn unrolled as a tapering strip, with high frequencies at the base and low frequencies at the apex">
+      <!-- coiled cochlea -->
+      <g transform="translate(20,20)">
+        <path d="M 60 150 a 55 55 0 1 1 55 -55 a 36 36 0 1 1 -36 36 a 20 20 0 1 1 20 -20"
+              fill="none" stroke="var(--ink-mute)" stroke-width="9" stroke-linecap="round"/>
+        <text x="60" y="186" font-size="11.5" fill="var(--ink-soft)" text-anchor="middle">coiled</text>
+      </g>
+      <text x="168" y="108" font-size="20" fill="var(--ink-mute)">→</text>
+      <!-- unrolled strip, tapering -->
+      <g transform="translate(205,0)">
+        <polygon points="0,70 400,55 400,125 0,140" fill="var(--bg-soft)" stroke="var(--line-2)" stroke-width="1.5"/>
+        <!-- frequency gradient blocks -->
+        <rect x="6"   y="78" width="78" height="54" fill="var(--accent)"   opacity=".55"/>
+        <rect x="90"  y="76" width="78" height="52" fill="var(--accent)"   opacity=".40"/>
+        <rect x="174" y="74" width="78" height="50" fill="var(--accent-3)" opacity=".38"/>
+        <rect x="258" y="72" width="78" height="48" fill="var(--accent-2)" opacity=".40"/>
+        <rect x="342" y="70" width="52" height="46" fill="var(--accent-2)" opacity=".55"/>
+        <text x="45"  y="110" font-size="11" fill="var(--ink)" text-anchor="middle">high</text>
+        <text x="368" y="97"  font-size="11" fill="var(--ink)" text-anchor="middle">low</text>
+        <text x="0"   y="162" font-size="11.5" fill="var(--ink-soft)">base</text>
+        <text x="360" y="162" font-size="11.5" fill="var(--ink-soft)">apex</text>
+        <line x1="0" y1="150" x2="394" y2="150" stroke="var(--ink-mute)" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="197" y="182" font-size="11.5" fill="var(--ink-soft)" text-anchor="middle">position along the cochlea = frequency</text>
+      </g>
+    </svg>
+    <div class="caption">Schematic. Hair cells near the <strong>base</strong> respond to high
+    frequencies (orange), those near the <strong>apex</strong> to low (teal). What to notice: frequency
+    has been turned into <em>place</em>, and that map is preserved all the way up to cortex — which is
+    what makes tonotopy worth a name.</div>
+  </div>
+
+  <h3>The pathway</h3>
+
+  <div class="viz">
+    <div class="viz-title">Figure 3 · Cochlea to primary auditory cortex</div>
+    <svg viewBox="0 0 680 190" role="img" aria-label="Flow diagram from cochlea through auditory nerve, brainstem, thalamus to primary auditory cortex, with crossing arrows showing each ear reaching both hemispheres">
+      <g font-size="11.5" text-anchor="middle">
+        <rect x="14"  y="70" width="92" height="46" rx="7" fill="var(--panel)" stroke="var(--accent)" stroke-width="1.6"/>
+        <text x="60" y="90" fill="var(--ink)">cochlea</text><text x="60" y="105" fill="var(--ink-mute)" font-size="10">transduction</text>
+
+        <rect x="134" y="70" width="98" height="46" rx="7" fill="var(--panel)" stroke="var(--line-2)"/>
+        <text x="183" y="90" fill="var(--ink)">auditory</text><text x="183" y="105" fill="var(--ink)">nerve</text>
+
+        <rect x="260" y="70" width="98" height="46" rx="7" fill="var(--panel)" stroke="var(--line-2)"/>
+        <text x="309" y="90" fill="var(--ink)">brainstem</text><text x="309" y="105" fill="var(--ink-mute)" font-size="10">nuclei</text>
+
+        <rect x="386" y="70" width="98" height="46" rx="7" fill="var(--panel)" stroke="var(--line-2)"/>
+        <text x="435" y="90" fill="var(--ink)">thalamus</text><text x="435" y="105" fill="var(--ink-mute)" font-size="10">relay</text>
+
+        <rect x="512" y="70" width="104" height="46" rx="7" fill="var(--panel)" stroke="var(--accent-2)" stroke-width="1.6"/>
+        <text x="564" y="90" fill="var(--ink)">A1</text><text x="564" y="105" fill="var(--ink-mute)" font-size="10">high-low-high</text>
+      </g>
+      <g stroke="var(--ink-mute)" stroke-width="1.5" fill="none">
+        <path d="M 108 93 H 132"/><path d="M 234 93 H 258"/><path d="M 360 93 H 384"/><path d="M 486 93 H 510"/>
+      </g>
+      <!-- bilateral note -->
+      <path d="M 309 68 C 309 30, 500 30, 545 66" stroke="var(--accent-3)" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+      <path d="M 309 118 C 309 158, 500 158, 545 120" stroke="var(--accent-3)" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+      <text x="420" y="24" font-size="11" fill="var(--accent-3)" text-anchor="middle">each ear reaches both hemispheres</text>
+    </svg>
+    <div class="caption">The lecture states the two endpoints — cochlea to primary auditory cortex — and
+    one structural fact worth remembering: <strong>signals from each ear go to both sides of the
+    brain</strong> (violet dashed). The intermediate brainstem and thalamic stages are drawn generically
+    here, because the slide names the route rather than listing each nucleus; if your exam wants the
+    individual nuclei, take them from the slide image rather than from this figure. A1 itself is
+    tonotopic, running high&ndash;low&ndash;high across its surface.</div>
+  </div>
+
+  <div class="box warn">
+    <span class="label">Common mistake</span>
+    <p style="margin-bottom:0">The bilateral projection is a real contrast with vision. Damage to one
+    side of the <a href="eye-retina.html">visual</a> pathway produces a predictable field loss, because
+    the projection is organised by visual field. One-sided damage in audition does <em>not</em> deafen
+    one ear, because each ear already reaches both hemispheres. If a question asks why unilateral
+    auditory cortex damage rarely causes deafness, that is the answer.</p>
+  </div>
+
+  <h2 id="beyond">6. Speech, music and language <span class="pill">later lecture</span></h2>
+
+  <p>The deck continues past hearing, but the study guide marks the selective-regions question as
+  featured later, and language is not on this midterm. Enough to recognise:</p>
+  <ul>
+    <li>A <strong>speech (phoneme) selective region</strong> sits near A1; speech has been reconstructed
+      from these regions using ECoG.</li>
+    <li>A <strong>music-selective region</strong> also sits near A1 — fMRI shows a stronger response to
+      music than to non-musical sounds — with a nearby song-selective region.</li>
+    <li>Language relies on a <strong>network</strong>, mainly left frontal and left temporal, and the
+      evidence that language is distinct from thought (global aphasia with intact cognition; Williams
+      syndrome with low IQ and relatively intact language) is a double dissociation of the same form you
+      met in <a href="colour-pathways.html">the two visual pathways</a>.</li>
+  </ul>
+
+  <h2 id="problems">7. Problems</h2>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Trace the pathway, and say what tonotopy buys you</div>
+    <div class="g-body">
+      <p>A patient reports that speech sounds muffled and that they can no longer tell a flute from a
+      violin, though they still hear that <em>something</em> is there. Trace the route a sound takes from
+      air to cortex, then say which stage a loss of high-frequency hair cells would affect and why it
+      could produce this complaint.</p>
+    </div>
+    <details class="step"><summary>Step 1 — What is actually being asked?</summary>
+      <div><p>Two things: the pathway in order, and a mapping from a cellular loss to a perceptual
+      symptom. The second half is where the marks are — it tests whether you understand tonotopy as a
+      code rather than as a word.</p></div></details>
+    <details class="step"><summary>Step 2 — The pathway</summary>
+      <div><p>Air vibration &rarr; cochlea, where hair cells <em>transduce</em> vibration into electrical
+      signal &rarr; auditory nerve &rarr; brainstem nuclei &rarr; thalamus &rarr; primary auditory cortex
+      (A1). Each ear projects to both hemispheres.</p></div></details>
+    <details class="step"><summary>Step 3 — Where the loss lands</summary>
+      <div><p>Hair cells are arranged tonotopically, high frequencies at the base. Losing high-frequency
+      hair cells removes the top of the spectrum at the very first stage, before any central processing.
+      Nothing downstream can restore information the cochlea never encoded.</p></div></details>
+    <details class="step"><summary>Solution</summary>
+      <div><p>Both symptoms follow. <strong>Muffled speech:</strong> consonants carry much of their
+      identity in higher frequencies, so losing the top of the range blurs exactly the phonemic
+      distinctions that separate words — while vowels, carried by lower formants, survive, so speech is
+      still audible. <strong>Flute versus violin:</strong> instruments playing the same note share a
+      fundamental and differ in their <em>harmonics</em>, which sit above it. Remove the high
+      frequencies and you remove the difference, leaving the pitch intact.</p></div></details>
+    <details class="step"><summary>Why this is the exam version of the idea</summary>
+      <div><p>It rewards knowing that the fundamental carries pitch while harmonics and upper formants
+      carry identity. A student who can only recite "tonotopy = frequency map" cannot get from a hair-cell
+      loss to a specific complaint.</p></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Why does the same clip yield two different words?</div>
+    <div class="g-body">
+      <p>Two people listen to the same recording on the same speaker. One hears "Yanny", the other
+      "Laurel". Explain in terms of the algorithmic-level equation, and say what this tells you about
+      whether perception is a readout of the stimulus.</p>
+    </div>
+    <details class="step"><summary>Step 1 — Write the equation</summary>
+      <div><p>Perceived sound = sound source (ambiguous) &times; environment (inferred). Both listeners
+      receive the same left-hand side. They differ in the second factor — the environment they
+      infer.</p></div></details>
+    <details class="step"><summary>Step 2 — Work both branches</summary>
+      <div><p>If the inferred environment is <strong>low frequency</strong>, the brain discounts low
+      frequencies; what remains is the higher content &rarr; "Yanny". If it is inferred as
+      <strong>high frequency</strong>, high frequencies are discounted and the lower content remains
+      &rarr; "Laurel".</p></div></details>
+    <details class="step"><summary>Solution &amp; the takeaway</summary>
+      <div><p>The percept is the stimulus <em>divided by a guess about the room</em>, so two different
+      guesses yield two different words from identical input. Perception is therefore not a readout —
+      it is inference, and the brain is actively generating predictions rather than passively listening.
+      The same argument explains the dress in <a href="colour-pathways.html">colour</a>: identical
+      photons, different assumed illuminant, different percept.</p></div></details>
+  </div>
+
+  <div class="guided">
+    <div class="g-head"><span class="tag">Try it</span>Sound constancy across rooms and speakers</div>
+    <div class="g-body">
+      <p>Your friend says one word to you in a tiled bathroom and then outdoors. The acoustic signal
+      reaching your ear differs substantially. You hear the same word both times. Explain the mechanism,
+      then explain the separate problem posed by a <em>different</em> person saying that word, and name
+      the empirical phenomenon that supports your answer.</p>
+    </div>
+    <details class="step"><summary>Step 1 — Separate the two nuisance variables</summary>
+      <div><p>Room and speaker are different factors multiplied into the same signal. The bathroom
+      changes the <em>environment</em> term (reverberation); a new talker changes the
+      <em>source</em> term.</p></div></details>
+    <details class="step"><summary>Step 2 — The room</summary>
+      <div><p><strong>Sound constancy.</strong> The brain has learned the statistical regularities of
+      reverberation — effectively the impulse response of rooms like this one — and corrects for it. This
+      is structurally identical to colour constancy inferring the illuminant.</p></div></details>
+    <details class="step"><summary>Step 3 — The speaker</summary>
+      <div><p>Harder, because talkers genuinely overlap: plotting each vowel as an ellipse over many
+      speakers, the ellipses overlap, so one acoustic sound can correspond to several vowels. The brain
+      learns each speaker's regularities and corrects for them.</p></div></details>
+    <details class="step"><summary>Solution — and the evidence</summary>
+      <div><p>Both are solved by learning the statistics of a nuisance factor and discounting it. The
+      supporting phenomenon is the <strong>familiar voice advantage</strong>: listeners perceive speech
+      more accurately from a familiar voice than an unfamiliar one — exactly what you expect if
+      recognition depends on a learned speaker model. The <strong>cocktail party effect</strong> is the
+      same story with background noise as the nuisance.</p></div></details>
+  </div>
+
+  <h2 id="check">8. Check yourself</h2>
+
+  <div class="quiz" data-answer="1">
+    <div class="q">A singer sings the same vowel first at a low pitch, then an octave higher. On the
+    spectrogram, what mainly changes?</div>
+    <button class="opt">The formants shift up, because formants determine pitch.</button>
+    <button class="opt">The fundamental and its harmonics shift up, while the formant bands stay in roughly the same frequency regions.</button>
+    <button class="opt">Nothing changes; the spectrogram shows only time.</button>
+    <button class="opt">The number of phonemes doubles.</button>
+    <div class="why"><strong>Why:</strong> pitch lives in the fundamental, so f₀ and all its multiples
+    move. Formants are set by the shape of the vocal tract, not by pitch, so they stay put — which is
+    exactly why the vowel is still recognisable as the same vowel. Swap which one changes and you have
+    the two definitions backwards, the single most common error on this material.</div>
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="q">Why does damage to auditory cortex on one side rarely produce deafness in one ear?</div>
+    <button class="opt">Because the cochlea can compensate by shifting its tonotopic map.</button>
+    <button class="opt">Because hearing is not represented in cortex at all.</button>
+    <button class="opt">Because signals from each ear already project to both hemispheres.</button>
+    <button class="opt">Because the interaural time difference is only about 0.3 ms.</button>
+    <div class="why"><strong>Why:</strong> the auditory pathway is bilateral from early on, so one
+    hemisphere still receives both ears. This is a genuine contrast with vision, where the projection is
+    organised by visual field and one-sided damage produces a predictable field loss.</div>
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="q">A tree falls in an empty forest. On the lecture's definitions, what happens?</div>
+    <button class="opt">There is sound but no hearing.</button>
+    <button class="opt">There is hearing but no sound.</button>
+    <button class="opt">Neither, since sound requires a perceiver.</button>
+    <button class="opt">Both, since air vibration is itself a percept.</button>
+    <div class="why"><strong>Why:</strong> sound is defined as the external physical stimulus — air
+    vibrations — and hearing as the perceptual process that experiences it. The vibrations occur; nobody
+    perceives them. The question is testing whether you hold the physical/perceptual distinction, the
+    same distinction that separates frequency from pitch.</div>
+  </div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
